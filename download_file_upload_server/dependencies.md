@@ -15,4 +15,4 @@ Read Emails from outlook account and send to Windows Remote server Share Directo
 1) pip install pywin32 -> To connect to outlook
 2) pip install pywinrm  
 3) pip install pyyaml -> To configure user credentials on remote server
-4) pip install smbprotocol[kerberos] -> To tranfer files using SMBConnection
+4) pip install smbprotocol[kerberos] -> To tranfer files using SMBConnection documentation [here](https://pysmb.readthedocs.io/en/latest/api/smb_SMBConnection.html)
