@@ -8,7 +8,6 @@ import datetime as dt
 import goto
 import winrm
 import yaml
-import subprocess
 from smb.SMBConnection import SMBConnection
 
 date_time=dt.datetime.now()
@@ -34,9 +33,9 @@ except ValueError :
     isValidDate = False
     
 if(isValidDate) :
-    print ("\nInput date is valid ..")
+    print ("Input date is valid ..")
 else :
-    print ("\nInput date is not valid..")
+    print ("Input date is not valid..")
     #goto .begin
     sys.exit()
 
@@ -72,7 +71,7 @@ if (aldea_account == "no"):
 
 print("Is there an aldea account? " + aldea_account)
 
-print("\nAldea email: " + aldea_email)
+print("Aldea email: " + aldea_email)
 
 
 #print("Index of array " + str(index_email))
@@ -92,7 +91,6 @@ messages=inbox.Items
 counter = 0
 attachement_file_names = []
 
-print ("\nDownloading Files from Email:")
 for message in messages:
     index1 = message.Subject.find("Undeliverable")
     index2 = message.Subject.find("failed")
@@ -105,7 +103,6 @@ for message in messages:
             print(message.SentOn.strftime("%Y-%m-%d : ") + message.Subject)
             attachments = message.Attachments
             for attachment in message.Attachments:
-                ### Downloading Files from Email
                 attachment.SaveAsFile(os.path.join(path, str(attachment)))
                 ### Store File Names in an array
                 attachement_file_names.append(str(attachment))
@@ -113,16 +110,17 @@ for message in messages:
 print ("Processed " + str(counter) + " file(s)")
 
 
-############################# Reading config file
+############################# Reading parameters
 
 parameters = []
 remote_server = ""
 user=""
 passw=""
 domain=""
+host=""
 
 
-### Reading YAML config file
+### Reading config file
 path_config = os.path.expanduser("~/Desktop/python/config.yaml")
 with open(path_config) as file:
     #config_list = yaml.load(file, Loader=yaml.FullLoader)
@@ -141,48 +139,25 @@ with open(path_config) as file:
             passw = doc
         if (item == "domain"):
             domain = doc
-        if (item == "server_name"):
-            server_name = doc
-        if (item == "my_name"):
-            my_name = doc    
+        if (item == "host"):
+            host = doc
+            
             
 
-print ("Connection to remote server: " + remote_server + " - " + fqdn)
+print ("Connecting to remote server: " + remote_server + " - " + fqdn)
 #print ("File Names to send: " + str(attachement_file_names[1]))
 
-############################# Sending files to remote server
+############################# Sending files to remote serve
 
-### Stablished connection
-counter = 0
-conn = SMBConnection(user, passw, my_name, server_name, domain=domain, use_ntlm_v2=True,is_direct_tcp=True)
+#remote_path="F:\Shares\NSSR\SP Files"
+### Register Session
+#smbclient.register_session(str(remote_server), username=str(user), password=str(passw))
 
-print ("Connecting...")
-connected = conn.connect(remote_server, 445)
-print (connected)
+#smbclient.mkdir(r"\\server\share\directory", username="user", password="pass")
 
-print ("\nStoring files...\n")
-
-for files in attachement_file_names:
-    
-    counter = counter + 1
-    name,type = files.split('.')
-    
-    print (str(counter) + "- Reading File: " + files + " | Type: " + type)
-    
-    file_name= path + files
-    print ("Path: " + file_name)
-    
-    # Read the file in binary mode
-    file2transfer = open(file_name,"rb")
-
-    conn.storeFileFromOffset('NSSR',"SP Files/" + files , file2transfer, offset=0, truncate=True, timeout=30)
-
-    file2transfer.close()
-
-print ("\nClosing connection...")
-conn.close()
+conn = SMBConnection(user, passw, host, server_name, domain=domain_name, use_ntlm_v2=True,is_direct_tcp=True)
 
 
-print("Script Finished Succesfully!")
-input("\nPress enter to finish...")
+
+print("Finished Succesfully")
 

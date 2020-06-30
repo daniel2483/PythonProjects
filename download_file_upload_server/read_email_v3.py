@@ -8,8 +8,7 @@ import datetime as dt
 import goto
 import winrm
 import yaml
-import subprocess
-from smb.SMBConnection import SMBConnection
+
 
 date_time=dt.datetime.now()
 
@@ -34,9 +33,9 @@ except ValueError :
     isValidDate = False
     
 if(isValidDate) :
-    print ("\nInput date is valid ..")
+    print ("Input date is valid ..")
 else :
-    print ("\nInput date is not valid..")
+    print ("Input date is not valid..")
     #goto .begin
     sys.exit()
 
@@ -72,7 +71,7 @@ if (aldea_account == "no"):
 
 print("Is there an aldea account? " + aldea_account)
 
-print("\nAldea email: " + aldea_email)
+print("Aldea email: " + aldea_email)
 
 
 #print("Index of array " + str(index_email))
@@ -90,9 +89,7 @@ messages=inbox.Items
 ############################# Filtering emails
 
 counter = 0
-attachement_file_names = []
 
-print ("\nDownloading Files from Email:")
 for message in messages:
     index1 = message.Subject.find("Undeliverable")
     index2 = message.Subject.find("failed")
@@ -102,87 +99,40 @@ for message in messages:
         ### Get emails attachements from input date
         if (inputDate == message_date):
             counter = counter + 1
-            print(message.SentOn.strftime("%Y-%m-%d : ") + message.Subject)
+            print(message.SentOn.strftime("%Y-%m-%d") + message.Subject)
             attachments = message.Attachments
             for attachment in message.Attachments:
-                ### Downloading Files from Email
                 attachment.SaveAsFile(os.path.join(path, str(attachment)))
-                ### Store File Names in an array
-                attachement_file_names.append(str(attachment))
 
 print ("Processed " + str(counter) + " file(s)")
 
 
-############################# Reading config file
+############################# Sending files to remote server
 
-parameters = []
-remote_server = ""
-user=""
-passw=""
-domain=""
-
-
-### Reading YAML config file
+### Reading config file
 path_config = os.path.expanduser("~/Desktop/python/config.yaml")
 with open(path_config) as file:
     #config_list = yaml.load(file, Loader=yaml.FullLoader)
     documents = yaml.full_load(file)
     #print(config_list)
     for item, doc in documents.items():
-        #print ("Parameters: " + item + " : " + doc)
-        parameters.append(item + ":" + doc)
         if (item == "remote_server"):
-            remote_server = doc
+            remote_server = item
         if (item == "fqdn"):
-            fqdn = doc
+            fqdn = item
         if (item == "user"):
-            user = doc
-        if (item == "passw"):
-            passw = doc
-        if (item == "domain"):
-            domain = doc
-        if (item == "server_name"):
-            server_name = doc
-        if (item == "my_name"):
-            my_name = doc    
-            
+            user = item
+        #if (item == "pass"):
+        #    pass = str(item)
+        #    print(item, ":", doc)
+        #if (item == "domain"):
+        #    domain = item
+        #    print(item, ":", doc)
 
-print ("Connection to remote server: " + remote_server + " - " + fqdn)
-#print ("File Names to send: " + str(attachement_file_names[1]))
+print("Sending files to: " + remote_server + " - FQDN : " + fqdn)
 
-############################# Sending files to remote server
-
-### Stablished connection
-counter = 0
-conn = SMBConnection(user, passw, my_name, server_name, domain=domain, use_ntlm_v2=True,is_direct_tcp=True)
-
-print ("Connecting...")
-connected = conn.connect(remote_server, 445)
-print (connected)
-
-print ("\nStoring files...\n")
-
-for files in attachement_file_names:
-    
-    counter = counter + 1
-    name,type = files.split('.')
-    
-    print (str(counter) + "- Reading File: " + files + " | Type: " + type)
-    
-    file_name= path + files
-    print ("Path: " + file_name)
-    
-    # Read the file in binary mode
-    file2transfer = open(file_name,"rb")
-
-    conn.storeFileFromOffset('NSSR',"SP Files/" + files , file2transfer, offset=0, truncate=True, timeout=30)
-
-    file2transfer.close()
-
-print ("\nClosing connection...")
-conn.close()
+#remoteConn = winrm.Session('windows-host.example.com', auth=('john.smith', 'secret'))
 
 
-print("Script Finished Succesfully!")
-input("\nPress enter to finish...")
+print("Finished Succesfully")
 

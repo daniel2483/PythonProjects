@@ -123,7 +123,7 @@ domain=""
 
 
 ### Reading YAML config file
-path_config = os.path.expanduser("~/Desktop/python/config.yaml")
+path_config = "./config.yaml"
 with open(path_config) as file:
     #config_list = yaml.load(file, Loader=yaml.FullLoader)
     documents = yaml.full_load(file)
