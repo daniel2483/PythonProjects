@@ -1,7 +1,7 @@
-remote_server: 15.140.130.57
-fqdn: zc4w01283.itcs.houston.dxccorp.net
-user: x-jrodrigue
-passw: r5utBv:rlloi8nZ@arfdarpnm
-domain: ssz
-server_name: zc4w01283
-my_name: CR5CG8398W7C
+remote_server: server_ip
+fqdn: server_fqdn
+user: username
+passw: password
+domain: domain
+server_name: hostname
+my_name: pc_computer_name
