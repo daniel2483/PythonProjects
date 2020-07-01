@@ -11,11 +11,11 @@ import yaml
 import subprocess
 from smb.SMBConnection import SMBConnection
 
-date_time=dt.datetime.now()
+date_time_start=dt.datetime.now()
 
 
 
-print ("Script start at: " + str(date_time))
+print ("Script started at: " + str(date_time_start.strftime("%Y-%m-%d %H:%M:%S")))
 
 ############################# Ask for the date the files are going to process
 #label .begin
@@ -38,6 +38,7 @@ if(isValidDate) :
 else :
     print ("\nInput date is not valid..")
     #goto .begin
+    input ("\nPlease press enter and try again...")
     sys.exit()
 
 ############################# Setting path where locate attachements
@@ -150,7 +151,7 @@ with open(path_config) as file:
 print ("Connection to remote server: " + remote_server + " - " + fqdn)
 #print ("File Names to send: " + str(attachement_file_names[1]))
 
-############################# Sending files to remote server
+############################# Sending files to remote server, but first check if the file already exists
 
 ### Stablished connection
 counter = 0
@@ -175,14 +176,35 @@ for files in attachement_file_names:
     # Read the file in binary mode
     file2transfer = open(file_name,"rb")
 
-    conn.storeFileFromOffset('NSSR',"SP Files/" + files , file2transfer, offset=0, truncate=True, timeout=30)
+    conn.storeFileFromOffset('NSSR','SP Files/' + files , file2transfer, offset=0, truncate=False, timeout=30)
 
     file2transfer.close()
+
+# Listing remote Share Directory
+print ("Listing Remote Share Directory")
+conn.listPath('NSSR', 'SP Files/', pattern='*', timeout=30)
 
 print ("\nClosing connection...")
 conn.close()
 
 
-print("Script Finished Succesfully!")
-input("\nPress enter to finish...")
+print("Script Finished Succesfully!\n\n")
+
+
+############################# Getting the Elapse Time
+
+date_time_end=dt.datetime.now()
+
+print ("Script finished at: " + str(date_time_end.strftime("%Y-%m-%d %H:%M:%S")))
+
+date = dt.date(1, 1, 1)
+datetime1 = dt.datetime.combine(date, date_time_start.time())
+datetime2 = dt.datetime.combine(date, date_time_end.time())
+
+time_elapse = datetime2 - datetime1
+
+print ("Time Duration: " + str(time_elapse))
+
+input("\n*************************\nPress enter to finish...")
+
 
