@@ -9,19 +9,28 @@ import goto
 import winrm
 import yaml
 import subprocess
+import shutil
 from smb.SMBConnection import SMBConnection
 
 date_time_start=dt.datetime.now()
 
+argument = (sys.argv[1])
 
+############################# Help list to use this script
+
+#print (arguments)
+
+if ( argument == "-h"):
+    print ("*************Usage Guide************\n\n")
+    input ("Press enter to continue...")
+    sys.exit()
+    
 
 print ("Script started at: " + str(date_time_start.strftime("%Y-%m-%d %H:%M:%S")))
 
 ############################# Ask for the date the files are going to process
 #label .begin
 inputDate=input ("Enter a date with format YYYY-MM-DD: ")
-
-
 
 
 ############################# Check if is a valid date
@@ -43,6 +52,14 @@ else :
 
 ############################# Setting path where locate attachements
 path = os.path.expanduser("~/Desktop/NSSR/")
+
+############################# Clearing the local directory
+#shutil.rmtree(os.path.expanduser("~/Desktop/NSSR/")) 
+for filename in os.listdir(path):
+    print (filename)
+    os.remove(path + filename)
+    print ("Deleted: " + str(filename))
+    
     
  
 ############################# Reading Email
@@ -148,6 +165,7 @@ with open(path_config) as file:
             my_name = doc    
             
 
+print ("\n################## Remote Windows Connection ##################")
 print ("Connection to remote server: " + remote_server + " - " + fqdn)
 #print ("File Names to send: " + str(attachement_file_names[1]))
 
@@ -159,7 +177,7 @@ conn = SMBConnection(user, passw, my_name, server_name, domain=domain, use_ntlm_
 
 print ("Connecting...")
 connected = conn.connect(remote_server, 445)
-print (connected)
+print ("Is connection stablished? " + str(connected))
 
 print ("\nStoring files...\n")
 
@@ -176,20 +194,27 @@ for files in attachement_file_names:
     # Read the file in binary mode
     file2transfer = open(file_name,"rb")
 
-    conn.storeFileFromOffset('NSSR','SP Files/' + files , file2transfer, offset=0, truncate=False, timeout=30)
+    #conn.storeFileFromOffset('NSSR','SP Files/' + files , file2transfer, offset=0, truncate=False, timeout=30)
 
     file2transfer.close()
+    
+print ("\nClosing connection...")
+
+    
+############################# Deleting downloaded local files
+
+print ("\n\nDeleting Local Files:")
+for files in attachement_file_names:
+    print ("Deleting: " + files)
+    os.remove(path + files)
 
 # Listing remote Share Directory
 print ("Listing Remote Share Directory")
 conn.listPath('NSSR', 'SP Files/', pattern='*', timeout=30)
 
-print ("\nClosing connection...")
-conn.close()
-
-
 print("Script Finished Succesfully!\n\n")
 
+conn.close()
 
 ############################# Getting the Elapse Time
 
@@ -203,8 +228,7 @@ datetime2 = dt.datetime.combine(date, date_time_end.time())
 
 time_elapse = datetime2 - datetime1
 
-print ("Time Duration: " + str(time_elapse))
+print ("\nElapse Time: " + str(time_elapse))
 
 input("\n*************************\nPress enter to finish...")
-
 
