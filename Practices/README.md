@@ -10,3 +10,7 @@ This repository contains simple exmples on python language (Using Python 3)
 3. Example for loading progress bar: [Script](./progress_bar.py)
 
 4. Example for Downloading attachement files from inbox outlook account [Script](./download_email_v1.py)
+
+5. Example for Sending Emails (using [mailtrap](https://mailtrap.io) for testing) [Script](./send_email_smtp.py)
+
+6. Example for Sending Emails using Gmail SMTP Server [Script](./send_email_smtp_gmail_account.py)
