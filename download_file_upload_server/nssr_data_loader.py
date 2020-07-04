@@ -14,23 +14,62 @@ from smb.SMBConnection import SMBConnection
 
 date_time_start=dt.datetime.now()
 
-argument = (sys.argv[1])
+############################# Help Usage message function
+def HelpMessage():
+        print ("\n*************Usage Guide************\n\n")
+        print (" Description: This script is inteded to Load Data into NSSR Share Directory for OC Platform\n\n")
+        print (" Usage:\n")
+        print (" python nssr_data_loader.py\t\t\tThis will ask in prompt for a particular date with the following format YYYY-MM-DD")
+        print (" python nssr_data_loader.py -d YYYY-MM-DD\tAdding date Argument to start download for a particular date with YYYY-MM-DD format\n\n")
+        #input ("Press enter to continue...")
+        sys.exit()
 
-############################# Help list to use this script
+
+arguments = (sys.argv)
+
+############################# Help Guide to use this script and Date option
 
 #print (arguments)
+counter_arg = 0
+date_arg = ""
+date_arg_flag = "False"
 
-if ( argument == "-h"):
-    print ("*************Usage Guide************\n\n")
-    input ("Press enter to continue...")
-    sys.exit()
+for arg in arguments:
+    if ( arg == "-h"):
+        HelpMessage()
+    if ( arg == "-d"):
+        next_arg = counter_arg + 1
+        try:
+            date_arg = arguments[next_arg]
+            date_arg_flag = "True"
+            
+            ### Check Date argument format. 3 values split by -
+            
+            date_arg_chk = date_arg.split("-")
+            date_arg_length = len(date_arg_chk)
+
+            if (date_arg_length != 3):
+                print ("\nDate Argument has incorrect Format Try again..\n\n")
+                HelpMessage()
+            
+            print ("Processing Data from: " + str(arguments[next_arg]))
+        except IndexError:
+            print ("\nMissing Date value...")
+            HelpMessage()
+    counter_arg = counter_arg + 1
+
+
+
     
-
+# Printing start datetime of execution
 print ("Script started at: " + str(date_time_start.strftime("%Y-%m-%d %H:%M:%S")))
 
-############################# Ask for the date the files are going to process
-#label .begin
-inputDate=input ("Enter a date with format YYYY-MM-DD: ")
+############################# Ask for the date the files are going to process or Use arguments
+
+if (date_arg_flag == "True"):
+    inputDate = date_arg
+else:
+    inputDate=input ("Enter a date with format YYYY-MM-DD: ")
 
 
 ############################# Check if is a valid date
@@ -45,10 +84,10 @@ except ValueError :
 if(isValidDate) :
     print ("\nInput date is valid ..")
 else :
-    print ("\nInput date is not valid..")
-    #goto .begin
-    input ("\nPlease press enter and try again...")
-    sys.exit()
+    print ("\nInput date has incorrect Date Format Try again..\n\n")
+    HelpMessage()
+    #input ("\nPlease press enter and try again...")
+    #sys.exit()
 
 ############################# Setting path where locate attachements
 path = os.path.expanduser("~/Desktop/NSSR/")
@@ -194,7 +233,7 @@ for files in attachement_file_names:
     # Read the file in binary mode
     file2transfer = open(file_name,"rb")
 
-    #conn.storeFileFromOffset('NSSR','SP Files/' + files , file2transfer, offset=0, truncate=False, timeout=30)
+    conn.storeFileFromOffset('NSSR','SP Files/' + files , file2transfer, offset=0, truncate=False, timeout=30)
 
     file2transfer.close()
     
@@ -231,4 +270,6 @@ time_elapse = datetime2 - datetime1
 print ("\nElapse Time: " + str(time_elapse))
 
 input("\n*************************\nPress enter to finish...")
+
+
 
