@@ -11,23 +11,35 @@ import yaml
 import subprocess
 import shutil
 from smb.SMBConnection import SMBConnection
+from pathlib import Path
 
 date_time_start=dt.datetime.now()
+
+#####################################################################
+#                              Functions                            #
+#####################################################################
 
 ############################# Help Usage message function
 def HelpMessage():
         print ("\n*************Usage Guide************\n\n")
         print (" Description: This script is inteded to Load Data into NSSR Share Directory for OC Platform\n\n")
         print (" Usage:\n")
-        print (" python nssr_data_loader.py\t\t\tThis will ask in prompt for a particular date with the following format YYYY-MM-DD")
-        print (" python nssr_data_loader.py -d YYYY-MM-DD\tAdding date Argument to start download for a particular date with YYYY-MM-DD format\n\n")
+        print (" nssr_data_loader.py -h\t\t\tThis will show help usage guide")
+        print (" nssr_data_loader.py\t\t\tThis will ask in prompt for a particular date with the following format YYYY-MM-DD")
+        print (" nssr_data_loader.py -d YYYY-MM-DD\tAdding date Argument to start download for a particular date with YYYY-MM-DD format\n\n")
         #input ("Press enter to continue...")
         sys.exit()
 
 
-arguments = (sys.argv)
+
+
+#####################################################################
+#                              Main                                 #
+#####################################################################
 
 ############################# Help Guide to use this script and Date option
+
+arguments = (sys.argv)
 
 #print (arguments)
 counter_arg = 0
@@ -132,8 +144,6 @@ print("Is there an aldea account? " + aldea_account)
 print("\nAldea email: " + aldea_email)
 
 
-#print("Index of array " + str(index_email))
-
 ############################# Reading aldea email inbox
 inbox = outlook.Folders(aldea_email).Folders('Inbox')
 
@@ -223,11 +233,13 @@ print ("\nStoring files...\n")
 for files in attachement_file_names:
     
     counter = counter + 1
-    name,type = files.split('.')
-    
-    print (str(counter) + "- Reading File: " + files + " | Type: " + type)
-    
     file_name= path + files
+    
+    name,type = files.split('.')
+    file_size = Path(file_name).stat().st_size
+    print (str(counter) + "- Reading File: " + files + " | Type: " + type + " | Size: " + str(file_size) + " bytes")
+    
+    
     print ("Path: " + file_name)
     
     # Read the file in binary mode
