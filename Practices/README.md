@@ -1,3 +1,6 @@
 # Practices
 
-This repository contains simple practices on python language
+
+This repository contains simple exmples on python language (Using Python 3)
+
+1. 
