@@ -1,4 +1,4 @@
-![Python Logo](./images/python_logo.jpg)
+![Python Logo](./images/python_logo.png)
 
 # Python 3 - Examples
 
