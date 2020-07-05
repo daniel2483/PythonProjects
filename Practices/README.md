@@ -1,4 +1,4 @@
-![Python Logo](./images/python_logo.png)
+<img src="./images/python_logo.png" width=150>
 
 # Python 3 - Examples
 
