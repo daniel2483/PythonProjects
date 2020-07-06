@@ -18,3 +18,5 @@ This repository contains simple exmples on python language (Using Python 3)
 6. Example for Sending Emails (using [mailtrap](https://mailtrap.io) for testing) [Script](./send_email_smtp.py)
 
 7. Example for Sending Emails using Gmail SMTP Server [Script](./send_email_smtp_gmail_account.py)
+
+8. Example of simple calculator (sm,subs,div and mult) [Script](./simple_calculator.py)
