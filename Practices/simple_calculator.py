@@ -2,6 +2,7 @@
 #    Creator: Jose Daniel Rodriguez Sanchez
 
 import sys
+import math
 
 def menu():
     ########## Menu
@@ -19,18 +20,23 @@ def menu():
     print ("\t3. Presiona esta opcion para multiplicar dos numeros.")
     print ("\t4. Presiona esta opcion para dividir dos numeros.")
     print ("\t5. Presiona esta opcion para dsacar la potencia de valor1^valor2.")
-    print ("\t6. Presiona esta opcion para salir del programa.")
+    print ("\t6. Presiona esta opcion para optener factorial de un numero.")
+    print ("\t7. Presiona esta opcion para salir del programa.")
 
     print ("\n\n\tSelecciona una opcion de arriba...")
     opcion = input ("\n\tIngresa la operacion: ")
 
     # Salir
-    if (str(opcion) == "6"):
+    if (str(opcion) == "7"):
         salir()
         sys.exit()
 
     num1 = input ("\tEl valor 1: ")
-    num2 = input ("\tEl valor 2: ")
+    
+    if (str(opcion) != "6"):
+        num2 = input ("\tEl valor 2: ")
+    else:
+        num2=0
     
     return opcion,num1,num2
     
@@ -55,7 +61,10 @@ def operacion(opcion,num1,num2):
     # Potencia
     elif (str(opcion) == "5"):
         pot(num1,num2)
-        
+    
+    # Factorial
+    elif (str(opcion) == "6"):
+        fac(num1)
 
     # Mensaje Error
     else:
@@ -99,7 +108,14 @@ def pot(number1,number2):
     input("\n\tPresione enter para realizar otra operacion")
     opcion,num1,num2 = menu()
     operacion(opcion,num1,num2)
-    
+
+def fac(number1):
+    mul_result = math.factorial(int(number1))
+    print ("\n\tFactorial: " + str(number1) + "! = " + str(mul_result))
+    input("\n\tPresione enter para realizar otra operacion")
+    opcion,num1,num2 = menu()
+    operacion(opcion,num1,num2)
+
 def salir():
     print ("\n\tSaliendo de la aplicacion")
     
