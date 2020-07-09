@@ -19,7 +19,7 @@ def menu():
     print ("\t2. Presiona esta opcion para restar dos numeros.")
     print ("\t3. Presiona esta opcion para multiplicar dos numeros.")
     print ("\t4. Presiona esta opcion para dividir dos numeros.")
-    print ("\t5. Presiona esta opcion para dsacar la potencia de valor1^valor2.")
+    print ("\t5. Presiona esta opcion para sacar la potencia de valor1^valor2.")
     print ("\t6. Presiona esta opcion para optener factorial de un numero.")
     print ("\t7. Presiona esta opcion para salir del programa.")
 
