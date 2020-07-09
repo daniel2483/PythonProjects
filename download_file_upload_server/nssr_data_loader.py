@@ -54,16 +54,16 @@ for arg in arguments:
         try:
             date_arg = arguments[next_arg]
             date_arg_flag = "True"
-            
+
             ### Check Date argument format. 3 values split by -
-            
+
             date_arg_chk = date_arg.split("-")
             date_arg_length = len(date_arg_chk)
 
             if (date_arg_length != 3):
                 print ("\nDate Argument has incorrect Format Try again..\n\n")
                 HelpMessage()
-            
+
             print ("Processing Data from: " + str(arguments[next_arg]))
         except IndexError:
             print ("\nMissing Date value...")
@@ -72,7 +72,7 @@ for arg in arguments:
 
 
 
-    
+
 # Printing start datetime of execution
 print ("Script started at: " + str(date_time_start.strftime("%Y-%m-%d %H:%M:%S")))
 
@@ -84,6 +84,7 @@ else:
     inputDate=input ("Enter a date with format YYYY-MM-DD: ")
 
 
+
 ############################# Check if is a valid date
 year,month,day = inputDate.split('-')
 isValidDate = True
@@ -92,27 +93,35 @@ try :
     date_to_process = dt.datetime(int(year),int(month),int(day))
 except ValueError :
     isValidDate = False
-    
+
 if(isValidDate) :
-    print ("\nInput date is valid ..")
+    print ("\nInput date is valid ..\n")
 else :
     print ("\nInput date has incorrect Date Format Try again..\n\n")
     HelpMessage()
     #input ("\nPlease press enter and try again...")
     #sys.exit()
 
-############################# Setting path where locate attachements
+############################# Setting path where locate attachements and check if NSSR directoy exists on Desktop
+
 path = os.path.expanduser("~/Desktop/NSSR/")
+isDirectory = os.path.isdir(path)
+
+print ("Checking if " + str(path) + " exists: " + str(isDirectory))
+
+if (isDirectory == False):
+    print ("\nCreating Local Directory " + str(path) + "\n\n")
+    os.mkdir(path)
 
 ############################# Clearing the local directory
-#shutil.rmtree(os.path.expanduser("~/Desktop/NSSR/")) 
+#shutil.rmtree(os.path.expanduser("~/Desktop/NSSR/"))
 for filename in os.listdir(path):
     print (filename)
     os.remove(path + filename)
     print ("Deleted: " + str(filename))
-    
-    
- 
+
+
+
 ############################# Reading Email
 
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
@@ -211,8 +220,8 @@ with open(path_config) as file:
         if (item == "server_name"):
             server_name = doc
         if (item == "my_name"):
-            my_name = doc    
-            
+            my_name = doc
+
 
 print ("\n################## Remote Windows Connection ##################")
 print ("Connection to remote server: " + remote_server + " - " + fqdn)
@@ -231,27 +240,27 @@ print ("Is connection stablished? " + str(connected))
 print ("\nStoring files...\n")
 
 for files in attachement_file_names:
-    
+
     counter = counter + 1
     file_name= path + files
-    
+
     name,type = files.split('.')
     file_size = Path(file_name).stat().st_size
     print (str(counter) + "- Reading File: " + files + " | Type: " + type + " | Size: " + str(file_size) + " bytes")
-    
-    
+
+
     print ("Path: " + file_name)
-    
+
     # Read the file in binary mode
     file2transfer = open(file_name,"rb")
 
     conn.storeFileFromOffset('NSSR','SP Files/' + files , file2transfer, offset=0, truncate=False, timeout=30)
 
     file2transfer.close()
-    
+
 print ("\nClosing connection...")
 
-    
+
 ############################# Deleting downloaded local files
 
 print ("\n\nDeleting Local Files:")
@@ -260,8 +269,8 @@ for files in attachement_file_names:
     os.remove(path + files)
 
 # Listing remote Share Directory
-print ("Listing Remote Share Directory")
-conn.listPath('NSSR', 'SP Files/', pattern='*', timeout=30)
+#print ("Listing Remote Share Directory")
+#conn.listPath('NSSR', 'SP Files/', pattern='*', timeout=30)
 
 print("Script Finished Succesfully!\n\n")
 
@@ -282,6 +291,3 @@ time_elapse = datetime2 - datetime1
 print ("\nElapse Time: " + str(time_elapse))
 
 input("\n*************************\nPress enter to finish...")
-
-
-
