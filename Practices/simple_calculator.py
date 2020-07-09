@@ -19,22 +19,24 @@ def menu():
     print ("\t2. Presiona esta opcion para restar dos numeros.")
     print ("\t3. Presiona esta opcion para multiplicar dos numeros.")
     print ("\t4. Presiona esta opcion para dividir dos numeros.")
-    print ("\t5. Presiona esta opcion para optener el residido de la division de dos numeros.")
-    print ("\t6. Presiona esta opcion para sacar la potencia de valor1^valor2.")
-    print ("\t7. Presiona esta opcion para optener factorial de un numero.")
-    print ("\t8. Presiona esta opcion para salir del programa.")
+    print ("\t5. Presiona esta opcion para optener el residuo de la division de dos numeros.")
+    print ("\t6. Presiona esta opcion para optener la parte entera de la division.")
+    print ("\t7. Presiona esta opcion para sacar la potencia de valor1^valor2.")
+    print ("\t8. Presiona esta opcion para optener factorial de un numero.")
+    print ("\t9. Presiona esta opcion para salir del programa.")
 
     print ("\n\n\tSelecciona una opcion de arriba...")
     opcion = input ("\n\tIngresa la operacion: ")
 
     # Salir
-    if (str(opcion) == "8"):
+    if (str(opcion) == "9"):
         salir()
         sys.exit()
 
     num1 = input ("\tEl valor 1: ")
     
-    if (str(opcion) != "6"):
+    ### Para Calculo de Facorial, solo se necesita un numero
+    if (str(opcion) != "8"):
         num2 = input ("\tEl valor 2: ")
     else:
         num2=0
@@ -63,12 +65,16 @@ def operacion(opcion,num1,num2):
     elif (str(opcion) == "5"):
         res(num1,num2)
         
-    # Potencia
+    # Parte entera
     elif (str(opcion) == "6"):
+        floor(num1,num2)
+        
+    # Potencia
+    elif (str(opcion) == "7"):
         pot(num1,num2)
     
     # Factorial
-    elif (str(opcion) == "7"):
+    elif (str(opcion) == "8"):
         fac(num1)
 
     # Mensaje Error
@@ -110,6 +116,13 @@ def mult(number1,number2):
 def res(number1,number2):
     res_result = float(number1) % float(number2)
     print ("\n\tSuma: " + str(number1) + " % " + str(number2) + " = " + str(res_result))
+    input("\n\tPresione enter para realizar otra operacion")
+    opcion,num1,num2 = menu()
+    operacion(opcion,num1,num2)
+    
+def floor(number1,number2):
+    floor_result = int(number1) // int(number2)
+    print ("\n\tParte entera: " + str(number1) + " / " + str(number2) + " = " + str(floor_result))
     input("\n\tPresione enter para realizar otra operacion")
     opcion,num1,num2 = menu()
     operacion(opcion,num1,num2)
