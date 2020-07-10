@@ -27,14 +27,15 @@ def HelpMessage():
         print (" nssr_data_loader.py -h\t\t\tThis will show help usage guide")
         print (" nssr_data_loader.py\t\t\tThis will ask in prompt for a particular date with the following format YYYY-MM-DD")
         print (" nssr_data_loader.py -d YYYY-MM-DD\tAdding date Argument to start download for a particular date with YYYY-MM-DD format\n\n")
+        print (" nssr_data_loader.py -t\t\t\tThis will do the import of the current day\n\n")
         #input ("Press enter to continue...")
         sys.exit()
 
 
-def DownloadingFiles (messages):
+def DownloadingFiles (messages,unread):
     counter = 0
     for message in messages:
-        
+
         index1 = message.Subject.find("Undeliverable")
         index2 = message.Subject.find("failed")
         ### Skip incorrect emails subjects
@@ -50,6 +51,7 @@ def DownloadingFiles (messages):
                     attachment.SaveAsFile(os.path.join(path, str(attachment)))
                     ### Store File Names in an array
                     attachement_file_names.append(str(attachment))
+                message.Unread = False
     return counter
 
 
@@ -58,6 +60,9 @@ def DownloadingFiles (messages):
 #####################################################################
 
 ############################# Help Guide to use this script and Date option
+
+# Printing start datetime of execution
+print ("Script started at: " + str(date_time_start.strftime("%Y-%m-%d %H:%M:%S")))
 
 arguments = (sys.argv)
 
@@ -88,18 +93,25 @@ for arg in arguments:
         except IndexError:
             print ("\nMissing Date value...")
             HelpMessage()
+    if ( arg == "-t"):
+        print("Downloading Emails from Today")
+    #else:
+        #print ("Please enter a correct arguments..\n")
+        #HelpMessage()
+
     counter_arg = counter_arg + 1
 
-
-
-
-# Printing start datetime of execution
-print ("Script started at: " + str(date_time_start.strftime("%Y-%m-%d %H:%M:%S")))
 
 ############################# Ask for the date the files are going to process or Use arguments
 
 if (date_arg_flag == "True"):
     inputDate = date_arg
+elif (arg == "-t"):
+    # YYYY-MM-DD
+    today = dt.date.today()
+    inputDate = today.strftime("%Y-%m-%d")
+    print ("Today is: " + inputDate)
+
 else:
     inputDate=input ("Enter a date with format YYYY-MM-DD: ")
 
@@ -189,13 +201,13 @@ messages_outlook=inbox.Items
 
 attachement_file_names = []
 
-counter = DownloadingFiles(messages_outlook)
+counter = DownloadingFiles(messages_outlook,True)
 
 if (counter == 0):
     print("\nChecking on Deleted Folder...")
     deleted = outlook.Folders(aldea_email).Folders('Deleted Items')
     messages_outlook=deleted.Items
-    counter = DownloadingFiles(messages_outlook)
+    counter = DownloadingFiles(messages_outlook,True)
 
 print ("Processed " + str(counter) + " file(s)")
 
