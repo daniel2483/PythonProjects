@@ -24,10 +24,11 @@ def HelpMessage():
         print ("\n*************Usage Guide************\n\n")
         print (" Description: This script is inteded to Load Data into NSSR Share Directory for OC Platform\n\n")
         print (" Usage:\n")
-        print (" nssr_data_loader.py -h\t\t\tThis will show help usage guide")
         print (" nssr_data_loader.py\t\t\tThis will ask in prompt for a particular date with the following format YYYY-MM-DD")
-        print (" nssr_data_loader.py -d YYYY-MM-DD\tAdding date Argument to start download for a particular date with YYYY-MM-DD format\n\n")
-        print (" nssr_data_loader.py -t\t\t\tThis will do the import of the current day\n\n")
+        print (" nssr_data_loader.py [-h]\t\tThis will show help usage guide")
+        print (" nssr_data_loader.py [-d YYYY-MM-DD]\tAdding date Argument to start download for a particular date with YYYY-MM-DD format")
+        print (" nssr_data_loader.py [-t]\t\tThis will do the import of the current day\n\n")
+        print (" nssr_data_loader.py [-a]\t\tThis can be use to doanload all the attach files from a day (no matter if is read or unread)\n\n")
         #input ("Press enter to continue...")
         sys.exit()
 
@@ -35,23 +36,41 @@ def HelpMessage():
 def DownloadingFiles (messages,unread):
     counter = 0
     for message in messages:
-
-        index1 = message.Subject.find("Undeliverable")
-        index2 = message.Subject.find("failed")
-        ### Skip incorrect emails subjects
-        if (index1 == -1 ):
-            message_date = message.SentOn.strftime("%Y-%m-%d")
-            ### Get emails attachements from input date
-            if (inputDate == message_date):
-                counter = counter + 1
-                print(message.SentOn.strftime("%Y-%m-%d : ") + message.Subject)
-                attachments = message.Attachments
-                for attachment in message.Attachments:
-                    ### Downloading Files from Email
-                    attachment.SaveAsFile(os.path.join(path, str(attachment)))
-                    ### Store File Names in an array
-                    attachement_file_names.append(str(attachment))
-                message.Unread = False
+        if (unread == True & message.Unread == False):
+            index1 = message.Subject.find("Undeliverable")
+            index2 = message.Subject.find("failed")
+            ### Skip incorrect emails subjects
+            if (index1 == -1 ):
+                message_date = message.SentOn.strftime("%Y-%m-%d")
+                ### Get emails attachements from input date
+                if (inputDate == message_date):
+                    counter = counter + 1
+                    print(message.SentOn.strftime("%Y-%m-%d : ") + message.Subject)
+                    attachments = message.Attachments
+                    for attachment in message.Attachments:
+                        ### Downloading Files from Email
+                        attachment.SaveAsFile(os.path.join(path, str(attachment)))
+                        ### Store File Names in an array
+                        attachement_file_names.append(str(attachment))
+                    message.Unread = False
+        elif (unread == False):
+                index1 = message.Subject.find("Undeliverable")
+                index2 = message.Subject.find("failed")
+                ### Skip incorrect emails subjects
+                if (index1 == -1 ):
+                    message_date = message.SentOn.strftime("%Y-%m-%d")
+                    ### Get emails attachements from input date
+                    if (inputDate == message_date):
+                        counter = counter + 1
+                        print(message.SentOn.strftime("%Y-%m-%d : ") + message.Subject)
+                        attachments = message.Attachments
+                        for attachment in message.Attachments:
+                            ### Downloading Files from Email
+                            attachment.SaveAsFile(os.path.join(path, str(attachment)))
+                            ### Store File Names in an array
+                            attachement_file_names.append(str(attachment))
+    if (counter == 0):
+        print ("\n++++++++++++ There is no email to download +++++++++++++++++\n")
     return counter
 
 
@@ -69,7 +88,9 @@ arguments = (sys.argv)
 #print (arguments)
 counter_arg = 0
 date_arg = ""
-date_arg_flag = "False"
+date_arg_flag = 0
+today_arg_flag = 0
+read_unread_arg_flag = True
 
 for arg in arguments:
     if ( arg == "-h"):
@@ -78,7 +99,7 @@ for arg in arguments:
         next_arg = counter_arg + 1
         try:
             date_arg = arguments[next_arg]
-            date_arg_flag = "True"
+            date_arg_flag = 1
 
             ### Check Date argument format. 3 values split by -
 
@@ -94,7 +115,10 @@ for arg in arguments:
             print ("\nMissing Date value...")
             HelpMessage()
     if ( arg == "-t"):
+        today_arg_flag = 1
         print("Downloading Emails from Today")
+    if (arg == "-a"):
+        read_unread_arg_flag = False
     #else:
         #print ("Please enter a correct arguments..\n")
         #HelpMessage()
@@ -104,9 +128,9 @@ for arg in arguments:
 
 ############################# Ask for the date the files are going to process or Use arguments
 
-if (date_arg_flag == "True"):
+if (date_arg_flag == 1):
     inputDate = date_arg
-elif (arg == "-t"):
+elif (today_arg_flag == 1):
     # YYYY-MM-DD
     today = dt.date.today()
     inputDate = today.strftime("%Y-%m-%d")
@@ -201,13 +225,13 @@ messages_outlook=inbox.Items
 
 attachement_file_names = []
 
-counter = DownloadingFiles(messages_outlook,True)
+counter = DownloadingFiles(messages_outlook,read_unread_arg_flag)
 
 if (counter == 0):
     print("\nChecking on Deleted Folder...")
     deleted = outlook.Folders(aldea_email).Folders('Deleted Items')
     messages_outlook=deleted.Items
-    counter = DownloadingFiles(messages_outlook,True)
+    counter = DownloadingFiles(messages_outlook,read_unread_arg_flag)
 
 print ("Processed " + str(counter) + " file(s)")
 
@@ -245,43 +269,44 @@ with open(path_config) as file:
         if (item == "my_name"):
             my_name = doc
 
+if (counter != 0):
+    print ("\n################## Remote Windows Connection ##################")
+    print ("Connection to remote server: " + remote_server + " - " + fqdn)
+    #print ("File Names to send: " + str(attachement_file_names[1]))
 
-print ("\n################## Remote Windows Connection ##################")
-print ("Connection to remote server: " + remote_server + " - " + fqdn)
-#print ("File Names to send: " + str(attachement_file_names[1]))
+    ############################# Sending files to remote server, but first check if the file already exists
 
-############################# Sending files to remote server, but first check if the file already exists
+    ### Stablished connection
+    counter = 0
+    conn = SMBConnection(user, passw, my_name, server_name, domain=domain, use_ntlm_v2=True,is_direct_tcp=True)
 
-### Stablished connection
-counter = 0
-conn = SMBConnection(user, passw, my_name, server_name, domain=domain, use_ntlm_v2=True,is_direct_tcp=True)
+    print ("Connecting...")
+    connected = conn.connect(remote_server, 445)
+    print ("Is connection stablished? " + str(connected))
 
-print ("Connecting...")
-connected = conn.connect(remote_server, 445)
-print ("Is connection stablished? " + str(connected))
+    print ("\nStoring files...\n")
 
-print ("\nStoring files...\n")
+    for files in attachement_file_names:
 
-for files in attachement_file_names:
+        counter = counter + 1
+        file_name= path + files
 
-    counter = counter + 1
-    file_name= path + files
-
-    name,type = files.split('.')
-    file_size = Path(file_name).stat().st_size
-    print (str(counter) + "- Reading File: " + files + " | Type: " + type + " | Size: " + str(file_size) + " bytes")
+        name,type = files.split('.')
+        file_size = Path(file_name).stat().st_size
+        print (str(counter) + "- Reading File: " + files + " | Type: " + type + " | Size: " + str(file_size) + " bytes")
 
 
-    print ("Path: " + file_name)
+        print ("Path: " + file_name)
 
-    # Read the file in binary mode
-    file2transfer = open(file_name,"rb")
+        # Read the file in binary mode
+        file2transfer = open(file_name,"rb")
 
-    conn.storeFileFromOffset('NSSR','SP Files/' + files , file2transfer, offset=0, truncate=False, timeout=30)
+        conn.storeFileFromOffset('NSSR','SP Files/' + files , file2transfer, offset=0, truncate=False, timeout=30)
 
-    file2transfer.close()
+        file2transfer.close()
 
-print ("\nClosing connection...")
+    print ("\nClosing connection...")
+    conn.close()
 
 
 ############################# Deleting downloaded local files
@@ -297,7 +322,6 @@ for files in attachement_file_names:
 
 print("Script Finished Succesfully!\n\n")
 
-conn.close()
 
 ############################# Getting the Elapse Time
 
@@ -313,4 +337,6 @@ time_elapse = datetime2 - datetime1
 
 print ("\nElapse Time: " + str(time_elapse))
 
-input("\n*************************\nPress enter to finish...")
+print("\n*************************\nEnd..")
+
+#input("\n*************************\nPress enter to finish...")
