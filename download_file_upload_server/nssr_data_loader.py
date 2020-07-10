@@ -31,6 +31,26 @@ def HelpMessage():
         sys.exit()
 
 
+def DownloadingFiles (messages):
+    counter = 0
+    for message in messages:
+        
+        index1 = message.Subject.find("Undeliverable")
+        index2 = message.Subject.find("failed")
+        ### Skip incorrect emails subjects
+        if (index1 == -1 ):
+            message_date = message.SentOn.strftime("%Y-%m-%d")
+            ### Get emails attachements from input date
+            if (inputDate == message_date):
+                counter = counter + 1
+                print(message.SentOn.strftime("%Y-%m-%d : ") + message.Subject)
+                attachments = message.Attachments
+                for attachment in message.Attachments:
+                    ### Downloading Files from Email
+                    attachment.SaveAsFile(os.path.join(path, str(attachment)))
+                    ### Store File Names in an array
+                    attachement_file_names.append(str(attachment))
+    return counter
 
 
 #####################################################################
@@ -153,10 +173,12 @@ print("Is there an aldea account? " + aldea_account)
 print("\nAldea email: " + aldea_email)
 
 
-############################# Reading aldea email inbox
+############################# Checking inbox first - Reading aldea email inbox
 inbox = outlook.Folders(aldea_email).Folders('Inbox')
 
-messages=inbox.Items
+print("\nChecking on Inbox Folder First...")
+
+messages_outlook=inbox.Items
 #message = messages.GetLast()
 #body_content = message.body
 #subject_content = message.Subject
@@ -165,26 +187,15 @@ messages=inbox.Items
 
 ############################# Filtering emails
 
-counter = 0
 attachement_file_names = []
 
-print ("\nDownloading Files from Email:")
-for message in messages:
-    index1 = message.Subject.find("Undeliverable")
-    index2 = message.Subject.find("failed")
-    ### Skip incorrect emails subjects
-    if (index1 == -1 ):
-        message_date = message.SentOn.strftime("%Y-%m-%d")
-        ### Get emails attachements from input date
-        if (inputDate == message_date):
-            counter = counter + 1
-            print(message.SentOn.strftime("%Y-%m-%d : ") + message.Subject)
-            attachments = message.Attachments
-            for attachment in message.Attachments:
-                ### Downloading Files from Email
-                attachment.SaveAsFile(os.path.join(path, str(attachment)))
-                ### Store File Names in an array
-                attachement_file_names.append(str(attachment))
+counter = DownloadingFiles(messages_outlook)
+
+if (counter == 0):
+    print("\nChecking on Deleted Folder...")
+    deleted = outlook.Folders(aldea_email).Folders('Deleted Items')
+    messages_outlook=deleted.Items
+    counter = DownloadingFiles(messages_outlook)
 
 print ("Processed " + str(counter) + " file(s)")
 
