@@ -21,14 +21,15 @@ date_time_start=dt.datetime.now()
 
 ############################# Help Usage message function
 def HelpMessage():
-        print ("\n*************Usage Guide************\n\n")
-        print (" Description: This script is inteded to Load Data into NSSR Share Directory for OC Platform\n\n")
+        print ("*************Usage Guide************\n\n")
+        print (" Description: This script is inteded to Load Data into NSSR Share Directory for OC Platform\n")
         print (" Usage:\n")
         print (" nssr_data_loader.py\t\t\tThis will ask in prompt for a particular date with the following format YYYY-MM-DD")
         print (" nssr_data_loader.py [-h]\t\tThis will show help usage guide")
         print (" nssr_data_loader.py [-d YYYY-MM-DD]\tAdding date Argument to start download for a particular date with YYYY-MM-DD format")
-        print (" nssr_data_loader.py [-t]\t\tThis will do the import of the current day\n\n")
-        print (" nssr_data_loader.py [-a]\t\tThis can be use to doanload all the attach files from a day (no matter if is read or unread)\n\n")
+        print (" nssr_data_loader.py [-t]\t\tThis will do the import of the current day")
+        print (" nssr_data_loader.py [-a]\t\tThis can be use to doanload all the attach files from a day (no matter if is read or unread,")
+        print (" \t\t\t\t\tby default is only unread emails)\n")
         #input ("Press enter to continue...")
         sys.exit()
 
@@ -80,8 +81,7 @@ def DownloadingFiles (messages,unread):
 
 ############################# Help Guide to use this script and Date option
 
-# Printing start datetime of execution
-print ("Script started at: " + str(date_time_start.strftime("%Y-%m-%d %H:%M:%S")))
+
 
 arguments = (sys.argv)
 
@@ -125,6 +125,8 @@ for arg in arguments:
 
     counter_arg = counter_arg + 1
 
+# Printing start datetime of execution
+print ("Script started at: " + str(date_time_start.strftime("%Y-%m-%d %H:%M:%S")))
 
 ############################# Ask for the date the files are going to process or Use arguments
 
@@ -337,6 +339,6 @@ time_elapse = datetime2 - datetime1
 
 print ("\nElapse Time: " + str(time_elapse))
 
-print("\n*************************\nEnd..")
+print("\n*************************End..")
 
 #input("\n*************************\nPress enter to finish...")
