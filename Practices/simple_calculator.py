@@ -24,20 +24,21 @@ def menu():
     print ("\t7. Presiona esta opcion para optener la parte entera y residuo de division.")
     print ("\t8. Presiona esta opcion para sacar la potencia de valor1^valor2.")
     print ("\t9. Presiona esta opcion para optener factorial de un numero.")
-    print ("\t10. Presiona esta opcion para salir del programa.")
+    print ("\t10. Presiona esta opcion para optener la raiz cuadrada de un numero.")
+    print ("\t11. Presiona esta opcion para salir del programa.")
 
     print ("\n\n\tSelecciona una opcion de arriba...")
     opcion = input ("\n\tIngresa la operacion: ")
 
     # Salir
-    if (str(opcion) == "10"):
+    if (str(opcion) == "11"):
         salir()
         sys.exit()
 
     num1 = input ("\tEl valor 1: ")
     
     ### Para Calculo de Facorial, solo se necesita un numero
-    if (str(opcion) != "9"):
+    if (str(opcion) != "9" and str(opcion) != "10"):
         num2 = input ("\tEl valor 2: ")
     else:
         num2=0
@@ -81,6 +82,10 @@ def operacion(opcion,num1,num2):
     # Factorial
     elif (str(opcion) == "9"):
         fac(num1)
+        
+    # Raz Cuadrada
+    elif (str(opcion) == "10"):
+        raiz(num1)
 
     # Mensaje Error
     else:
@@ -151,6 +156,13 @@ def pot(number1,number2):
 def fac(number1):
     mul_result = math.factorial(int(number1))
     print ("\n\tFactorial: " + str(number1) + "! = " + str(mul_result))
+    input("\n\tPresione enter para realizar otra operacion")
+    opcion,num1,num2 = menu()
+    operacion(opcion,num1,num2)
+    
+def raiz(number1):
+    raiz_result = math.sqrt(float(number1))
+    print ("\n\tRaiz Cuadrada: √" + str(number1) + " = " + str(raiz_result))
     input("\n\tPresione enter para realizar otra operacion")
     opcion,num1,num2 = menu()
     operacion(opcion,num1,num2)
