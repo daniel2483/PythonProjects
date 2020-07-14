@@ -3,7 +3,7 @@
 # Python 3 - Examples
 
 
-This repository contains simple exmples on python language (Using Python 3)
+This repository contains simple examples on python language (Using Python 3)
 
 1. Example of reading Outlook inbox: [Code](./read_email.py)
 
