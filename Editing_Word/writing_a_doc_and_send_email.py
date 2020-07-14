@@ -7,6 +7,22 @@ import os
 import email_checker_and_domain_result as email_check
 import sys
 
+########## Functions
+
+def ask_for_email_address():
+    send_email = input ("Desea enviar este documento a algún correo (S/N)? ")
+    
+    if (send_email == "S" or send_email == "s"):
+        email = input("Ingrese el correo: ")
+        domain,error = email_check.domain_name(email)
+        print ("Dominio de correo: " + domain)
+    elif (send_email == "N" or send_email == "n"):
+        sys.exit()
+    else:
+        print ("Opción inválidad. Ingrese de nuevo una opción.")
+        ask_for_email_address()
+
+
 ########## Main
 
 print ("")
@@ -52,13 +68,8 @@ document.write(path + 'carta_final.docx')
 
 print ("Word Document already created...")
 
-send_email = input ("Desea enviar este documento a algún correo (S/N)? ")
+ask_for_email_address()
 
-if (send_email == "S"):
-    email = input("Ingrese el correo: ")
-    domain,error = email_check.domain_name(email)
-    print ("Dominio de correo: " + domain)
-else:
-    sys.exit()
+
 
 
