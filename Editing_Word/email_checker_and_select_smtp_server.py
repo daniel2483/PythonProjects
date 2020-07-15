@@ -1,4 +1,5 @@
 import sys
+import re
 
 def domain_name (email):
 
@@ -42,13 +43,19 @@ def domain_name (email):
     return domain,error
 
 def hotmail():
-    return "SMTP Hotmail"
+    print ("SMTP Hotmail (Outlook)")
+    smtp_server = "Smtp.live.com"
+    return smtp_server
 
 def gmail():
-    return "SMTP Gmail"
+    print ("SMTP Gmail")
+    smtp_server = "smtp.gmail.com"
+    return smtp_server
 
 def yahoo():
-    return "SMTP Yahoo"
+    print ("SMTP Yahoo")
+    smtp_server = "Mail.yahoo.com"
+    return smtp_server
 
 switcher = {
         1: hotmail,
@@ -67,10 +74,26 @@ def numbers_to_strings(argument):
     # Execute the function
     #print (func)
 
-output = numbers_to_strings(3)
+def get_smtp_server(domain):
+    if re.search(rf"hotmail|outlook", domain, re.IGNORECASE):
+        output = numbers_to_strings(1)
+        print (output)
+    elif re.search(rf"gmail", domain, re.IGNORECASE):
+        output = numbers_to_strings(2)
+        print (output)
+    elif re.search(rf"yahoo", domain, re.IGNORECASE):
+        output = numbers_to_strings(3)
+        print (output)
+    else:
+        print ("SMTP Server Not found...")
 
-print (output)
+############################## Following lines are for testing purposes
 
+try:
+    output = get_smtp_server("gmail")
+
+except TypeError :
+    print ("This is not a valid email domain server...")
 
 #email = input ("Please enter your email address: " )
 
