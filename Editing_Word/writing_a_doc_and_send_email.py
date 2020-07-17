@@ -6,12 +6,14 @@ from datetime import date
 import os
 import email_checker_and_domain_result as email_check
 import sys
-import email_checker_and_select_smtp_server as smtp_detection
+#import email_checker_and_select_smtp_server as smtp_detection
+import checking_smtp_server as smtp_detection
 
 ########## Functions
 
 def ask_for_email_address():
     send_email = input ("Desea enviar este documento a algún correo (S/N)? ")
+    email = ""
     
     if (send_email == "S" or send_email == "s"):
         email = input("Ingrese el correo: ")
@@ -23,7 +25,7 @@ def ask_for_email_address():
         print ("Opción inválidad. Ingrese de nuevo una opción.")
         ask_for_email_address()
         
-    return send_email
+    return email
 
 
 ########## Main
@@ -56,7 +58,7 @@ if(local == "2" or local == "3"):
 document = MailMerge( path + template)
 
 # To check the merge fields on word Template
-#print(document.get_merge_fields())
+#print(document.get_merge_fields())  
 
 document.merge(
     current_date='{:%d-%b-%Y}'.format(date.today()),
@@ -75,6 +77,18 @@ print ("Word Document already created...")
 send_email_to = ask_for_email_address()
 
 # Get the Domain and errors if is presented
-domain,error = email_check.email_address(send_email_to)
+domain,error = email_check.email_address(str(send_email_to))
 
-smtp_detection.get_smtp_server(str(domain))
+smtp_server = smtp_detection.getting_smtp_server(str(domain))
+
+if (smtp_server == "none"):
+    print ("The SMTP Server is not supported, please choose another Email Address...")
+    sys.exit()
+    
+else:
+    print ("SMTP Server: " + smtp_server + " is supported")
+
+
+    
+
+
