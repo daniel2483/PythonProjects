@@ -6,6 +6,7 @@ from datetime import date
 import os
 import email_checker_and_domain_result as email_check
 import sys
+import email_checker_and_select_smtp_server as smtp_detection
 
 ########## Functions
 
@@ -21,6 +22,8 @@ def ask_for_email_address():
     else:
         print ("Opción inválidad. Ingrese de nuevo una opción.")
         ask_for_email_address()
+        
+    return send_email
 
 
 ########## Main
@@ -68,8 +71,10 @@ document.write(path + 'carta_final.docx')
 
 print ("Word Document already created...")
 
-ask_for_email_address()
+# Ask for email, and if is not correct ask again
+send_email_to = ask_for_email_address()
 
+# Get the Domain and errors if is presented
+domain,error = email_check.email_address(send_email_to)
 
-
-
+smtp_detection.get_smtp_server(str(domain))
