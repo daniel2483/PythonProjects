@@ -41,9 +41,9 @@ def domain_name (email):
 
     return domain,error
 
-def ask_for_email_address(email):
-        domain,error = email_check.domain_name(email)
-        print ("Dominio de correo: " + domain " | Error: " error)
+def email_address(email):
+        domain,error = domain_name(email)
+        print ("Dominio de correo: " + domain + " | Error: " + str(error))
         return domain,error
         
         
