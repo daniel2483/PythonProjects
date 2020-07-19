@@ -29,7 +29,7 @@ class MyFrame(wx.Frame):
         
         self.my_btn_per = wx.Button(panel, label='%', pos=(5, 55), size=(40, 40))
         self.my_btn_sqr = wx.Button(panel, label='√', pos=(45, 55), size=(40, 40))
-        self.my_btn_pot2 = wx.Button(panel, label='x^2', pos=(85, 55), size=(40, 40))
+        self.my_btn_pow2 = wx.Button(panel, label='x^2', pos=(85, 55), size=(40, 40))
         self.my_btn_xdiv = wx.Button(panel, label='1/x', pos=(125, 55), size=(40, 40))
         
         self.my_btn_clear = wx.Button(panel, label='CE', pos=(5, 95), size=(40, 40))
@@ -92,6 +92,7 @@ class MyFrame(wx.Frame):
         self.my_btn_mul.Bind(wx.EVT_BUTTON, self.OnButtonMul)
         self.my_btn_div.Bind(wx.EVT_BUTTON, self.OnButtonDiv)
         self.my_btn_sqr.Bind(wx.EVT_BUTTON, self.OnButtonSqr)
+        self.my_btn_pow2.Bind(wx.EVT_BUTTON, self.OnButtonPow2)
     
         self.Show()
     
@@ -227,6 +228,22 @@ class MyFrame(wx.Frame):
         self.value.SetLabel("0")
         operation = " √ " + operand1
         result = op.sqr(float(operand1))
+        str_result = str(result)
+        
+        int,decimal = str_result.split('.')
+        
+        if decimal == "0":
+            str_result = str_result[:-2]
+        
+        operation = operation  + " = " + str_result
+        self.operation.SetLabel(operation)
+        self.result.SetLabel(str_result)
+        
+    def OnButtonPow2(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("0")
+        operation = operand1 + " ^ 2"
+        result = op.pot(float(operand1),2)
         str_result = str(result)
         
         int,decimal = str_result.split('.')
