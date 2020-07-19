@@ -27,13 +27,13 @@ class MyFrame(wx.Frame):
         self.value = wx.TextCtrl(panel, pos=(10, 5), size=(200, 20),value = "0", style=wx.TE_RIGHT | wx.TE_READONLY)
         # pos=(x,y)
         
-        self.my_btn_per = wx.Button(panel, label='%', pos=(5, 55), size=(40, 40))
-        self.my_btn_sqr = wx.Button(panel, label='√', pos=(45, 55), size=(40, 40))
-        self.my_btn_pow2 = wx.Button(panel, label='x^2', pos=(85, 55), size=(40, 40))
+        self.my_btn_sqr = wx.Button(panel, label='√', pos=(5, 55), size=(40, 40))
+        self.my_btn_pow2 = wx.Button(panel, label='x^2', pos=(45, 55), size=(40, 40))
+        self.my_btn_pow3 = wx.Button(panel, label='x^3', pos=(85, 55), size=(40, 40))
         self.my_btn_xdiv = wx.Button(panel, label='1/x', pos=(125, 55), size=(40, 40))
         
-        self.my_btn_clear = wx.Button(panel, label='CE', pos=(5, 95), size=(40, 40))
-        self.my_btn_clear2 = wx.Button(panel, label='C', pos=(45, 95), size=(40, 40))
+        self.my_btn_clear_all = wx.Button(panel, label='CE', pos=(5, 95), size=(40, 40))
+        self.my_btn_clear = wx.Button(panel, label='C', pos=(45, 95), size=(40, 40))
         self.my_btn_del = wx.Button(panel, label='DEL', pos=(85, 95), size=(40, 40))
         self.my_btn_div = wx.Button(panel, label='÷', pos=(125, 95), size=(40, 40))
         
@@ -83,8 +83,8 @@ class MyFrame(wx.Frame):
         self.my_btn_del.Bind(wx.EVT_BUTTON, self.OnButtonDel)
         self.my_btn_dot.Bind(wx.EVT_BUTTON, self.OnButtonDot)
         
-        self.my_btn_clear2.Bind(wx.EVT_BUTTON, self.OnButtonclear)
         self.my_btn_clear.Bind(wx.EVT_BUTTON, self.OnButtonclear)
+        self.my_btn_clear_all.Bind(wx.EVT_BUTTON, self.OnButtonAC)
         
         self.my_btn_result.Bind(wx.EVT_BUTTON, self.OnButtonResult)
         self.my_btn_sum.Bind(wx.EVT_BUTTON, self.OnButtonSum)
@@ -93,6 +93,9 @@ class MyFrame(wx.Frame):
         self.my_btn_div.Bind(wx.EVT_BUTTON, self.OnButtonDiv)
         self.my_btn_sqr.Bind(wx.EVT_BUTTON, self.OnButtonSqr)
         self.my_btn_pow2.Bind(wx.EVT_BUTTON, self.OnButtonPow2)
+        self.my_btn_pow3.Bind(wx.EVT_BUTTON, self.OnButtonPow3)
+        self.my_btn_xdiv.Bind(wx.EVT_BUTTON, self.OnButtonXdiv)
+        self.my_btn_sign.Bind(wx.EVT_BUTTON, self.OnButtonSign)
     
         self.Show()
     
@@ -173,13 +176,13 @@ class MyFrame(wx.Frame):
         value = self.value.GetValue()
         if (value != 0):
             value = str(value) + "0"
-            if "00" in value:
+            if re.search("^00", value):
                 value = value[-1:]
             self.value.SetLabel(value)
             
     def OnButtonDel(self, e):
         value = self.value.GetValue()
-        if (value == 0 or value == ""):
+        if (value == 0 or value == "" or value =="-"):
             value = "0"
             self.value.SetLabel(value)
         else:
@@ -227,9 +230,14 @@ class MyFrame(wx.Frame):
         operand1 = self.value.GetValue()
         self.value.SetLabel("0")
         operation = " √ " + operand1
-        result = op.sqr(float(operand1))
-        str_result = str(result)
-        
+        try: 
+            result = op.sqr(float(operand1))
+            str_result = str(result)
+        except ValueError:
+            operand1 = abs(float(operand1))
+            result = op.sqr(float(operand1))
+            str_result = str(result) + " i"
+            
         int,decimal = str_result.split('.')
         
         if decimal == "0":
@@ -238,6 +246,38 @@ class MyFrame(wx.Frame):
         operation = operation  + " = " + str_result
         self.operation.SetLabel(operation)
         self.result.SetLabel(str_result)
+        
+    def OnButtonXdiv(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("0")
+        operation = " 1/" + operand1
+        try:
+            result = 1 / float(operand1)
+        except ZeroDivisionError:
+            result = "∞"
+        str_result = str(result)
+        
+        try:
+            int,decimal = str_result.split('.')
+        except ValueError:
+            decimal = "Error"
+            str_result = str_result
+        
+        if decimal == "0":
+            str_result = str_result[:-2]
+        
+        operation = operation  + " = " + str_result
+        self.operation.SetLabel(operation)
+        self.result.SetLabel(str_result)
+        
+    def OnButtonSign(self,e):
+        operand = self.value.GetValue()
+        if "-" in operand:
+            operand = operand.replace("-", "")
+            self.value.SetValue(operand)
+        else:
+            operand = "-" + operand
+            self.value.SetValue(operand)
         
     def OnButtonPow2(self,e):
         operand1 = self.value.GetValue()
@@ -255,24 +295,47 @@ class MyFrame(wx.Frame):
         self.operation.SetLabel(operation)
         self.result.SetLabel(str_result)
         
+    def OnButtonPow3(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("0")
+        operation = operand1 + " ^ 3"
+        result = op.pot(float(operand1),3)
+        str_result = str(result)
+        
+        int,decimal = str_result.split('.')
+        
+        if decimal == "0":
+            str_result = str_result[:-2]
+        
+        operation = operation  + " = " + str_result
+        self.operation.SetLabel(operation)
+        self.result.SetLabel(str_result)
+        
     def OnButtonResult(self,e):
         operation = self.operation.GetLabel()
         operand1 = operation[:-3]
+        
         operand2 = self.value.GetValue()
+        tmp = ""
         
         self.value.SetLabel("0")
         
-        if "+" in operation:
+        
+        if " + " in operation:
             result = op.sum(float(operand1),float(operand2))
-        if "-" in operation:
+        if " - " in operation:
             result = op.sub(float(operand1),float(operand2))
-        if "×" in operation:
+        if " × " in operation:
             result = op.mult(float(operand1),float(operand2))
-        if "÷" in operation:
+        if " ÷ " in operation:
             result = op.div(float(operand1),float(operand2))
         
         str_result = str(result)
-        int,decimal = str_result.split('.')
+        try:
+            int,decimal = str_result.split('.')
+        except ValueError:
+            decimal = "Error"
+            str_result = str_result
         
         if decimal == "0":
             str_result = str_result[:-2]
@@ -286,6 +349,11 @@ class MyFrame(wx.Frame):
     def OnButtonclear(self, e):
         value = "0"
         self.value.SetLabel(value)
+        
+    def OnButtonAC(self, e):
+        value = "0"
+        self.value.SetLabel(value)
+        self.operation.SetLabel("")
             
 if __name__ == '__main__':
     app = wx.App()
