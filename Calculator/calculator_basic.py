@@ -65,8 +65,8 @@ class MyFrame(wx.Frame):
         self.result = wx.StaticText(panel, label="", pos=(200, 145))
         self.result.SetForegroundColour(wx.RED)
         self.operation.SetForegroundColour(wx.RED)
-        #font = wx.Font(18, wx.DECORATIVE, wx.ITALIC, wx.NORMAL)
-        font = wx.Font(16, wx.DECORATIVE, wx.DECORATIVE, wx.NORMAL)
+        #font = wx.Font(18, wx.DECORATIVE, wx.ITALIC, wx.NORMAL) -- wx.BOLD
+        font = wx.Font(16, wx.DECORATIVE, wx.NORMAL, wx.BOLD)
         self.operation.SetFont(font)
         
         wx.StaticText(panel, label="Made by: Jose Daniel Rodríguez Sánchez", pos=(5, 350))
