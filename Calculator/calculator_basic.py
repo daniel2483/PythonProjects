@@ -6,13 +6,16 @@
 import operations as op
 import wx
 import re
+import os
 from wx.lib.masked import NumCtrl
 
 class MyFrame(wx.Frame):
     
     def __init__(self):
-        super().__init__(parent=None, title='Standard Calculator')
+        super().__init__(parent=None, title='Standard Calculator',size=(550, 500))
         panel = wx.Panel(self)
+        
+        #self.wx.Frame.
         
         operand1 = ""
         operand2 = ""
@@ -52,15 +55,18 @@ class MyFrame(wx.Frame):
         self.my_btn_n3 = wx.Button(panel, label='3', pos=(85, 215), size=(40, 40))
         self.my_btn_sum = wx.Button(panel, label='+', pos=(125, 215), size=(40, 40))
         
-        self.my_btn_sign = wx.Button(panel, label='+/-', pos=(5, 255), size=(40, 40))
+        self.my_btn_sign = wx.Button(panel, label='±', pos=(5, 255), size=(40, 40))
         self.my_btn_n0 = wx.Button(panel, label='0', pos=(45, 255), size=(40, 40))
         self.my_btn_dot = wx.Button(panel, label='.', pos=(85, 255), size=(40, 40))
         self.my_btn_result = wx.Button(panel, label='=', pos=(125, 255), size=(40, 40))
 
         # Results
-        self.operation = wx.StaticText(panel, label="", pos=(200, 55))
+        self.operation = wx.StaticText(panel, label="", pos=(170, 55))
         self.result = wx.StaticText(panel, label="", pos=(200, 145))
         self.result.SetForegroundColour(wx.RED)
+        self.operation.SetForegroundColour(wx.RED)
+        font = wx.Font(18, wx.DECORATIVE, wx.ITALIC, wx.NORMAL)
+        self.operation.SetFont(font)
         
         wx.StaticText(panel, label="Made by: Jose Daniel Rodríguez Sánchez", pos=(5, 350))
         wx.StaticText(panel, label="Build on: 2020-07-18", pos=(5, 370))
@@ -98,6 +104,16 @@ class MyFrame(wx.Frame):
         self.my_btn_sign.Bind(wx.EVT_BUTTON, self.OnButtonSign)
     
         self.Show()
+        
+        current_dir = os.getcwd()
+        
+        #print ("Working on Dir: " + str(current_dir))
+        
+        self.SetIcon(wx.Icon(current_dir + "/app_calc.ico"))
+        #self.SetIcon(wx.Icon.SetWidth(16))
+        #self.SetIcon(wx.Icon.SetHeight(16))
+        
+        #self.wx.Icon(desiredWidth = 150, desiredHeight = 150)
     
     def OnButton1(self, e):
         value = self.value.GetValue()
@@ -245,7 +261,7 @@ class MyFrame(wx.Frame):
         
         operation = operation  + " = " + str_result
         self.operation.SetLabel(operation)
-        self.result.SetLabel(str_result)
+        #self.result.SetLabel(str_result)
         
     def OnButtonXdiv(self,e):
         operand1 = self.value.GetValue()
@@ -268,7 +284,7 @@ class MyFrame(wx.Frame):
         
         operation = operation  + " = " + str_result
         self.operation.SetLabel(operation)
-        self.result.SetLabel(str_result)
+        #self.result.SetLabel(str_result)
         
     def OnButtonSign(self,e):
         operand = self.value.GetValue()
@@ -293,7 +309,7 @@ class MyFrame(wx.Frame):
         
         operation = operation  + " = " + str_result
         self.operation.SetLabel(operation)
-        self.result.SetLabel(str_result)
+        #self.result.SetLabel(str_result)
         
     def OnButtonPow3(self,e):
         operand1 = self.value.GetValue()
@@ -309,7 +325,7 @@ class MyFrame(wx.Frame):
         
         operation = operation  + " = " + str_result
         self.operation.SetLabel(operation)
-        self.result.SetLabel(str_result)
+        #self.result.SetLabel(str_result)
         
     def OnButtonResult(self,e):
         operation = self.operation.GetLabel()
@@ -344,7 +360,7 @@ class MyFrame(wx.Frame):
         self.operation.SetLabel(operation)
         
         
-        self.result.SetLabel(str_result)
+        #self.result.SetLabel(str_result)
             
     def OnButtonclear(self, e):
         value = "0"
