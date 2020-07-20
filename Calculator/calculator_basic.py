@@ -1,6 +1,8 @@
 # pip install wxpython
-# Calculator
-# Made by: Jose Daniel Rodriguez Sanchez
+#   Calculator Standard
+#   Made by: Jose Daniel Rodriguez Sanchez
+#   Build on: 2020-07-18
+#   Last Update: 2020-07-20
 
 
 import operations as op
@@ -21,57 +23,75 @@ class MyFrame(wx.Frame):
         operand2 = ""
         operation = ""
         
-        pos_ini_y = 55
-        pos_ini_x = 5
+        pos_ini_y = 60
+        pos_ini_x = 55
         dif_y = 40
         dif_x = 40
 
         #self.value = NumCtrl(panel, pos=(10, 5), size=(500, 20),value = "0",decimalChar = ".",fractionWidth = 0)
-        self.value = wx.TextCtrl(panel, pos=(10, 5), size=(200, 20),value = "0", style=wx.TE_RIGHT | wx.TE_READONLY)
+        self.value = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y - 40), size=(160, 20),value = "0", style=wx.TE_RIGHT | wx.TE_READONLY)
         # pos=(x,y)
         
-        self.my_btn_sqr = wx.Button(panel, label='√', pos=(5, 55), size=(40, 40))
-        self.my_btn_pow2 = wx.Button(panel, label='x^2', pos=(45, 55), size=(40, 40))
-        self.my_btn_pow3 = wx.Button(panel, label='x^3', pos=(85, 55), size=(40, 40))
-        self.my_btn_xdiv = wx.Button(panel, label='1/x', pos=(125, 55), size=(40, 40))
+        self.my_btn_sqr = wx.Button(panel, label='√', pos=(pos_ini_x, pos_ini_y), size=(40, 40))
+        self.my_btn_pow2 = wx.Button(panel, label='x²', pos=(pos_ini_x + 40, pos_ini_y), size=(40, 40))
+        self.my_btn_pow3 = wx.Button(panel, label='x³', pos=(pos_ini_x + 80, pos_ini_y), size=(40, 40))
+        self.my_btn_xdiv = wx.Button(panel, label='1/x', pos=(pos_ini_x +120, pos_ini_y), size=(40, 40))
         
-        self.my_btn_clear_all = wx.Button(panel, label='CE', pos=(5, 95), size=(40, 40))
-        self.my_btn_clear = wx.Button(panel, label='C', pos=(45, 95), size=(40, 40))
-        self.my_btn_del = wx.Button(panel, label='DEL', pos=(85, 95), size=(40, 40))
-        self.my_btn_div = wx.Button(panel, label='÷', pos=(125, 95), size=(40, 40))
+        self.my_btn_clear_all = wx.Button(panel, label='CE', pos=(pos_ini_x, pos_ini_y + 40), size=(40, 40))
+        self.my_btn_clear = wx.Button(panel, label='C', pos=(pos_ini_x + 40, pos_ini_y + 40), size=(40, 40))
+        self.my_btn_del = wx.Button(panel, label='DEL', pos=(pos_ini_x + 80, pos_ini_y + 40), size=(40, 40))
+        self.my_btn_div = wx.Button(panel, label='÷', pos=(pos_ini_x + 120, pos_ini_y + 40), size=(40, 40))
         
-        self.my_btn_n7 = wx.Button(panel, label='7', pos=(5, 135), size=(40, 40))
-        self.my_btn_n8 = wx.Button(panel, label='8', pos=(45, 135), size=(40, 40))
-        self.my_btn_n9 = wx.Button(panel, label='9', pos=(85, 135), size=(40, 40))
-        self.my_btn_mul = wx.Button(panel, label='×', pos=(125, 135), size=(40, 40))
+        self.my_btn_n7 = wx.Button(panel, label='7', pos=(pos_ini_x, pos_ini_y + 80), size=(40, 40))
+        self.my_btn_n8 = wx.Button(panel, label='8', pos=(pos_ini_x + 40, pos_ini_y + 80), size=(40, 40))
+        self.my_btn_n9 = wx.Button(panel, label='9', pos=(pos_ini_x + 80, pos_ini_y + 80), size=(40, 40))
+        self.my_btn_mul = wx.Button(panel, label='×', pos=(pos_ini_x +120, pos_ini_y + 80), size=(40, 40))
         
-        self.my_btn_n4 = wx.Button(panel, label='4', pos=(5, 175), size=(40, 40))
-        self.my_btn_n5 = wx.Button(panel, label='5', pos=(45, 175), size=(40, 40))
-        self.my_btn_n6 = wx.Button(panel, label='6', pos=(85, 175), size=(40, 40))
-        self.my_btn_sub = wx.Button(panel, label='-', pos=(125, 175), size=(40, 40))
+        self.my_btn_n4 = wx.Button(panel, label='4', pos=(pos_ini_x, pos_ini_y + 120), size=(40, 40))
+        self.my_btn_n5 = wx.Button(panel, label='5', pos=(pos_ini_x + 40, pos_ini_y + 120), size=(40, 40))
+        self.my_btn_n6 = wx.Button(panel, label='6', pos=(pos_ini_x + 80, pos_ini_y + 120), size=(40, 40))
+        self.my_btn_sub = wx.Button(panel, label='-', pos=(pos_ini_x +120, pos_ini_y + 120), size=(40, 40))
         
-        self.my_btn_n1 = wx.Button(panel, label='1', pos=(5, 215), size=(40, 40))
-        self.my_btn_n2 = wx.Button(panel, label='2', pos=(45, 215), size=(40, 40))
-        self.my_btn_n3 = wx.Button(panel, label='3', pos=(85, 215), size=(40, 40))
-        self.my_btn_sum = wx.Button(panel, label='+', pos=(125, 215), size=(40, 40))
+        self.my_btn_n1 = wx.Button(panel, label='1', pos=(pos_ini_x, pos_ini_y + 160), size=(40, 40))
+        self.my_btn_n2 = wx.Button(panel, label='2', pos=(pos_ini_x + 40, pos_ini_y + 160), size=(40, 40))
+        self.my_btn_n3 = wx.Button(panel, label='3', pos=(pos_ini_x + 80, pos_ini_y + 160), size=(40, 40))
+        self.my_btn_sum = wx.Button(panel, label='+', pos=(pos_ini_x +120, pos_ini_y + 160), size=(40, 40))
         
-        self.my_btn_sign = wx.Button(panel, label='±', pos=(5, 255), size=(40, 40))
-        self.my_btn_n0 = wx.Button(panel, label='0', pos=(45, 255), size=(40, 40))
-        self.my_btn_dot = wx.Button(panel, label='.', pos=(85, 255), size=(40, 40))
-        self.my_btn_result = wx.Button(panel, label='=', pos=(125, 255), size=(40, 40))
+        self.my_btn_sign = wx.Button(panel, label='±', pos=(pos_ini_x, pos_ini_y + 200), size=(40, 40))
+        self.my_btn_n0 = wx.Button(panel, label='0', pos=(pos_ini_x + 40, pos_ini_y + 200), size=(40, 40))
+        self.my_btn_dot = wx.Button(panel, label='.', pos=(pos_ini_x + 80, pos_ini_y + 200), size=(40, 40))
+        self.my_btn_result = wx.Button(panel, label='=', pos=(pos_ini_x +120, pos_ini_y + 200), size=(40, 40))
 
         # Results
-        self.operation = wx.StaticText(panel, label="", pos=(170, 55))
-        self.result = wx.StaticText(panel, label="", pos=(200, 145))
+        self.operation = wx.StaticText(panel, label="", pos=(pos_ini_x + 175, pos_ini_y))
+        self.result = wx.StaticText(panel, label="", pos=(200, pos_ini_y + 90))
         self.result.SetForegroundColour(wx.RED)
         self.operation.SetForegroundColour(wx.RED)
+        
+        ## Setting Font Size Style
         #font = wx.Font(18, wx.DECORATIVE, wx.ITALIC, wx.NORMAL) -- wx.BOLD
         font = wx.Font(16, wx.DECORATIVE, wx.NORMAL, wx.BOLD)
         self.operation.SetFont(font)
         
-        wx.StaticText(panel, label="Made by: Jose Daniel Rodríguez Sánchez", pos=(5, 350))
-        wx.StaticText(panel, label="Build on: 2020-07-18", pos=(5, 370))
-        wx.StaticText(panel, label="Last Update: 2020-07-18", pos=(5, 390))
+        fontButtonOp = wx.Font(11, wx.DECORATIVE, wx.NORMAL, wx.BOLD)
+        self.my_btn_sqr.SetFont(fontButtonOp)
+        self.my_btn_pow2.SetFont(fontButtonOp)
+        self.my_btn_pow3.SetFont(fontButtonOp)
+        self.my_btn_xdiv.SetFont(fontButtonOp)
+        self.my_btn_div.SetFont(fontButtonOp)
+        self.my_btn_mul.SetFont(fontButtonOp)
+        self.my_btn_sum.SetFont(fontButtonOp)
+        self.my_btn_sub.SetFont(fontButtonOp)
+        self.my_btn_sign.SetFont(fontButtonOp)
+        self.my_btn_del.SetFont(fontButtonOp)
+        self.my_btn_clear.SetFont(fontButtonOp)
+        self.my_btn_clear_all.SetFont(fontButtonOp)
+        self.my_btn_dot.SetFont(fontButtonOp)
+        self.my_btn_result.SetFont(fontButtonOp)
+        
+        wx.StaticText(panel, label="Made by: Jose Daniel Rodríguez Sánchez", pos=(pos_ini_x, pos_ini_y + 325))
+        wx.StaticText(panel, label="Build on: 2020-07-18", pos=(pos_ini_x, pos_ini_y + 345))
+        wx.StaticText(panel, label="Last Update: 2020-07-18", pos=(pos_ini_x, pos_ini_y + 365))
         
         # Set event handlers
         # Numbers
@@ -324,7 +344,7 @@ class MyFrame(wx.Frame):
     def OnButtonPow2(self,e):
         operand1 = self.value.GetValue()
         self.value.SetLabel("0")
-        operation = operand1 + " ^ 2"
+        operation = operand1 + "²"
         result = op.pot(float(operand1),2)
         str_result = str(result)
         
@@ -340,7 +360,7 @@ class MyFrame(wx.Frame):
     def OnButtonPow3(self,e):
         operand1 = self.value.GetValue()
         self.value.SetLabel("0")
-        operation = operand1 + " ^ 3"
+        operation = operand1 + "³"
         result = op.pot(float(operand1),3)
         str_result = str(result)
         
