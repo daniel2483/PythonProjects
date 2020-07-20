@@ -65,7 +65,8 @@ class MyFrame(wx.Frame):
         self.result = wx.StaticText(panel, label="", pos=(200, 145))
         self.result.SetForegroundColour(wx.RED)
         self.operation.SetForegroundColour(wx.RED)
-        font = wx.Font(18, wx.DECORATIVE, wx.ITALIC, wx.NORMAL)
+        #font = wx.Font(18, wx.DECORATIVE, wx.ITALIC, wx.NORMAL)
+        font = wx.Font(16, wx.DECORATIVE, wx.DECORATIVE, wx.NORMAL)
         self.operation.SetFont(font)
         
         wx.StaticText(panel, label="Made by: Jose Daniel Rodríguez Sánchez", pos=(5, 350))
@@ -109,11 +110,36 @@ class MyFrame(wx.Frame):
         
         #print ("Working on Dir: " + str(current_dir))
         
+        # Style
         self.SetIcon(wx.Icon(current_dir + "/app_calc.ico"))
         #self.SetIcon(wx.Icon.SetWidth(16))
         #self.SetIcon(wx.Icon.SetHeight(16))
-        
         #self.wx.Icon(desiredWidth = 150, desiredHeight = 150)
+        self.my_btn_n1.SetBackgroundColour(wx.Colour(240, 240, 240))
+        self.my_btn_n2.SetBackgroundColour(wx.Colour(240, 240, 240))
+        self.my_btn_n3.SetBackgroundColour(wx.Colour(240, 240, 240))
+        self.my_btn_n4.SetBackgroundColour(wx.Colour(240, 240, 240))
+        self.my_btn_n5.SetBackgroundColour(wx.Colour(240, 240, 240))
+        self.my_btn_n6.SetBackgroundColour(wx.Colour(240, 240, 240))
+        self.my_btn_n7.SetBackgroundColour(wx.Colour(240, 240, 240))
+        self.my_btn_n8.SetBackgroundColour(wx.Colour(240, 240, 240))
+        self.my_btn_n9.SetBackgroundColour(wx.Colour(240, 240, 240))
+        self.my_btn_n0.SetBackgroundColour(wx.Colour(240, 240, 240))
+        self.my_btn_clear_all.SetBackgroundColour(wx.Colour(255, 0, 0))
+    
+        self.my_btn_clear_all.Bind(wx.EVT_ENTER_WINDOW, self.onMouseOver)
+        self.my_btn_clear_all.Bind(wx.EVT_LEAVE_WINDOW, self.onMouseLeave)
+        
+        #wx.EVT_ENTER_WINDOW(self, self.onMouseOver)
+        #wx.EVT_LEAVE_WINDOW(self, self.onMouseLeave)
+        
+    def onMouseOver(self, event):
+        self.my_btn_clear_all.SetBackgroundColour((11, 11, 11))
+        self.my_btn_clear_all.Refresh()
+    
+    def onMouseLeave(self, event):
+        self.my_btn_clear_all.SetBackgroundColour((255, 0, 0))
+        self.my_btn_clear_all.Refresh()
     
     def OnButton1(self, e):
         value = self.value.GetValue()
