@@ -9,6 +9,7 @@ import operations as op
 import wx
 import re
 import os
+import wx.richtext as rt
 from wx.lib.masked import NumCtrl
 
 class MyFrame(wx.Frame):
@@ -40,7 +41,7 @@ class MyFrame(wx.Frame):
         # pos=(x,y)
         
         self.my_btn_pow3 = wx.Button(panel, label='x³', pos=(pos_ini_x -40, pos_ini_y -80), size=(40, 40))
-        self.my_btn_root = wx.Button(panel, label='∛', pos=(pos_ini_x, pos_ini_y -80), size=(40, 40))
+        self.my_btn_cuber = wx.Button(panel, label='∛', pos=(pos_ini_x, pos_ini_y -80), size=(40, 40))
         # set bmp as bitmap for button 
         #self.my_btn_root.SetBitmap(bmpForRootAny) 
         self.my_btn_arcs = wx.Button(panel, label='arcs', pos=(pos_ini_x + 40, pos_ini_y - 80), size=(40, 40))
@@ -123,7 +124,7 @@ class MyFrame(wx.Frame):
         self.my_btn_clear_all.SetFont(fontButtonOp)
         self.my_btn_dot.SetFont(fontButtonOp)
         self.my_btn_result.SetFont(fontButtonOpMain)
-        self.my_btn_root.SetFont(wx.Font(18, wx.DECORATIVE, wx.NORMAL, wx.BOLD))
+        self.my_btn_cuber.SetFont(wx.Font(18, wx.DECORATIVE, wx.NORMAL, wx.BOLD))
         self.my_btn_arcc.SetFont(fontButtonOp)
         self.my_btn_arcs.SetFont(fontButtonOp)
         self.my_btn_arct.SetFont(fontButtonOp)
@@ -181,6 +182,8 @@ class MyFrame(wx.Frame):
         self.my_btn_pow3.Bind(wx.EVT_BUTTON, self.OnButtonPow3)
         self.my_btn_xdiv.Bind(wx.EVT_BUTTON, self.OnButtonXdiv)
         self.my_btn_sign.Bind(wx.EVT_BUTTON, self.OnButtonSign)
+        self.my_btn_cuber.Bind(wx.EVT_BUTTON, self.OnButtonCuber)
+        self.my_btn_powy.Bind(wx.EVT_BUTTON, self.OnButtonPowy)
         
     
         self.Show()
@@ -220,78 +223,115 @@ class MyFrame(wx.Frame):
         self.my_btn_clear_all.SetBackgroundColour((255, 0, 0))
         self.my_btn_clear_all.Refresh()
     
+    ########## Buttons Numbers ###########
+    
     def OnButton1(self, e):
         value = self.value.GetValue()
         if (value != 0):
             value = str(value) + "1"
-            if "01" in value:
-                value = value[-1:]
-            #value = int(value)
+            print (value)
+            if re.search("^01", value):
+                value_len = len(value)
+                value = value[1:value_len]
             self.value.SetLabel(value)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
 
     def OnButton2(self, e):
         value = self.value.GetValue()
         if (value != 0):
             value = str(value) + "2"
-            if "02" in value:
-                value = value[-1:]
+            print (value)
+            if re.search("^02", value):
+                value_len = len(value)
+                value = value[1:value_len]
             self.value.SetLabel(value)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
             
     def OnButton3(self, e):
         value = self.value.GetValue()
         if (value != 0):
             value = str(value) + "3"
-            if "03" in value:
-                value = value[-1:]
+            print (value)
+            if re.search("^03", value):
+                value_len = len(value)
+                value = value[1:value_len]
             self.value.SetLabel(value)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButton4(self, e):
         value = self.value.GetValue()
         if (value != 0):
             value = str(value) + "4"
-            if "04" in value:
-                value = value[-1:]
+            print (value)
+            if re.search("^04", value):
+                value_len = len(value)
+                value = value[1:value_len]
             self.value.SetLabel(value)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
 
     def OnButton5(self, e):
         value = self.value.GetValue()
         if (value != 0):
             value = str(value) + "5"
-            if "05" in value:
-                value = value[-1:]
+            print (value)
+            if re.search("^05", value):
+                value_len = len(value)
+                value = value[1:value_len]
             self.value.SetLabel(value)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButton6(self, e):
         value = self.value.GetValue()
         if (value != 0):
             value = str(value) + "6"
-            if "06" in value:
-                value = value[-1:]
+            print (value)
+            if re.search("^06", value):
+                value_len = len(value)
+                value = value[1:value_len]
             self.value.SetLabel(value)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
 
     def OnButton7(self, e):
         value = self.value.GetValue()
         if (value != 0):
             value = str(value) + "7"
-            if "07" in value:
-                value = value[-1:]
+            print (value)
+            if re.search("^07", value):
+                value_len = len(value)
+                value = value[1:value_len]
             self.value.SetLabel(value)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButton8(self, e):
         value = self.value.GetValue()
         if (value != 0):
             value = str(value) + "8"
-            if "08" in value:
-                value = value[-1:]
+            print (value)
+            if re.search("^08", value):
+                value_len = len(value)
+                value = value[1:value_len]
             self.value.SetLabel(value)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
 
     def OnButton9(self, e):
         value = self.value.GetValue()
         if (value != 0):
             value = str(value) + "9"
-            if "09" in value:
-                value = value[-1:]
+            print (value)
+            if re.search("^09", value):
+                value_len = len(value)
+                value = value[1:value_len]
             self.value.SetLabel(value)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButton0(self, e):
         value = self.value.GetValue()
@@ -300,20 +340,26 @@ class MyFrame(wx.Frame):
             if re.search("^00", value):
                 value = value[-1:]
             self.value.SetLabel(value)
-            
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+    
+    ########## Buttons Operations ###########
+    
     def OnButtonDel(self, e):
         value = self.value.GetValue()
         if (value == 0 or value == "" or value =="-"):
-            value = "0"
+            value = ""
             self.value.SetLabel(value)
         else:
             value = str(value)
             value = value[:-1]
             if (value == ""):
-                value = "0"
+                value = ""
                 self.value.SetLabel(value)
             else:
                 self.value.SetLabel(value)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
                 
     def OnButtonDot(self, e):
         value = self.value.GetValue()
@@ -322,34 +368,44 @@ class MyFrame(wx.Frame):
         else:
             value = str(value) + "."
             self.value.SetLabel(value)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
             
     def OnButtonSum(self,e):
         operand1 = self.value.GetValue()
         operation = operand1 + " + "
-        self.value.SetLabel("0")
+        self.value.SetLabel("")
         self.operation.SetLabel(operation)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButtonSub(self,e):
         operand1 = self.value.GetValue()
         operation = operand1 + " - "
-        self.value.SetLabel("0")
+        self.value.SetLabel("")
         self.operation.SetLabel(operation)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButtonMul(self,e):
         operand1 = self.value.GetValue()
         operation = operand1 + " × "
-        self.value.SetLabel("0")
+        self.value.SetLabel("")
         self.operation.SetLabel(operation)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
 
     def OnButtonDiv(self,e):
         operand1 = self.value.GetValue()
         operation = operand1 + " ÷ "
-        self.value.SetLabel("0")
+        self.value.SetLabel("")
         self.operation.SetLabel(operation)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButtonSqr(self,e):
         operand1 = self.value.GetValue()
-        self.value.SetLabel("0")
+        self.value.SetLabel("")
         operation = " √ " + operand1
         try: 
             result = op.sqr(float(operand1))
@@ -367,10 +423,12 @@ class MyFrame(wx.Frame):
         operation = operation  + " = " + str_result
         self.operation.SetLabel(operation)
         #self.result.SetLabel(str_result)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButtonXdiv(self,e):
         operand1 = self.value.GetValue()
-        self.value.SetLabel("0")
+        self.value.SetLabel("")
         operation = " 1/" + operand1
         try:
             result = 1 / float(operand1)
@@ -390,6 +448,8 @@ class MyFrame(wx.Frame):
         operation = operation  + " = " + str_result
         self.operation.SetLabel(operation)
         #self.result.SetLabel(str_result)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButtonSign(self,e):
         operand = self.value.GetValue()
@@ -399,10 +459,12 @@ class MyFrame(wx.Frame):
         else:
             operand = "-" + operand
             self.value.SetValue(operand)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButtonPow2(self,e):
         operand1 = self.value.GetValue()
-        self.value.SetLabel("0")
+        self.value.SetLabel("")
         operation = operand1 + "²"
         result = op.pot(float(operand1),2)
         str_result = str(result)
@@ -415,10 +477,12 @@ class MyFrame(wx.Frame):
         operation = operation  + " = " + str_result
         self.operation.SetLabel(operation)
         #self.result.SetLabel(str_result)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButtonPow3(self,e):
         operand1 = self.value.GetValue()
-        self.value.SetLabel("0")
+        self.value.SetLabel("")
         operation = operand1 + "³"
         result = op.pot(float(operand1),3)
         str_result = str(result)
@@ -431,15 +495,53 @@ class MyFrame(wx.Frame):
         operation = operation  + " = " + str_result
         self.operation.SetLabel(operation)
         #self.result.SetLabel(str_result)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+
+    def OnButtonPowy(self,e):
+        operand1 = self.value.GetValue()
+        if operand1 == "":
+            print ("No inicial value...")
+        else:
+            self.value.SetLabel(operand1 + "^")
+            operation = operand1 + " ^ "
+            self.value.SetLabel(operation)
+            self.operation.SetLabel(operation)
+            
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+
+    def OnButtonCuber(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("")
+        operation = "∛" + operand1
+        result = op.cube_root(float(operand1))
+        str_result = str(result)
+        
+        try:
+            int,decimal = str_result.split('.')
+        except ValueError:
+            decimal=""
+            int = str_result
+        
+        if decimal == "0":
+            str_result = str_result[:-2]
+        
+        operation = operation  + " = " + str_result
+        self.operation.SetLabel(operation)
+        #self.result.SetLabel(str_result)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButtonResult(self,e):
         operation = self.operation.GetLabel()
+        #print (operation)
         operand1 = operation[:-3]
         
         operand2 = self.value.GetValue()
         tmp = ""
         
-        self.value.SetLabel("0")
+        self.value.SetLabel("")
         
         
         if " + " in operation:
@@ -450,6 +552,9 @@ class MyFrame(wx.Frame):
             result = op.mult(float(operand1),float(operand2))
         if " ÷ " in operation:
             result = op.div(float(operand1),float(operand2))
+        if " ^ " in operation:
+            operand1,operand2 = operand2.split(' ^ ')
+            result = op.pot(float(operand1),float(operand2))
         
         str_result = str(result)
         try:
@@ -464,17 +569,21 @@ class MyFrame(wx.Frame):
         operation = operation + operand2 + " = " + str_result
         self.operation.SetLabel(operation)
         
-        
-        #self.result.SetLabel(str_result)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
             
     def OnButtonclear(self, e):
-        value = "0"
+        value = ""
         self.value.SetLabel(value)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def OnButtonAC(self, e):
-        value = "0"
+        value = ""
         self.value.SetLabel(value)
         self.operation.SetLabel("")
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
         
     def click_on_text_field(self, event):
         self.value.SetInsertionPointEnd()
@@ -497,8 +606,10 @@ class MyFrame(wx.Frame):
 
         if key_code == ord('-'):
             value = self.value.GetValue()
+            value_len = len(value)
+            print (value)
             if re.search("^-",value):
-                self.value.SetValue(value[-1:])
+                self.value.SetValue(value[1:value_len])
                 self.value.SetInsertionPointEnd() 
             else:
                 self.value.SetValue("-" + value)
@@ -510,7 +621,7 @@ class MyFrame(wx.Frame):
         if key_code == ord('.'):
             value = self.value.GetValue()
             print (value)
-            if re.search(".", value):
+            if re.search("\.", value):
                 print ("Already decimal in op...")
                 return
             event.Skip()
