@@ -1,8 +1,8 @@
 # pip install wxpython
 #   Calculator Scientific
 #   Made by: Jose Daniel Rodriguez Sanchez
-#   Build on: 2020-07-18
-#   Last Update: 2020-07-20
+#   Build on: 2020-07-20
+#   Last Update: 2020-07-22
 
 
 import operations as op
@@ -14,26 +14,35 @@ from wx.lib.masked import NumCtrl
 class MyFrame(wx.Frame):
     
     def __init__(self):
-        super().__init__(parent=None, title='Scientific Calculator',size=(550, 500))
+        super().__init__(parent=None, title='Scientific Calculator',size=(600, 550))
         panel = wx.Panel(self)
         
-        #self.wx.Frame.
+        # create wx.Bitmap object  
+        bmpForRootAny = wx.Bitmap('images/root.png') 
         
         operand1 = ""
         operand2 = ""
         operation = ""
         
-        pos_ini_y = 150
+        pos_ini_y = 170
         pos_ini_x = 95
         dif_y = 40
         dif_x = 40
 
-        #self.value = NumCtrl(panel, pos=(10, 5), size=(500, 20),value = "0",decimalChar = ".",fractionWidth = 0)
-        self.value = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y - 110), size=(160, 20),value = "0", style=wx.TE_RIGHT | wx.TE_READONLY)
+        #self.value = NumCtrl(panel, pos=(5, 0), size=(500, 40),value = "",decimalChar = ".",fractionWidth = 0)
+        self.value = wx.TextCtrl(panel, pos=(pos_ini_x - 40, pos_ini_y - 150), size=(200, 60),value = "", style=wx.TE_RIGHT | wx.TE_MULTILINE | wx.SUNKEN_BORDER)
+        self.value.Bind(wx.EVT_CHAR, self.block_non_numbers)
+        #self.value.Bind(wx.EVT_LEFT_DOWN, self.click_on_text_field) 
+        
+        # To have cursor always a the right position
+        self.value.Bind(wx.EVT_LEFT_UP, self.click_on_text_field)
+        
         # pos=(x,y)
         
         self.my_btn_pow3 = wx.Button(panel, label='x³', pos=(pos_ini_x -40, pos_ini_y -80), size=(40, 40))
-        self.my_btn_exp = wx.Button(panel, label='r(x,y)', pos=(pos_ini_x, pos_ini_y -80), size=(40, 40))
+        self.my_btn_root = wx.Button(panel, label='∛', pos=(pos_ini_x, pos_ini_y -80), size=(40, 40))
+        # set bmp as bitmap for button 
+        #self.my_btn_root.SetBitmap(bmpForRootAny) 
         self.my_btn_arcs = wx.Button(panel, label='arcs', pos=(pos_ini_x + 40, pos_ini_y - 80), size=(40, 40))
         self.my_btn_arcc = wx.Button(panel, label='arcc', pos=(pos_ini_x + 80, pos_ini_y -80 ), size=(40, 40))
         self.my_btn_arct = wx.Button(panel, label='arct', pos=(pos_ini_x + 120, pos_ini_y - 80), size=(40, 40))
@@ -97,8 +106,8 @@ class MyFrame(wx.Frame):
         font = wx.Font(16, wx.DECORATIVE, wx.NORMAL, wx.BOLD)
         self.operation.SetFont(font)
         
+        ## Fonts Style
         fontButtonOpMain = wx.Font(15, wx.DECORATIVE, wx.NORMAL, wx.BOLD)
-        
         fontButtonOp = wx.Font(11, wx.DECORATIVE, wx.NORMAL, wx.BOLD)
         self.my_btn_sqr.SetFont(fontButtonOp)
         self.my_btn_pow2.SetFont(fontButtonOp)
@@ -114,10 +123,33 @@ class MyFrame(wx.Frame):
         self.my_btn_clear_all.SetFont(fontButtonOp)
         self.my_btn_dot.SetFont(fontButtonOp)
         self.my_btn_result.SetFont(fontButtonOpMain)
+        self.my_btn_root.SetFont(wx.Font(18, wx.DECORATIVE, wx.NORMAL, wx.BOLD))
+        self.my_btn_arcc.SetFont(fontButtonOp)
+        self.my_btn_arcs.SetFont(fontButtonOp)
+        self.my_btn_arct.SetFont(fontButtonOp)
+        self.my_btn_powy.SetFont(fontButtonOp)
+        self.my_btn_sin.SetFont(fontButtonOp)
+        self.my_btn_cos.SetFont(fontButtonOp)
+        self.my_btn_tan.SetFont(fontButtonOp)
+        self.my_btn_ex.SetFont(fontButtonOp)
+        self.my_btn_ln.SetFont(fontButtonOp)
+        self.my_btn_eu.SetFont(fontButtonOp)
+        self.my_btn_gra.SetFont(fontButtonOp)
+        self.my_btn_base10.SetFont(fontButtonOp)
+        self.my_btn_log.SetFont(fontButtonOp)
+        self.my_btn_res.SetFont(fontButtonOp)
+        self.my_btn_abs.SetFont(fontButtonOp)
+        self.my_btn_mem.SetFont(fontButtonOp)
+        self.my_btn_pi.SetFont(fontButtonOp)
+        self.my_btn_fac.SetFont(fontButtonOp)
+        self.my_btn_openp.SetFont(fontButtonOp)
+        self.my_btn_closep.SetFont(fontButtonOp)
+        
+        
         
         wx.StaticText(panel, label="Made by: Jose Daniel Rodríguez Sánchez", pos=(pos_ini_x + 175, pos_ini_y + 200))
         wx.StaticText(panel, label="Build on: 2020-07-20", pos=(pos_ini_x + 175, pos_ini_y + 225))
-        wx.StaticText(panel, label="Last Update: 2020-07-20", pos=(pos_ini_x + 175, pos_ini_y + 245))
+        wx.StaticText(panel, label="Last Update: 2020-07-22", pos=(pos_ini_x + 175, pos_ini_y + 245))
         
         # Set event handlers
         # Numbers
@@ -149,6 +181,7 @@ class MyFrame(wx.Frame):
         self.my_btn_pow3.Bind(wx.EVT_BUTTON, self.OnButtonPow3)
         self.my_btn_xdiv.Bind(wx.EVT_BUTTON, self.OnButtonXdiv)
         self.my_btn_sign.Bind(wx.EVT_BUTTON, self.OnButtonSign)
+        
     
         self.Show()
         
@@ -157,7 +190,7 @@ class MyFrame(wx.Frame):
         #print ("Working on Dir: " + str(current_dir))
         
         # Style
-        self.SetIcon(wx.Icon(current_dir + "/app_calc.ico"))
+        self.SetIcon(wx.Icon(current_dir + "/images/app_calc.ico"))
         #self.SetIcon(wx.Icon.SetWidth(16))
         #self.SetIcon(wx.Icon.SetHeight(16))
         #self.wx.Icon(desiredWidth = 150, desiredHeight = 150)
@@ -442,7 +475,54 @@ class MyFrame(wx.Frame):
         value = "0"
         self.value.SetLabel(value)
         self.operation.SetLabel("")
+        
+    def click_on_text_field(self, event):
+        self.value.SetInsertionPointEnd()
+        event.Skip()
             
+            
+    def block_non_numbers(self, event):
+        key_code = event.GetKeyCode()
+        
+        print ("Key: " + str(key_code))
+        
+        if key_code in (8, 127, 314, 316):
+            event.Skip()
+            return
+
+        # Allow ASCII numerics
+        if ord('0') <= key_code <= ord('9'):
+            event.Skip()
+            return
+
+        if key_code == ord('-'):
+            value = self.value.GetValue()
+            if re.search("^-",value):
+                self.value.SetValue(value[-1:])
+                self.value.SetInsertionPointEnd() 
+            else:
+                self.value.SetValue("-" + value)
+                self.value.SetInsertionPointEnd() 
+            #event.Skip()
+            return
+
+        # Allow decimal points
+        if key_code == ord('.'):
+            value = self.value.GetValue()
+            print (value)
+            if re.search(".", value):
+                print ("Already decimal in op...")
+                return
+            event.Skip()
+            return
+
+        # Allow tabs, for tab navigation between TextCtrls
+        #if key_code == ord('\t'):
+        #    event.Skip()
+        #    return
+
+        # Block everything else
+        return
 if __name__ == '__main__':
     app = wx.App()
     frame = MyFrame()
