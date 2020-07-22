@@ -13,6 +13,15 @@ import shutil
 from smb.SMBConnection import SMBConnection
 from pathlib import Path
 
+############# Created by: Jose Daniel Rodriguez
+#   Description:
+#       This scripts download emails from aldea_account and send the attachements 
+#       to Windows Server for processing into DB.
+#
+#   Created on Date: 2020-06-29
+#   Last Update: 2020-07-21
+#
+
 date_time_start=dt.datetime.now()
 
 #####################################################################
@@ -316,7 +325,10 @@ if (counter != 0):
 print ("\n\nDeleting Local Files:")
 for files in attachement_file_names:
     print ("Deleting: " + files)
-    os.remove(path + files)
+    try:
+        os.remove(path + files)
+    except FileNotFoundError:
+        print ("File Not Present...")
 
 # Listing remote Share Directory
 #print ("Listing Remote Share Directory")
