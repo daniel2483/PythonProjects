@@ -39,3 +39,11 @@ def fac(number1):
 def sqr(number1):
     sqr_result = math.sqrt(float(number1))
     return sqr_result
+    
+def cube_root(number1):
+    cube_root_result = round(number1 ** (1. / 3),10)
+    #cube_root_result = number1 ** (1. / 3)
+    return cube_root_result
+    
+#test = cube_root(27)
+#print (test)
