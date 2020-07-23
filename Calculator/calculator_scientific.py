@@ -10,6 +10,7 @@ import wx
 import re
 import os
 import wx.richtext as rt
+import math
 from wx.lib.masked import NumCtrl
 
 class MyFrame(wx.Frame):
@@ -62,7 +63,7 @@ class MyFrame(wx.Frame):
         
         self.my_btn_sqr = wx.Button(panel, label='√', pos=(pos_ini_x-40, pos_ini_y + 40), size=(40, 40))
         self.my_btn_base10 = wx.Button(panel, label='10^x', pos=(pos_ini_x, pos_ini_y + 40), size=(40, 40))
-        self.my_btn_log = wx.Button(panel, label='Log', pos=(pos_ini_x + 40, pos_ini_y + 40), size=(40, 40))
+        self.my_btn_log10 = wx.Button(panel, label='Log', pos=(pos_ini_x + 40, pos_ini_y + 40), size=(40, 40))
         self.my_btn_res = wx.Button(panel, label='Res', pos=(pos_ini_x + 80, pos_ini_y + 40), size=(40, 40))
         self.my_btn_abs = wx.Button(panel, label='ABS', pos=(pos_ini_x +120, pos_ini_y + 40), size=(40, 40))
         
@@ -137,7 +138,7 @@ class MyFrame(wx.Frame):
         self.my_btn_eu.SetFont(fontButtonOp)
         self.my_btn_gra.SetFont(fontButtonOp)
         self.my_btn_base10.SetFont(fontButtonOp)
-        self.my_btn_log.SetFont(fontButtonOp)
+        self.my_btn_log10.SetFont(fontButtonOp)
         self.my_btn_res.SetFont(fontButtonOp)
         self.my_btn_abs.SetFont(fontButtonOp)
         self.my_btn_mem.SetFont(fontButtonOp)
@@ -184,7 +185,8 @@ class MyFrame(wx.Frame):
         self.my_btn_sign.Bind(wx.EVT_BUTTON, self.OnButtonSign)
         self.my_btn_cuber.Bind(wx.EVT_BUTTON, self.OnButtonCuber)
         self.my_btn_powy.Bind(wx.EVT_BUTTON, self.OnButtonPowy)
-        
+        self.my_btn_powy.Bind(wx.EVT_BUTTON, self.OnButtonPowy)
+        self.my_btn_log10.Bind(wx.EVT_BUTTON, self.OnButtonLog10)
     
         self.Show()
         
@@ -485,6 +487,24 @@ class MyFrame(wx.Frame):
         self.value.SetLabel("")
         operation = operand1 + "³"
         result = op.pot(float(operand1),3)
+        str_result = str(result)
+        
+        int,decimal = str_result.split('.')
+        
+        if decimal == "0":
+            str_result = str_result[:-2]
+        
+        operation = operation  + " = " + str_result
+        self.operation.SetLabel(operation)
+        #self.result.SetLabel(str_result)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+        
+    def OnButtonLog10(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("")
+        operation = "Log 10 (" + operand1 + ")"
+        result = round(math.log(float(operand1),10),10)
         str_result = str(result)
         
         int,decimal = str_result.split('.')
