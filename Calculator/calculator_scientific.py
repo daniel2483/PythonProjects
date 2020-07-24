@@ -2,7 +2,7 @@
 #   Calculator Scientific
 #   Made by: Jose Daniel Rodriguez Sanchez
 #   Build on: 2020-07-20
-#   Last Update: 2020-07-22
+#   Last Update: 2020-07-23
 
 
 import operations as op
@@ -56,15 +56,15 @@ class MyFrame(wx.Frame):
         self.my_btn_tan = wx.Button(panel, label='tan', pos=(pos_ini_x + 120, pos_ini_y - 40), size=(40, 40))
         
         self.my_btn_xdiv = wx.Button(panel, label='1/x', pos=(pos_ini_x -40, pos_ini_y), size=(40, 40))
-        self.my_btn_ex = wx.Button(panel, label='e^x', pos=(pos_ini_x, pos_ini_y), size=(40, 40))
+        self.my_btn_exp = wx.Button(panel, label='e^x', pos=(pos_ini_x, pos_ini_y), size=(40, 40))
         self.my_btn_ln = wx.Button(panel, label='ln', pos=(pos_ini_x + 40, pos_ini_y), size=(40, 40))
-        self.my_btn_eu = wx.Button(panel, label='e', pos=(pos_ini_x + 80, pos_ini_y), size=(40, 40))
+        self.my_btn_e = wx.Button(panel, label='e', pos=(pos_ini_x + 80, pos_ini_y), size=(40, 40))
         self.my_btn_gra = wx.Button(panel, label='G', pos=(pos_ini_x + 120, pos_ini_y), size=(40, 40))
         
         self.my_btn_sqr = wx.Button(panel, label='√', pos=(pos_ini_x-40, pos_ini_y + 40), size=(40, 40))
         self.my_btn_base10 = wx.Button(panel, label='10^x', pos=(pos_ini_x, pos_ini_y + 40), size=(40, 40))
         self.my_btn_log10 = wx.Button(panel, label='Log', pos=(pos_ini_x + 40, pos_ini_y + 40), size=(40, 40))
-        self.my_btn_res = wx.Button(panel, label='Res', pos=(pos_ini_x + 80, pos_ini_y + 40), size=(40, 40))
+        self.my_btn_mod = wx.Button(panel, label='Mod', pos=(pos_ini_x + 80, pos_ini_y + 40), size=(40, 40))
         self.my_btn_abs = wx.Button(panel, label='ABS', pos=(pos_ini_x +120, pos_ini_y + 40), size=(40, 40))
         
         self.my_btn_mem = wx.Button(panel, label='Mem', pos=(pos_ini_x - 40, pos_ini_y + 80), size=(40, 40))
@@ -133,13 +133,13 @@ class MyFrame(wx.Frame):
         self.my_btn_sin.SetFont(fontButtonOp)
         self.my_btn_cos.SetFont(fontButtonOp)
         self.my_btn_tan.SetFont(fontButtonOp)
-        self.my_btn_ex.SetFont(fontButtonOp)
+        self.my_btn_exp.SetFont(fontButtonOp)
         self.my_btn_ln.SetFont(fontButtonOp)
-        self.my_btn_eu.SetFont(fontButtonOp)
+        self.my_btn_e.SetFont(fontButtonOp)
         self.my_btn_gra.SetFont(fontButtonOp)
         self.my_btn_base10.SetFont(fontButtonOp)
         self.my_btn_log10.SetFont(fontButtonOp)
-        self.my_btn_res.SetFont(fontButtonOp)
+        self.my_btn_mod.SetFont(fontButtonOp)
         self.my_btn_abs.SetFont(fontButtonOp)
         self.my_btn_mem.SetFont(fontButtonOp)
         self.my_btn_pi.SetFont(fontButtonOp)
@@ -187,6 +187,12 @@ class MyFrame(wx.Frame):
         self.my_btn_powy.Bind(wx.EVT_BUTTON, self.OnButtonPowy)
         self.my_btn_powy.Bind(wx.EVT_BUTTON, self.OnButtonPowy)
         self.my_btn_log10.Bind(wx.EVT_BUTTON, self.OnButtonLog10)
+        self.my_btn_ln.Bind(wx.EVT_BUTTON, self.OnButtonLn)
+        self.my_btn_base10.Bind(wx.EVT_BUTTON, self.OnButtonBase10)
+        self.my_btn_pi.Bind(wx.EVT_BUTTON, self.OnButtonPi)
+        self.my_btn_fac.Bind(wx.EVT_BUTTON, self.OnButtonFac)
+        self.my_btn_exp.Bind(wx.EVT_BUTTON, self.OnButtonExp)
+        self.my_btn_e.Bind(wx.EVT_BUTTON, self.OnButtonE)
     
         self.Show()
         
@@ -517,6 +523,24 @@ class MyFrame(wx.Frame):
         #self.result.SetLabel(str_result)
         self.value.SetFocus()
         self.value.SetInsertionPointEnd()
+        
+    def OnButtonLn(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("")
+        operation = "Ln (" + operand1 + ")"
+        result = round(math.log(float(operand1)),10)
+        str_result = str(result)
+        
+        int,decimal = str_result.split('.')
+        
+        if decimal == "0":
+            str_result = str_result[:-2]
+        
+        operation = operation  + " = " + str_result
+        self.operation.SetLabel(operation)
+        #self.result.SetLabel(str_result)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
 
     def OnButtonPowy(self,e):
         operand1 = self.value.GetValue()
@@ -528,6 +552,42 @@ class MyFrame(wx.Frame):
             self.value.SetLabel(operation)
             self.operation.SetLabel(operation)
             
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+        
+    def OnButtonPi(self,e):
+        piValue = math.pi
+        self.value.SetValue(str(piValue))
+            
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+        
+    def OnButtonE(self,e):
+        eValue = math.e
+        self.value.SetValue(str(eValue))
+            
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+        
+    def OnButtonBase10(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("")
+        operation = "10 ^ " + operand1
+        result = op.pot(10,float(operand1))
+        str_result = str(result)
+        
+        try :
+            int,decimal = str_result.split('.')
+        except ValueError:
+            decimal = ""
+            int = str_result
+        
+        if decimal == "0":
+            str_result = str_result[:-2]
+        
+        operation = operation  + " = " + str_result
+        self.operation.SetLabel(operation)
+
         self.value.SetFocus()
         self.value.SetInsertionPointEnd()
 
@@ -549,7 +609,43 @@ class MyFrame(wx.Frame):
         
         operation = operation  + " = " + str_result
         self.operation.SetLabel(operation)
-        #self.result.SetLabel(str_result)
+
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+        
+    def OnButtonFac(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("")
+        operation = operand1 + "!"
+        result = op.fac(float(operand1))
+        str_result = str(result)
+        
+        #int,decimal = str_result.split('.')
+        
+        #if decimal == "0":
+        #    str_result = str_result[:-2]
+        
+        operation = operation  + " = " + str_result
+        self.operation.SetLabel(operation)
+        
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+        
+    def OnButtonExp(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("")
+        operation = "e ^ " + operand1
+        result = math.exp(float(operand1))
+        str_result = str(result)
+        
+        int,decimal = str_result.split('.')
+        
+        if decimal == "0":
+            str_result = str_result[:-2]
+        
+        operation = operation  + " = " + str_result
+        self.operation.SetLabel(operation)
+        
         self.value.SetFocus()
         self.value.SetInsertionPointEnd()
         
