@@ -36,6 +36,9 @@ class MyFrame(wx.Frame):
         self.value.Bind(wx.EVT_CHAR, self.block_non_numbers)
         #self.value.Bind(wx.EVT_LEFT_DOWN, self.click_on_text_field)
 
+        # Units Measures Grades or Rad for trigonometrics ops
+        self.unit = wx.StaticText(panel, label="rad", pos=(pos_ini_x + 170, pos_ini_y - 150))
+
         # To have cursor always a the right position
         self.value.Bind(wx.EVT_LEFT_UP, self.click_on_text_field)
 
@@ -59,7 +62,7 @@ class MyFrame(wx.Frame):
         self.my_btn_exp = wx.Button(panel, label='e^x', pos=(pos_ini_x, pos_ini_y), size=(40, 40))
         self.my_btn_ln = wx.Button(panel, label='ln', pos=(pos_ini_x + 40, pos_ini_y), size=(40, 40))
         self.my_btn_e = wx.Button(panel, label='e', pos=(pos_ini_x + 80, pos_ini_y), size=(40, 40))
-        self.my_btn_gra = wx.Button(panel, label='G', pos=(pos_ini_x + 120, pos_ini_y), size=(40, 40))
+        self.my_btn_grad = wx.Button(panel, label='Grad', pos=(pos_ini_x + 120, pos_ini_y), size=(40, 40))
 
         self.my_btn_sqr = wx.Button(panel, label='√', pos=(pos_ini_x-40, pos_ini_y + 40), size=(40, 40))
         self.my_btn_base10 = wx.Button(panel, label='10^x', pos=(pos_ini_x, pos_ini_y + 40), size=(40, 40))
@@ -67,7 +70,7 @@ class MyFrame(wx.Frame):
         self.my_btn_mod = wx.Button(panel, label='Mod', pos=(pos_ini_x + 80, pos_ini_y + 40), size=(40, 40))
         self.my_btn_abs = wx.Button(panel, label='ABS', pos=(pos_ini_x +120, pos_ini_y + 40), size=(40, 40))
 
-        self.my_btn_mem = wx.Button(panel, label='Mem', pos=(pos_ini_x - 40, pos_ini_y + 80), size=(40, 40))
+        self.my_btn_ans = wx.Button(panel, label='ANS', pos=(pos_ini_x - 40, pos_ini_y + 80), size=(40, 40))
         self.my_btn_clear_all = wx.Button(panel, label='CE', pos=(pos_ini_x, pos_ini_y + 80), size=(40, 40))
         self.my_btn_clear = wx.Button(panel, label='C', pos=(pos_ini_x + 40, pos_ini_y + 80), size=(40, 40))
         self.my_btn_del = wx.Button(panel, label='DEL', pos=(pos_ini_x + 80, pos_ini_y + 80), size=(40, 40))
@@ -136,12 +139,12 @@ class MyFrame(wx.Frame):
         self.my_btn_exp.SetFont(fontButtonOp)
         self.my_btn_ln.SetFont(fontButtonOp)
         self.my_btn_e.SetFont(fontButtonOp)
-        self.my_btn_gra.SetFont(fontButtonOp)
+        self.my_btn_grad.SetFont(fontButtonOp)
         self.my_btn_base10.SetFont(fontButtonOp)
         self.my_btn_log10.SetFont(fontButtonOp)
         self.my_btn_mod.SetFont(fontButtonOp)
         self.my_btn_abs.SetFont(fontButtonOp)
-        self.my_btn_mem.SetFont(fontButtonOp)
+        self.my_btn_ans.SetFont(fontButtonOp)
         self.my_btn_pi.SetFont(fontButtonOp)
         self.my_btn_fac.SetFont(fontButtonOp)
         self.my_btn_openp.SetFont(fontButtonOp)
@@ -196,6 +199,13 @@ class MyFrame(wx.Frame):
         self.my_btn_abs.Bind(wx.EVT_BUTTON, self.OnButtonAbs)
         self.my_btn_mod.Bind(wx.EVT_BUTTON, self.OnButtonMod)
         self.my_btn_sin.Bind(wx.EVT_BUTTON, self.OnButtonSin)
+        self.my_btn_cos.Bind(wx.EVT_BUTTON, self.OnButtonCos)
+        self.my_btn_tan.Bind(wx.EVT_BUTTON, self.OnButtonTan)
+        self.my_btn_arcs.Bind(wx.EVT_BUTTON, self.OnButtonAsin)
+        self.my_btn_arcc.Bind(wx.EVT_BUTTON, self.OnButtonAcos)
+        self.my_btn_arct.Bind(wx.EVT_BUTTON, self.OnButtonAtan)
+        self.my_btn_ans.Bind(wx.EVT_BUTTON, self.OnButtonAns)
+        self.my_btn_grad.Bind(wx.EVT_BUTTON, self.OnButtonGrad)
 
         self.Show()
 
@@ -703,6 +713,171 @@ class MyFrame(wx.Frame):
 
         self.value.SetFocus()
         self.value.SetInsertionPointEnd()
+
+    def OnButtonCos(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("")
+        operation = "cos(" + operand1 + " rad)"
+        result = round(math.cos(float(operand1)),15)
+        str_result = str(result)
+
+        try:
+            int,decimal = str_result.split('.')
+        except ValueError:
+            int = str_result
+            decimal = ""
+
+        if decimal == "0":
+            str_result = str_result[:-2]
+
+        operation = operation  + " = " + str_result
+        self.operation.SetLabel(operation)
+
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+
+    def OnButtonTan(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("")
+        operation = "tan(" + operand1 + " rad)"
+        result = round(math.tan(float(operand1)),15)
+        str_result = str(result)
+
+        try:
+            int,decimal = str_result.split('.')
+        except ValueError:
+            int = str_result
+            decimal = ""
+
+        if decimal == "0":
+            str_result = str_result[:-2]
+
+        operation = operation  + " = " + str_result
+        self.operation.SetLabel(operation)
+
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+
+    def OnButtonAsin(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("")
+        operation = "asin(" + operand1 + ")"
+        error_flag = 0
+        try:
+            result = round(math.asin(float(operand1)),15)
+        except ValueError:
+            error_flag = 1
+            result = "Error"
+
+        str_result = str(result)
+
+        try:
+            int,decimal = str_result.split('.')
+        except ValueError:
+            int = str_result
+            decimal = ""
+
+        if decimal == "0":
+            str_result = str_result[:-2]
+
+        if error_flag == 0:
+            operation = operation  + " = " + str_result + " rad"
+        else:
+            operation = operation  + " = " + "Does not exist..."
+
+        self.operation.SetLabel(operation)
+
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+
+    def OnButtonAcos(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("")
+        operation = "acos(" + operand1 + ")"
+        error_flag = 0
+        try:
+            result = round(math.acos(float(operand1)),15)
+        except ValueError:
+            error_flag = 1
+            result = "Error"
+
+        str_result = str(result)
+
+        try:
+            int,decimal = str_result.split('.')
+        except ValueError:
+            int = str_result
+            decimal = ""
+
+        if decimal == "0":
+            str_result = str_result[:-2]
+
+        if error_flag == 0:
+            operation = operation  + " = " + str_result + " rad"
+        else:
+            operation = operation  + " = " + "Does not exist..."
+
+        self.operation.SetLabel(operation)
+
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+
+    def OnButtonAtan(self,e):
+        operand1 = self.value.GetValue()
+        self.value.SetLabel("")
+        operation = "atan(" + operand1 + ")"
+        error_flag = 0
+        try:
+            result = round(math.atan(float(operand1)),15)
+        except ValueError:
+            error_flag = 1
+            result = "Error"
+
+        str_result = str(result)
+
+        try:
+            int,decimal = str_result.split('.')
+        except ValueError:
+            int = str_result
+            decimal = ""
+
+        if decimal == "0":
+            str_result = str_result[:-2]
+
+        if error_flag == 0:
+            operation = operation  + " = " + str_result + " rad"
+        else:
+            operation = operation  + " = " + "Does not exist..."
+
+        self.operation.SetLabel(operation)
+
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+
+    def OnButtonAns(self,e):
+        operation = self.operation.GetLabel()
+        if " = " in operation:
+            chunk,value = operation.split(' = ')
+            self.value.SetLabel(value)
+        else:
+            operation = self.operation.SetLabel("Wrong ANS")
+
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+        print (operation)
+
+    def OnButtonGrad(self,e):
+        units = self.unit.GetLabel()
+
+        if "°" in units:
+            self.unit.SetLabel("rad")
+        else:
+            self.unit.SetLabel("°")
+
+        print (units)
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+
 
     def OnButtonResult(self,e):
         operation = self.operation.GetLabel()
