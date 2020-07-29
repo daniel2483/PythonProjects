@@ -2,7 +2,7 @@
 #   Calculator Scientific
 #   Made by: Jose Daniel Rodriguez Sanchez
 #   Build on: 2020-07-20
-#   Last Update: 2020-07-28
+#   Last Update: 2020-07-29
 
 
 import operations as op
@@ -154,7 +154,7 @@ class MyFrame(wx.Frame):
 
         wx.StaticText(panel, label="Made by: Jose Daniel Rodríguez Sánchez", pos=(pos_ini_x + 175, pos_ini_y + 200))
         wx.StaticText(panel, label="Build on: 2020-07-20", pos=(pos_ini_x + 175, pos_ini_y + 225))
-        wx.StaticText(panel, label="Last Update: 2020-07-28", pos=(pos_ini_x + 175, pos_ini_y + 245))
+        wx.StaticText(panel, label="Last Update: 2020-07-29", pos=(pos_ini_x + 175, pos_ini_y + 245))
 
         # Set event handlers
         # Numbers
@@ -205,6 +205,8 @@ class MyFrame(wx.Frame):
         self.my_btn_arct.Bind(wx.EVT_BUTTON, self.OnButtonAtan)
         self.my_btn_ans.Bind(wx.EVT_BUTTON, self.OnButtonAns)
         self.my_btn_grad.Bind(wx.EVT_BUTTON, self.OnButtonGrad)
+
+        self.my_btn_result.Bind(wx.EVT_BUTTON, self.OnButtonResult)
 
         self.Show()
 
@@ -517,17 +519,25 @@ class MyFrame(wx.Frame):
                 operation = self.operation.SetLabel("Enter a valid number")
                 return None
 
+
+
         self.value.SetLabel("")
         operation = " √ " + operand1
         try:
-            result = op.sqr(float(operand1))
-            str_result = str(result)
+            if operand1 != "∞":
+                result = op.sqr(float(operand1))
+                str_result = str(result)
+            else:
+                str_result = "∞"
         except ValueError:
             operand1 = abs(float(operand1))
             result = op.sqr(float(operand1))
             str_result = str(result) + " i"
 
-        int,decimal = str_result.split('.')
+        try:    int,decimal = str_result.split('.')
+        except ValueError:
+            int = str_result
+            decimal = ""
 
         if decimal == "0":
             str_result = str_result[:-2]
@@ -560,6 +570,9 @@ class MyFrame(wx.Frame):
             result = 1 / float(operand1)
         except ZeroDivisionError:
             result = "∞"
+        except ValueError:
+            result = "0"
+
         str_result = str(result)
 
         try:
@@ -606,10 +619,17 @@ class MyFrame(wx.Frame):
 
         self.value.SetLabel("")
         operation = operand1 + "²"
-        result = op.pot(float(operand1),2)
+
+        try:    result = op.pot(float(operand1),2)
+        except ValueError:  result = "∞"
+
         str_result = str(result)
 
-        int,decimal = str_result.split('.')
+        try: int,decimal = str_result.split('.')
+        except ValueError:
+            int = str_result
+            decimal = ""
+
 
         if decimal == "0":
             str_result = str_result[:-2]
@@ -638,10 +658,14 @@ class MyFrame(wx.Frame):
 
         self.value.SetLabel("")
         operation = operand1 + "³"
-        result = op.pot(float(operand1),3)
+        try:    result = op.pot(float(operand1),3)
+        except ValueError:  result = "∞"
         str_result = str(result)
 
-        int,decimal = str_result.split('.')
+        try: int,decimal = str_result.split('.')
+        except ValueError:
+            int = str_result
+            decimal = ""
 
         if decimal == "0":
             str_result = str_result[:-2]
@@ -772,7 +796,10 @@ class MyFrame(wx.Frame):
 
         self.value.SetLabel("")
         operation = "10 ^ " + operand1
-        result = op.pot(10,float(operand1))
+
+        try:    result = op.pot(10,float(operand1))
+        except ValueError: result = "∞"
+
         str_result = str(result)
 
         try :
@@ -808,11 +835,13 @@ class MyFrame(wx.Frame):
 
         self.value.SetLabel("")
         operation = "∛" + operand1
-        result = op.cube_root(float(operand1))
+
+        try:    result = op.cube_root(float(operand1))
+        except ValueError:  result = "∞"
+
         str_result = str(result)
 
-        try:
-            int,decimal = str_result.split('.')
+        try:    int,decimal = str_result.split('.')
         except ValueError:
             decimal=""
             int = str_result
@@ -1211,7 +1240,7 @@ class MyFrame(wx.Frame):
         self.value.SetLabel("")
 
         if operand1 == "":
-            print ("Test")
+            #print ("Test")
             operation = self.operation.GetLabel()
             if "Does not" in operation:
                 operation = self.operation.SetLabel("Value Does not exist")
@@ -1234,15 +1263,40 @@ class MyFrame(wx.Frame):
             else:
                 result = "∞"
         if " - " in operation:
-            result = op.sub(float(operand1),float(operand2))
+            if operand1 != "∞":
+                result = op.sub(float(operand1),float(operand2))
+            else:
+                result = "∞"
         if " × " in operation:
-            result = op.mult(float(operand1),float(operand2))
+            if operand1 != "∞":
+                result = op.mult(float(operand1),float(operand2))
+            elif operand2 == "0":
+                result = "Indet"
+            else:
+                result = "∞"
         if " ÷ " in operation:
-            result = op.div(float(operand1),float(operand2))
+            if operand1 != "∞" and operand2 != "0":
+                result = op.div(float(operand1),float(operand2))
+            elif operand1 == "∞" and operand2 == "0":
+                result = "Indet"
+            elif operand1 == "∞" and operand2 != "0":
+                result = "∞"
+            else:
+                result = "∞"
+
         if " ^ " in operation:
-            result = op.pot(float(operand1),float(operand2))
+            if operand1 != "∞" and operand2 != "0":
+                result = op.pot(float(operand1),float(operand2))
+            elif operand1 == "∞" and operand2 == "0":
+                result = "Indet"
+            elif operand1 == "∞" and operand2 != "0":
+                result = "∞"
+
         if " % " in operation:
-            result = op.res(float(operand1),float(operand2))
+            if operand1 != "∞" and operand2 != "0":
+                result = op.res(float(operand1),float(operand2))
+            else:
+                result = "Indet"
 
         str_result = str(result)
         try:
@@ -1263,63 +1317,63 @@ class MyFrame(wx.Frame):
     # Result operation from button
     def OnButtonResultEnter():
         operation = self.operation.GetLabel()
-        #print (operation)
-        operand1 = operation[:-3]
+        print (operation)
+        #operand1 = operation[:-3]
 
-        operand2 = self.value.GetValue()
-        tmp = ""
+        #operand2 = self.value.GetValue()
+        #tmp = ""
 
-        self.value.SetLabel("")
+        #self.value.SetLabel("")
 
-        if operand1 == "":
-            print ("Test")
-            operation = self.operation.GetLabel()
-            if "Does not" in operation:
-                operation = self.operation.SetLabel("Value Does not exist")
-                return None
+        #if operand1 == "":
+        #    print ("Test")
+        #    operation = self.operation.GetLabel()
+        #    if "Does not" in operation:
+        #        operation = self.operation.SetLabel("Value Does not exist")
+        #        return None
 
-            elif " = " in operation:
-                chunk,value = operation.split(' = ')
-                self.value.SetLabel(value)
-            else:
-                operation = self.operation.SetLabel("Enter a valid number")
-                return None
+        #    elif " = " in operation:
+        #        chunk,value = operation.split(' = ')
+        #        self.value.SetLabel(value)
+        #    else:
+        #        operation = self.operation.SetLabel("Enter a valid number")
+        #        return None
 
-        if operand2 == "":
-            operand2 = "0"
+        #if operand2 == "":
+        #    operand2 = "0"
 
 
-        if " + " in operation:
-            if operand1 != "∞":
-                result = op.sum(float(operand1),float(operand2))
-            else:
-                result = "∞"
-        if " - " in operation:
-            result = op.sub(float(operand1),float(operand2))
-        if " × " in operation:
-            result = op.mult(float(operand1),float(operand2))
-        if " ÷ " in operation:
-            result = op.div(float(operand1),float(operand2))
-        if " ^ " in operation:
-            result = op.pot(float(operand1),float(operand2))
-        if " % " in operation:
-            result = op.res(float(operand1),float(operand2))
+        #if " + " in operation:
+        #    if operand1 != "∞":
+        #        result = op.sum(float(operand1),float(operand2))
+        #    else:
+        #        result = "∞"
+        #if " - " in operation:
+        #    result = op.sub(float(operand1),float(operand2))
+        #if " × " in operation:
+        #    result = op.mult(float(operand1),float(operand2))
+        #if " ÷ " in operation:
+        #    result = op.div(float(operand1),float(operand2))
+        #if " ^ " in operation:
+        #    result = op.pot(float(operand1),float(operand2))
+        #if " % " in operation:
+        #    result = op.res(float(operand1),float(operand2))
 
-        str_result = str(result)
-        try:
-            int,decimal = str_result.split('.')
-        except ValueError:
-            decimal = "Error"
-            str_result = str_result
+        #str_result = str(result)
+        #try:
+        #    int,decimal = str_result.split('.')
+        #except ValueError:
+        #    decimal = "Error"
+        #    str_result = str_result
 
-        if decimal == "0":
-            str_result = str_result[:-2]
+        #if decimal == "0":
+        #    str_result = str_result[:-2]
 
-        operation = operation + operand2 + " = " + str_result
-        self.operation.SetLabel(operation)
+        #operation = operation + operand2 + " = " + str_result
+        #self.operation.SetLabel(operation)
 
-        self.value.SetFocus()
-        self.value.SetInsertionPointEnd()
+        #self.value.SetFocus()
+        #self.value.SetInsertionPointEnd()
 
     def OnButtonclear(self, e):
         value = ""
@@ -1377,8 +1431,8 @@ class MyFrame(wx.Frame):
             return
 
         if key_code == 13:
-            print ("Pressing Enter")
-            self.OnButtonResult
+            #print ("Pressing Enter")
+            self.OnButtonResultEnter
             return
 
         # Allow tabs, for tab navigation between TextCtrls
