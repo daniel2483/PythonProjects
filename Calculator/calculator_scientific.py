@@ -188,7 +188,6 @@ class MyFrame(wx.Frame):
         self.my_btn_sign.Bind(wx.EVT_BUTTON, self.OnButtonSign)
         self.my_btn_cuber.Bind(wx.EVT_BUTTON, self.OnButtonCuber)
         self.my_btn_powy.Bind(wx.EVT_BUTTON, self.OnButtonPowy)
-        self.my_btn_powy.Bind(wx.EVT_BUTTON, self.OnButtonPowy)
         self.my_btn_log10.Bind(wx.EVT_BUTTON, self.OnButtonLog10)
         self.my_btn_ln.Bind(wx.EVT_BUTTON, self.OnButtonLn)
         self.my_btn_base10.Bind(wx.EVT_BUTTON, self.OnButtonBase10)
@@ -394,6 +393,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonSum(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         operation = operand1 + " + "
         self.value.SetLabel("")
         self.operation.SetLabel(operation)
@@ -402,6 +415,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonSub(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         operation = operand1 + " - "
         self.value.SetLabel("")
         self.operation.SetLabel(operation)
@@ -410,6 +437,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonMul(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         operation = operand1 + " × "
         self.value.SetLabel("")
         self.operation.SetLabel(operation)
@@ -418,6 +459,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonDiv(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         operation = operand1 + " ÷ "
         self.value.SetLabel("")
         self.operation.SetLabel(operation)
@@ -426,6 +481,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonMod(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         operation = operand1 + " % "
         self.value.SetLabel("")
         self.operation.SetLabel(operation)
@@ -434,6 +503,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonSqr(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = " √ " + operand1
         try:
@@ -457,6 +540,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonXdiv(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = " 1/" + operand1
         try:
@@ -493,6 +590,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonPow2(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = operand1 + "²"
         result = op.pot(float(operand1),2)
@@ -511,6 +622,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonPow3(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = operand1 + "³"
         result = op.pot(float(operand1),3)
@@ -529,6 +654,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonLog10(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = "Log 10 (" + operand1 + ")"
         result = round(math.log(float(operand1),10),10)
@@ -547,6 +686,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonLn(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = "Ln (" + operand1 + ")"
         result = round(math.log(float(operand1)),10)
@@ -565,14 +718,25 @@ class MyFrame(wx.Frame):
 
     def OnButtonPowy(self,e):
         operand1 = self.value.GetValue()
-        if operand1 == "":
-            print ("No inicial value...")
-        else:
-            self.value.SetLabel(operand1 + "^")
-            operation = operand1 + " ^ "
-            self.value.SetLabel(operation)
-            self.operation.SetLabel(operation)
 
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
+        operation = operand1 + " ^ "
+        self.value.SetLabel(operation)
+        self.operation.SetLabel(operation)
+
+        self.value.SetLabel("")
         self.value.SetFocus()
         self.value.SetInsertionPointEnd()
 
@@ -592,6 +756,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonBase10(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = "10 ^ " + operand1
         result = op.pot(10,float(operand1))
@@ -614,6 +792,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonCuber(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = "∛" + operand1
         result = op.cube_root(float(operand1))
@@ -636,6 +828,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonFac(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = operand1 + "!"
         result = op.fac(float(operand1))
@@ -654,6 +860,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonExp(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = "e ^ " + operand1
         result = math.exp(float(operand1))
@@ -672,6 +892,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonAbs(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = "|" + operand1 + "|"
         result = abs(float(operand1))
@@ -694,6 +928,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonSin(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = "sin(" + operand1 + " rad)"
         result = round(math.sin(float(operand1)),15)
@@ -716,6 +964,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonCos(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = "cos(" + operand1 + " rad)"
         result = round(math.cos(float(operand1)),15)
@@ -738,6 +1000,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonTan(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = "tan(" + operand1 + " rad)"
         result = round(math.tan(float(operand1)),15)
@@ -760,6 +1036,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonAsin(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = "asin(" + operand1 + ")"
         error_flag = 0
@@ -781,7 +1071,7 @@ class MyFrame(wx.Frame):
             str_result = str_result[:-2]
 
         if error_flag == 0:
-            operation = operation  + " = " + str_result + " rad"
+            operation = operation  + " = " + str_result
         else:
             operation = operation  + " = " + "Does not exist..."
 
@@ -792,6 +1082,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonAcos(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = "acos(" + operand1 + ")"
         error_flag = 0
@@ -813,7 +1117,7 @@ class MyFrame(wx.Frame):
             str_result = str_result[:-2]
 
         if error_flag == 0:
-            operation = operation  + " = " + str_result + " rad"
+            operation = operation  + " = " + str_result
         else:
             operation = operation  + " = " + "Does not exist..."
 
@@ -824,6 +1128,20 @@ class MyFrame(wx.Frame):
 
     def OnButtonAtan(self,e):
         operand1 = self.value.GetValue()
+
+        if operand1 == "":
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                operand1 = value
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
         self.value.SetLabel("")
         operation = "atan(" + operand1 + ")"
         error_flag = 0
@@ -845,7 +1163,7 @@ class MyFrame(wx.Frame):
             str_result = str_result[:-2]
 
         if error_flag == 0:
-            operation = operation  + " = " + str_result + " rad"
+            operation = operation  + " = " + str_result #+ " rad"
         else:
             operation = operation  + " = " + "Does not exist..."
 
@@ -856,11 +1174,14 @@ class MyFrame(wx.Frame):
 
     def OnButtonAns(self,e):
         operation = self.operation.GetLabel()
-        if " = " in operation:
+        if "Does not" in operation:
+            operation = self.operation.SetLabel("Value Does not exist")
+
+        elif " = " in operation:
             chunk,value = operation.split(' = ')
             self.value.SetLabel(value)
         else:
-            operation = self.operation.SetLabel("Wrong ANS")
+            operation = self.operation.SetLabel("Empty ANS value")
 
         self.value.SetFocus()
         self.value.SetInsertionPointEnd()
@@ -878,7 +1199,7 @@ class MyFrame(wx.Frame):
         self.value.SetFocus()
         self.value.SetInsertionPointEnd()
 
-
+    # Result operation from button
     def OnButtonResult(self,e):
         operation = self.operation.GetLabel()
         #print (operation)
@@ -889,9 +1210,29 @@ class MyFrame(wx.Frame):
 
         self.value.SetLabel("")
 
+        if operand1 == "":
+            print ("Test")
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                self.value.SetLabel(value)
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
+        if operand2 == "":
+            operand2 = "0"
+
 
         if " + " in operation:
-            result = op.sum(float(operand1),float(operand2))
+            if operand1 != "∞":
+                result = op.sum(float(operand1),float(operand2))
+            else:
+                result = "∞"
         if " - " in operation:
             result = op.sub(float(operand1),float(operand2))
         if " × " in operation:
@@ -899,7 +1240,67 @@ class MyFrame(wx.Frame):
         if " ÷ " in operation:
             result = op.div(float(operand1),float(operand2))
         if " ^ " in operation:
-            operand1,operand2 = operand2.split(' ^ ')
+            result = op.pot(float(operand1),float(operand2))
+        if " % " in operation:
+            result = op.res(float(operand1),float(operand2))
+
+        str_result = str(result)
+        try:
+            int,decimal = str_result.split('.')
+        except ValueError:
+            decimal = "Error"
+            str_result = str_result
+
+        if decimal == "0":
+            str_result = str_result[:-2]
+
+        operation = operation + operand2 + " = " + str_result
+        self.operation.SetLabel(operation)
+
+        self.value.SetFocus()
+        self.value.SetInsertionPointEnd()
+
+    # Result operation from button
+    def OnButtonResultEnter():
+        operation = self.operation.GetLabel()
+        #print (operation)
+        operand1 = operation[:-3]
+
+        operand2 = self.value.GetValue()
+        tmp = ""
+
+        self.value.SetLabel("")
+
+        if operand1 == "":
+            print ("Test")
+            operation = self.operation.GetLabel()
+            if "Does not" in operation:
+                operation = self.operation.SetLabel("Value Does not exist")
+                return None
+
+            elif " = " in operation:
+                chunk,value = operation.split(' = ')
+                self.value.SetLabel(value)
+            else:
+                operation = self.operation.SetLabel("Enter a valid number")
+                return None
+
+        if operand2 == "":
+            operand2 = "0"
+
+
+        if " + " in operation:
+            if operand1 != "∞":
+                result = op.sum(float(operand1),float(operand2))
+            else:
+                result = "∞"
+        if " - " in operation:
+            result = op.sub(float(operand1),float(operand2))
+        if " × " in operation:
+            result = op.mult(float(operand1),float(operand2))
+        if " ÷ " in operation:
+            result = op.div(float(operand1),float(operand2))
+        if " ^ " in operation:
             result = op.pot(float(operand1),float(operand2))
         if " % " in operation:
             result = op.res(float(operand1),float(operand2))
@@ -973,6 +1374,11 @@ class MyFrame(wx.Frame):
                 print ("Already decimal in op...")
                 return
             event.Skip()
+            return
+
+        if key_code == 13:
+            print ("Pressing Enter")
+            self.OnButtonResult
             return
 
         # Allow tabs, for tab navigation between TextCtrls
