@@ -62,7 +62,7 @@ class MyFrame(wx.Frame):
         self.my_btn_exp = wx.Button(panel, label='e^x', pos=(pos_ini_x, pos_ini_y), size=(40, 40))
         self.my_btn_ln = wx.Button(panel, label='ln', pos=(pos_ini_x + 40, pos_ini_y), size=(40, 40))
         self.my_btn_e = wx.Button(panel, label='e', pos=(pos_ini_x + 80, pos_ini_y), size=(40, 40))
-        self.my_btn_grad = wx.Button(panel, label='Grad', pos=(pos_ini_x + 120, pos_ini_y), size=(40, 40))
+        self.my_btn_deg = wx.Button(panel, label='Deg', pos=(pos_ini_x + 120, pos_ini_y), size=(40, 40))
 
         self.my_btn_sqr = wx.Button(panel, label='√', pos=(pos_ini_x-40, pos_ini_y + 40), size=(40, 40))
         self.my_btn_base10 = wx.Button(panel, label='10^x', pos=(pos_ini_x, pos_ini_y + 40), size=(40, 40))
@@ -139,7 +139,7 @@ class MyFrame(wx.Frame):
         self.my_btn_exp.SetFont(fontButtonOp)
         self.my_btn_ln.SetFont(fontButtonOp)
         self.my_btn_e.SetFont(fontButtonOp)
-        self.my_btn_grad.SetFont(fontButtonOp)
+        self.my_btn_deg.SetFont(fontButtonOp)
         self.my_btn_base10.SetFont(fontButtonOp)
         self.my_btn_log10.SetFont(fontButtonOp)
         self.my_btn_mod.SetFont(fontButtonOp)
@@ -204,7 +204,7 @@ class MyFrame(wx.Frame):
         self.my_btn_arcc.Bind(wx.EVT_BUTTON, self.OnButtonAcos)
         self.my_btn_arct.Bind(wx.EVT_BUTTON, self.OnButtonAtan)
         self.my_btn_ans.Bind(wx.EVT_BUTTON, self.OnButtonAns)
-        self.my_btn_grad.Bind(wx.EVT_BUTTON, self.OnButtonGrad)
+        self.my_btn_deg.Bind(wx.EVT_BUTTON, self.OnButtonDeg)
 
         self.my_btn_result.Bind(wx.EVT_BUTTON, self.OnButtonResult)
 
@@ -694,10 +694,16 @@ class MyFrame(wx.Frame):
 
         self.value.SetLabel("")
         operation = "Log 10 (" + operand1 + ")"
-        result = round(math.log(float(operand1),10),10)
+
+        try:    result = round(math.log(float(operand1),10),10)
+        except ValueError: result = "∞"
+
         str_result = str(result)
 
-        int,decimal = str_result.split('.')
+        try:    int,decimal = str_result.split('.')
+        except ValueError:
+            int = str_result
+            decimal = ""
 
         if decimal == "0":
             str_result = str_result[:-2]
@@ -726,10 +732,16 @@ class MyFrame(wx.Frame):
 
         self.value.SetLabel("")
         operation = "Ln (" + operand1 + ")"
-        result = round(math.log(float(operand1)),10)
+
+        try:    result = round(math.log(float(operand1)),10)
+        except ValueError:  result = "∞"
+
         str_result = str(result)
 
-        int,decimal = str_result.split('.')
+        try:    int,decimal = str_result.split('.')
+        except ValueError:
+            int = str_result
+            decimal = ""
 
         if decimal == "0":
             str_result = str_result[:-2]
@@ -873,7 +885,12 @@ class MyFrame(wx.Frame):
 
         self.value.SetLabel("")
         operation = operand1 + "!"
-        result = op.fac(float(operand1))
+
+        try:
+            result = op.fac(float(operand1))
+        except ValueError:
+            result = "∞"
+
         str_result = str(result)
 
         #int,decimal = str_result.split('.')
@@ -905,10 +922,16 @@ class MyFrame(wx.Frame):
 
         self.value.SetLabel("")
         operation = "e ^ " + operand1
-        result = math.exp(float(operand1))
+
+        try:
+            result = math.exp(float(operand1))
+        except ValueError:  result = "∞"
         str_result = str(result)
 
-        int,decimal = str_result.split('.')
+        try:    int,decimal = str_result.split('.')
+        except ValueError:
+            int = str_result
+            decimal = ""
 
         if decimal == "0":
             str_result = str_result[:-2]
@@ -957,6 +980,14 @@ class MyFrame(wx.Frame):
 
     def OnButtonSin(self,e):
         operand1 = self.value.GetValue()
+        operand1_copy = operand1
+        units = self.unit.GetLabel()
+        #print (units)
+
+        if units == "°":
+            #print ("Grad")
+            operand1 = float(operand1)
+            operand1 = operand1 * math.pi / 180
 
         if operand1 == "":
             operation = self.operation.GetLabel()
@@ -972,7 +1003,13 @@ class MyFrame(wx.Frame):
                 return None
 
         self.value.SetLabel("")
-        operation = "sin(" + operand1 + " rad)"
+
+        ## To handle degrees
+        if units != "°":
+            operation = "sin(" + operand1 + " rad)"
+        else:
+            operation = "sin(" + operand1_copy + "°)"
+
         result = round(math.sin(float(operand1)),15)
         str_result = str(result)
 
@@ -993,6 +1030,14 @@ class MyFrame(wx.Frame):
 
     def OnButtonCos(self,e):
         operand1 = self.value.GetValue()
+        operand1_copy = operand1
+        units = self.unit.GetLabel()
+        #print (units)
+
+        if units == "°":
+            #print ("Grad")
+            operand1 = float(operand1)
+            operand1 = operand1 * math.pi / 180
 
         if operand1 == "":
             operation = self.operation.GetLabel()
@@ -1008,7 +1053,13 @@ class MyFrame(wx.Frame):
                 return None
 
         self.value.SetLabel("")
-        operation = "cos(" + operand1 + " rad)"
+
+        ## To handle degrees
+        if units != "°":
+            operation = "cos(" + operand1 + " rad)"
+        else:
+            operation = "cos(" + operand1_copy + " °)"
+
         result = round(math.cos(float(operand1)),15)
         str_result = str(result)
 
@@ -1029,6 +1080,14 @@ class MyFrame(wx.Frame):
 
     def OnButtonTan(self,e):
         operand1 = self.value.GetValue()
+        operand1_copy = operand1
+        units = self.unit.GetLabel()
+        #print (units)
+
+        if units == "°":
+            #print ("Grad")
+            operand1 = float(operand1)
+            operand1 = operand1 * math.pi / 180
 
         if operand1 == "":
             operation = self.operation.GetLabel()
@@ -1044,7 +1103,13 @@ class MyFrame(wx.Frame):
                 return None
 
         self.value.SetLabel("")
-        operation = "tan(" + operand1 + " rad)"
+
+        ## To handle degrees
+        if units != "°":
+            operation = "tan(" + operand1 + " rad)"
+        else:
+            operation = "tan(" + operand1_copy + " °)"
+
         result = round(math.tan(float(operand1)),15)
         str_result = str(result)
 
@@ -1216,7 +1281,7 @@ class MyFrame(wx.Frame):
         self.value.SetInsertionPointEnd()
         print (operation)
 
-    def OnButtonGrad(self,e):
+    def OnButtonDeg(self,e):
         units = self.unit.GetLabel()
 
         if "°" in units:
@@ -1224,7 +1289,7 @@ class MyFrame(wx.Frame):
         else:
             self.unit.SetLabel("°")
 
-        print (units)
+        #print (units)
         self.value.SetFocus()
         self.value.SetInsertionPointEnd()
 
@@ -1387,6 +1452,11 @@ class MyFrame(wx.Frame):
         self.operation.SetLabel("")
         self.value.SetFocus()
         self.value.SetInsertionPointEnd()
+
+    def Deg2Rad(value):
+        value = float(value)
+        new_value = value * math.pi / 180
+        return new_value
 
     def click_on_text_field(self, event):
         self.value.SetInsertionPointEnd()
