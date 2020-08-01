@@ -19,17 +19,20 @@ class MyFrame(wx.Frame):
         #self.wx.Frame.
 
 
-        pos_ini_y = 60
-        pos_ini_x = 55
-        dif_y = 40
-        dif_x = 40
+        pos_ini_y = 10
+        pos_ini_x = 150
+
+        wx.StaticText(panel, label="Elija Sucursal: ", pos=(pos_ini_x - 100, pos_ini_y))
+
+        sucursales = ['1. Óptica Nueva Imagen.', '2. Óptica Rosan Banco Nacional.', '3. Óptica Rosan Parque Central.']
+        self.sucursal = wx.ComboBox(panel,id = 1 , value = "1. Óptica Nueva Imagen.", pos=(pos_ini_x, pos_ini_y), size=(250, 20), choices = sucursales, style = wx.CB_DROPDOWN)
 
         #self.value = NumCtrl(panel, pos=(10, 5), size=(500, 20),value = "0",decimalChar = ".",fractionWidth = 0)
-        self.value = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y - 40), size=(160, 20),value = "0", style=wx.TE_RIGHT | wx.TE_READONLY)
+        self.value = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y + 30), size=(160, 20),value = "", style=wx.TE_LEFT)
         # pos=(x,y)
 
 
-        self.my_btn_n1 = wx.Button(panel, label='1', pos=(pos_ini_x, pos_ini_y + 160), size=(40, 40))
+        self.my_btn_n1 = wx.Button(panel, label='Guardar', pos=(pos_ini_x-50, pos_ini_y + 200), size=(100, 40))
 
         # Results
         self.operation = wx.StaticText(panel, label="", pos=(pos_ini_x + 175, pos_ini_y))
