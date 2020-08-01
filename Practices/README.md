@@ -22,3 +22,5 @@ This repository contains simple examples on python language (Using Python 3)
 8. Example for Sending Emails using Gmail SMTP Server [Code](./send_email_smtp_gmail_account.py)
 
 9. Example of simple calculator (sum, subs, div, mult and others) [Code](./simple_calculator.py)
+
+10. Example of importing a created module [Code](./using_create_module.py)
