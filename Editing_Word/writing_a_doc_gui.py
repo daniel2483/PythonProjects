@@ -2,7 +2,7 @@
 #   Word Letter Editor
 #   Made by: Jose Daniel Rodriguez Sanchez
 #   Build on: 2020-08-01
-#   Last Update: 2020-08-01
+#   Last Update: 2020-08-03
 
 
 import wx
@@ -23,16 +23,21 @@ class MyFrame(wx.Frame):
         pos_ini_x = 150
 
         wx.StaticText(panel, label="Elija Sucursal: ", pos=(pos_ini_x - 100, pos_ini_y))
-
         sucursales = ['1. Óptica Nueva Imagen.', '2. Óptica Rosan Banco Nacional.', '3. Óptica Rosan Parque Central.']
-        self.sucursal = wx.ComboBox(panel,id = 1 , value = "1. Óptica Nueva Imagen.", pos=(pos_ini_x, pos_ini_y), size=(250, 20), choices = sucursales, style = wx.CB_DROPDOWN)
+        self.sucursal = wx.ComboBox(panel,id = 1 , value = "", pos=(pos_ini_x, pos_ini_y), size=(250, 20), choices = sucursales, style = wx.CB_DROPDOWN)
 
-        #self.value = NumCtrl(panel, pos=(10, 5), size=(500, 20),value = "0",decimalChar = ".",fractionWidth = 0)
-        self.value = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y + 30), size=(160, 20),value = "", style=wx.TE_LEFT)
+        wx.StaticText(panel, label="Carta dirigida a: ", pos=(pos_ini_x - 100, pos_ini_y + 30))
+        self.sendto = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y + 30), size=(160, 20),value = "", style=wx.TE_LEFT)
         # pos=(x,y)
 
+        wx.StaticText(panel, label="Departamento: ", pos=(pos_ini_x - 100, pos_ini_y + 60))
+        self.department = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y + 60), size=(160, 20),value = "", style=wx.TE_LEFT)
 
-        self.my_btn_n1 = wx.Button(panel, label='Guardar', pos=(pos_ini_x-50, pos_ini_y + 200), size=(100, 40))
+        # First Status disable when no sucursal is selected
+        self.sendto.Disable()
+        self.department.Disable()
+
+        self.my_btn_save = wx.Button(panel, label='Guardar', pos=(pos_ini_x-50, pos_ini_y + 200), size=(100, 40))
 
         # Results
         self.operation = wx.StaticText(panel, label="", pos=(pos_ini_x + 175, pos_ini_y))
@@ -50,11 +55,14 @@ class MyFrame(wx.Frame):
 
         wx.StaticText(panel, label="Made by: Jose Daniel Rodríguez Sánchez", pos=(pos_ini_x, pos_ini_y + 325))
         wx.StaticText(panel, label="Build on: 2020-08-01", pos=(pos_ini_x, pos_ini_y + 345))
-        wx.StaticText(panel, label="Last Update: 2020-08-01", pos=(pos_ini_x, pos_ini_y + 365))
+        wx.StaticText(panel, label="Last Update: 2020-08-03", pos=(pos_ini_x, pos_ini_y + 365))
 
-        # Set event handlers
-        # Numbers
-        self.my_btn_n1.Bind(wx.EVT_BUTTON, self.OnButton1)
+        ### Set event handlers
+        # Event for combo sucursal
+        self.sucursal.Bind(wx.EVT_COMBOBOX, self.OnCombo)
+
+        # Save button
+        self.my_btn_save.Bind(wx.EVT_BUTTON, self.OnButtonSave)
 
 
         self.Show()
@@ -68,7 +76,7 @@ class MyFrame(wx.Frame):
         #self.SetIcon(wx.Icon.SetWidth(16))
         #self.SetIcon(wx.Icon.SetHeight(16))
         #self.wx.Icon(desiredWidth = 150, desiredHeight = 150)
-        self.my_btn_n1.SetBackgroundColour(wx.Colour(240, 240, 240))
+        self.my_btn_save.SetBackgroundColour(wx.Colour(240, 240, 240))
 
         #wx.EVT_ENTER_WINDOW(self, self.onMouseOver)
         #wx.EVT_LEAVE_WINDOW(self, self.onMouseLeave)
@@ -81,8 +89,8 @@ class MyFrame(wx.Frame):
         self.my_btn_clear_all.SetBackgroundColour((255, 0, 0))
         self.my_btn_clear_all.Refresh()
 
-    def OnButton1(self, e):
-        value = self.value.GetValue()
+    def OnButtonSave(self, e):
+        value = self.sendto.GetValue()
         if (value != 0):
             value = str(value) + "1"
             print (value)
@@ -90,8 +98,14 @@ class MyFrame(wx.Frame):
                 value_len = len(value)
                 value = value[1:value_len]
             #value = int(value)
-            self.value.SetLabel(value)
+            self.sendto.SetLabel(value)
 
+    def OnCombo(self, event):
+        #self.label.SetLabel("selected "+ self.combo.GetValue() +" from Combobox")
+        negocio = self.sucursal.GetValue()
+        print (negocio)
+        self.sendto.Enable()
+        self.department.Enable()
 
 if __name__ == '__main__':
     app = wx.App()
