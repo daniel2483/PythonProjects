@@ -238,6 +238,8 @@ class MyFrame(wx.Frame):
         self.my_btn_open.Bind(wx.EVT_BUTTON, self.OnButtonOpen)
         # Save and Send Button
         self.my_btn_save_n_send.Bind(wx.EVT_BUTTON, self.OnButtonSaveNSend)
+        # Only Send Last letter created
+        self.my_btn_send.Bind(wx.EVT_BUTTON, self.OnButtonSendLastLetter)
 
 
 
