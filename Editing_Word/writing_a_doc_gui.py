@@ -2,7 +2,7 @@
 #   Word Letter Editor
 #   Made by: Jose Daniel Rodriguez Sanchez
 #   Build on: 2020-08-01
-#   Last Update: 2020-08-04
+#   Last Update: 2020-08-05
 
 
 import wx
@@ -17,6 +17,72 @@ from PIL import Image
 #from mailmerge import MailMerge
 #from datetime import date
 #import os
+
+class dialogBox(wx.Dialog):
+    def __init__(self, parent, title):
+        super(dialogBox, self).__init__(parent, title = title, size = (350,200))
+        panel = wx.Panel(self)
+
+        self.label_1 = wx.StaticText(panel,id = 1, label="Email: " , pos = (10,10))
+        self.email = wx.TextCtrl(panel,id = 2, size = (150, 20), pos = (50,10))
+        self.text_alarm1 = wx.StaticText(panel,id = 1, label="* Campo requerido", pos=(205, 10))
+        self.text_alarm1.SetForegroundColour(wx.Colour(196, 56, 25))
+
+        #self.btn = wx.Button(panel, wx.ID_OK, label = "ok", size = (50,20), pos = (75,50))
+
+        #self.Bind ( wx.EVT_CLOSE, self.on_close )
+        #self.SetSizerAndFit ( self.CreateButtonSizer ( wx.OK|wx.CANCEL ) )
+
+
+
+        self.my_btn_ok = wx.Button(panel, label='OK', pos = (75,50), size=(100, 40))
+        #self.my_btn_open.Disable()
+        self.my_btn_ok.SetBackgroundColour((13, 52, 128))
+        self.my_btn_ok.SetForegroundColour(wx.Colour(255, 255, 255))
+
+        self.my_btn_ok.Bind(wx.EVT_BUTTON, self.OnButtonOK)
+        self.my_btn_ok.Disable()
+
+        self.email.Bind(wx.EVT_KEY_UP,self.checkingEmail)
+
+    #def on_close ( self, event ):
+        #print ("hello from on_close!")
+        #self.Destroy()
+
+    def OnButtonOK(self, event):
+        current_dir = os.getcwd()
+        path_file= os.path.expanduser(current_dir + "/Templates/")
+
+        email_list = self.email.GetValue()
+
+        final_file = "carta_final.docx"
+
+        print ("Sending Email to " + email_list)
+
+        email.sending_email(email_list, path_file + final_file)
+
+        # Destroy Dialog Box
+        self.Destroy()
+
+    def checkingEmail(self, event):
+        key_code = event.GetKeyCode()
+
+        email = self.email.GetValue()
+
+        # Validation Email
+        regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{3,3}$'
+
+        if(re.search(regex,email)):
+            #print("Valid Email")
+            self.my_btn_ok.Enable()
+            self.text_alarm1.Hide()
+        else:
+            #print("Invalid Email")
+            self.my_btn_ok.Disable()
+            self.text_alarm1.Show()
+
+        return
+
 
 class MyFrame(wx.Frame):
 
@@ -124,6 +190,11 @@ class MyFrame(wx.Frame):
         self.my_btn_save_n_send.SetBackgroundColour((13, 52, 128))
         self.my_btn_save_n_send.SetForegroundColour(wx.Colour(255, 255, 255))
 
+        self.my_btn_send = wx.Button(panel, label='Enviar', pos=(pos_ini_x + 460, pos_ini_y + 450), size=(100, 40))
+        #self.my_btn_save_n_send.Disable()
+        self.my_btn_send.SetBackgroundColour((13, 52, 128))
+        self.my_btn_send.SetForegroundColour(wx.Colour(255, 255, 255))
+
         # Results
         self.operation = wx.StaticText(panel, label="", pos=(pos_ini_x + 175, pos_ini_y))
         self.result = wx.StaticText(panel, label="", pos=(200, pos_ini_y + 90))
@@ -142,7 +213,7 @@ class MyFrame(wx.Frame):
         #text.SetBackgroundColour(wx.Colour(255, 255, 255))
         text = wx.StaticText(panel, label="Build on: 2020-08-01", pos=(pos_ini_x-90, pos_ini_y + 520))
         #text.SetBackgroundColour(wx.Colour(255, 255, 255))
-        text = wx.StaticText(panel, label="Last Update: 2020-08-04", pos=(pos_ini_x-90, pos_ini_y + 540))
+        text = wx.StaticText(panel, label="Last Update: 2020-08-05", pos=(pos_ini_x-90, pos_ini_y + 540))
         #text.SetBackgroundColour(wx.Colour(255, 255, 255))
 
 
@@ -184,12 +255,17 @@ class MyFrame(wx.Frame):
         #self.SetIcon(wx.Icon.SetHeight(16))
         #self.wx.Icon(desiredWidth = 150, desiredHeight = 150)
 
-
+        imageFile = current_dir + "/images/optica_ni_2.jpg"
+        logo = wx.Image(imageFile, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        imageObj = wx.StaticBitmap(self, -1, logo, (-100, -105), (logo.GetWidth(), logo.GetHeight()))
+        imageObj.SetPosition((pos_ini_x + 379, pos_ini_y -10))
 
         imageFile = current_dir + "/images/optica_rs_3.jpg"
         logo = wx.Image(imageFile, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         imageObj = wx.StaticBitmap(self, -1, logo, (-100, -105), (logo.GetWidth(), logo.GetHeight()))
         imageObj.SetPosition((pos_ini_x + 480, pos_ini_y -10))
+
+
 
         #imageFile = current_dir + "/images/optica_rs.jpg"
         #bitmap = scale_bitmap(imageFile, 300, 200)
@@ -234,6 +310,8 @@ class MyFrame(wx.Frame):
 
         letter.saving_word_letter(selection,sendto,department,greetings,reason,signature,id,path_file)
 
+        wx.MessageBox('Archivo Guardado', 'Información', wx.OK | wx.ICON_INFORMATION)
+
     def OnButtonOpen(self,e):
         print ("Open File...")
         current_dir = os.getcwd()
@@ -243,6 +321,8 @@ class MyFrame(wx.Frame):
 
     def OnButtonSaveNSend(self, e):
         print ("Saving File and Sending to Email...")
+
+
         sucursal = self.sucursal.GetValue()
         sendto = self.sendto.GetValue()
         department = self.department.GetValue()
@@ -262,9 +342,17 @@ class MyFrame(wx.Frame):
 
         letter.saving_word_letter(selection,sendto,department,greetings,reason,signature,id,path_file)
 
+        a = dialogBox(self, "Dialog").ShowModal()
 
         final_file = "carta_final.docx"
-        email.sending_email("jdrs2483@gmail.com", path_file + final_file)
+
+    def OnButtonSendLastLetter(self, e):
+        print ("Sending last letter to Email...")
+
+        a = dialogBox(self, "Dialog").ShowModal()
+
+        #final_file = "carta_final.docx"
+        #email.sending_email("jdrs2483@gmail.com", path_file + final_file)
 
     def OnCombo(self, event):
         #self.label.SetLabel("selected "+ self.combo.GetValue() +" from Combobox")
@@ -421,7 +509,7 @@ class MyFrame(wx.Frame):
         #print ("Digit: " + chr(key_code))
 
 
-        if sucursal != "" and sendto != ""  and reason != "" and signature != "" and len(cedula1) != 0 and len(cedula2) != 4 and len(cedula3) != 4:
+        if sucursal != "" and sendto != ""  and reason != "" and signature != "" and len(cedula1) > 0 and len(cedula2) == 4 and len(cedula3) == 4:
             self.my_btn_save.Enable()
             #self.my_btn_open.Enable()
             self.my_btn_save_n_send.Enable()
@@ -431,6 +519,9 @@ class MyFrame(wx.Frame):
             self.my_btn_save_n_send.Disable()
 
         return
+
+    def ShowMessage(self):
+        wx.MessageBox('Archivo Guardado', 'Info', wx.OK | wx.ICON_INFORMATION)
 
 if __name__ == '__main__':
     app = wx.App()
