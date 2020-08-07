@@ -2,7 +2,7 @@
 #   Word Letter Editor
 #   Made by: Jose Daniel Rodriguez Sanchez
 #   Build on: 2020-08-01
-#   Last Update: 2020-08-05
+#   Last Update: 2020-08-06
 
 
 import wx
@@ -23,9 +23,10 @@ class dialogBox(wx.Dialog):
         super(dialogBox, self).__init__(parent, title = title, size = (350,200))
         panel = wx.Panel(self)
 
-        self.label_1 = wx.StaticText(panel,id = 1, label="Email: " , pos = (10,10))
-        self.email = wx.TextCtrl(panel,id = 2, size = (150, 20), pos = (50,10))
-        self.text_alarm1 = wx.StaticText(panel,id = 1, label="* Campo requerido", pos=(205, 10))
+        self.label_1 = wx.StaticText(panel,id = 1, label="Solamenta direcciones gmail..." , pos = (50,20))
+        self.label_1 = wx.StaticText(panel,id = 1, label="Email: " , pos = (10,40))
+        self.email = wx.TextCtrl(panel,id = 2, size = (150, 20), pos = (50,40))
+        self.text_alarm1 = wx.StaticText(panel,id = 1, label="* Campo requerido", pos=(205, 40))
         self.text_alarm1.SetForegroundColour(wx.Colour(196, 56, 25))
 
         #self.btn = wx.Button(panel, wx.ID_OK, label = "ok", size = (50,20), pos = (75,50))
@@ -35,7 +36,7 @@ class dialogBox(wx.Dialog):
 
 
 
-        self.my_btn_ok = wx.Button(panel, label='OK', pos = (75,50), size=(100, 40))
+        self.my_btn_ok = wx.Button(panel, label='OK', pos = (75,90), size=(100, 40))
         #self.my_btn_open.Disable()
         self.my_btn_ok.SetBackgroundColour((13, 52, 128))
         self.my_btn_ok.SetForegroundColour(wx.Colour(255, 255, 255))
@@ -213,7 +214,7 @@ class MyFrame(wx.Frame):
         #text.SetBackgroundColour(wx.Colour(255, 255, 255))
         text = wx.StaticText(panel, label="Build on: 2020-08-01", pos=(pos_ini_x-90, pos_ini_y + 520))
         #text.SetBackgroundColour(wx.Colour(255, 255, 255))
-        text = wx.StaticText(panel, label="Last Update: 2020-08-05", pos=(pos_ini_x-90, pos_ini_y + 540))
+        text = wx.StaticText(panel, label="Last Update: 2020-08-06", pos=(pos_ini_x-90, pos_ini_y + 540))
         #text.SetBackgroundColour(wx.Colour(255, 255, 255))
 
 
