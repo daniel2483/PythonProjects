@@ -23,6 +23,19 @@ def sending_email(email_destination,file):
     msg['Date'] = formatdate(localtime=True)
     msg['Subject'] = "Este es un correo Automático de Ópticas Rosan a través de App para crear Cartas."
 
+    # write the HTML part
+    html = """<html> 
+                    <body> 
+                        <p>Hola!
+                        <br>
+                        <br>
+                        Este es un correo automático de <b>Ópticas Rosan</b></p> 
+                    </body> 
+            </html> """
+
+    msgText = MIMEText(html, "html")
+    msg.attach(msgText)
+
     msg.attach(MIMEText(file))
 
     #for f in files or []:
