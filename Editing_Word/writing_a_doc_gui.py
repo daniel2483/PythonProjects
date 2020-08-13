@@ -2,7 +2,7 @@
 #   Word Letter Editor
 #   Made by: Jose Daniel Rodriguez Sanchez
 #   Build on: 2020-08-01
-#   Last Update: 2020-08-12
+#   Last Update: 2020-08-13
 
 
 import wx
@@ -10,6 +10,8 @@ import re
 import os
 import writing_a_doc_module as letter
 import send_email_to_gmail_account_module as email
+import wx.grid as grid
+
 
 # from wx.lib.masked import NumCtrl
 # from PIL import Image
@@ -80,12 +82,12 @@ class dialogBox(wx.Dialog):
         self.Destroy()
 
     def checkingEmail(self, event):
-        key_code = event.GetKeyCode()
+        # key_code = event.GetKeyCode()
 
         email = self.email.GetValue()
 
         # Validation Email
-        regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+        regex = '^[a-z0-9.]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 
         if re.search(regex, email):
             # print("Valid Email")
@@ -163,46 +165,94 @@ class MyFrame(wx.Frame):
         # self.text_alarm1.SetBackgroundColour(wx.Colour(255, 255, 255))
         self.text_alarm4.SetForegroundColour(wx.Colour(196, 56, 25))
         # self.text_alarm2.Hide()
-        
-        self.text_combo_mediciones = wx.StaticText(panel, label="Agregar Receta: ")
+
+        ################# Formulario para recetas ########################
+
+        self.text_combo_mediciones = wx.StaticText(panel, label="Agregar Receta: ",
+                                                   pos=(pos_ini_x - 120, pos_ini_y + 270))
+        opciones = ['Si', 'No']
+        self.mediciones = wx.ComboBox(panel, value="No", pos=(pos_ini_x, pos_ini_y + 270), size=(40, 25),
+                                      choices=opciones, style=wx.CB_DROPDOWN | wx.TE_READONLY)
+        self.mediciones.Disable()
+
+        # self.GridPanel = wx.Panel(self)
+        self.mygrid = grid.Grid(panel, pos=(pos_ini_x + 50, pos_ini_y + 270))
+        self.mygrid.CreateGrid(2, 4)
+        # self.mygrid.SetSize(220, 3000)
+
+        (w, h) = self.mygrid.GetBestSize()
+        print(str(w) + "   " + str(h))
+
+        # sizer = wx.BoxSizer(wx.HORIZONTAL)
+        # sizer.Add(self.mygrid, -1, wx.EXPAND)
+        # self.SetSizer(sizer)
+
+        # change a couple column labels
+        # mygrid.SetColLabelValue(0, "").
+        self.mygrid.SetColLabelValue(0, "     Esfera     ")
+        self.mygrid.SetColLabelValue(1, "    Cilindro    ")
+        self.mygrid.SetColLabelValue(2, "      Eje       ")
+        self.mygrid.SetColLabelValue(3, "      A.V.      ")
+
+        # Change Row labels
+        # mygrid.SetRowLabelValue(0, "")
+        self.mygrid.SetRowLabelValue(0, "Ojo I.")
+        self.mygrid.SetRowLabelValue(1, "Ojo D.")
+
+        self.mygrid.AutoSize()
+        self.mygrid.SetColSize(0, 100)
+        self.mygrid.SetColSize(1, 100)
+        self.mygrid.SetColSize(2, 100)
+        self.mygrid.SetColSize(3, 100)
+
+        self.mygrid.SetRowSize(0, 25)
+        self.mygrid.SetRowSize(1, 25)
+
+        self.mygrid.AutoSize()
+        self.mygrid.DisableDragGridSize()
+
+        self.mygrid.Disable()
+
+        # self.mygrid.EnableScrolling(False, False)
+        ################# Fin formulario para recetas ####################
 
         self.text_cedula_combo = wx.StaticText(panel, id=22, label="Lista de Cédulas",
-                                               pos=(pos_ini_x - 120, pos_ini_y + 330))
+                                               pos=(pos_ini_x - 120, pos_ini_y + 360))
         ids = ['Alejandro Rodríguez Sánchez | 9-9999-9999',
                'Gladys Rodríguez Sánchez | 9-9999-9999',
                'Fabio Rodríguez González | 6-0106-1307',
                'Fabiola Rodríguez Sánchez | 9-9999-9999',
-               'Daniel Rodríguez Sánchez| 1-1172-0707']
-        self.ids = wx.ComboBox(panel, value="", pos=(pos_ini_x, pos_ini_y + 330), size=(250, 25), choices=ids,
+               'Daniel Rodríguez Sánchez | 1-1172-0707']
+        self.ids = wx.ComboBox(panel, value="", pos=(pos_ini_x, pos_ini_y + 360), size=(270, 25), choices=ids,
                                style=wx.CB_DROPDOWN | wx.TE_READONLY)
 
-        self.text6 = wx.StaticText(panel, label="Nombre quien firma: ", pos=(pos_ini_x - 120, pos_ini_y + 360))
+        self.text6 = wx.StaticText(panel, label="Nombre quien firma: ", pos=(pos_ini_x - 120, pos_ini_y + 390))
         # text.SetBackgroundColour(wx.Colour(255, 255, 255))
-        self.signature = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y + 360), size=(250, 25), value="",
+        self.signature = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y + 390), size=(250, 25), value="",
                                      style=wx.TE_LEFT)
-        self.text_alarm5 = wx.StaticText(panel, id=5, label="* Campo requerido", pos=(pos_ini_x + 260, pos_ini_y + 360))
+        self.text_alarm5 = wx.StaticText(panel, id=5, label="* Campo requerido", pos=(pos_ini_x + 260, pos_ini_y + 390))
         # self.text_alarm1.SetBackgroundColour(wx.Colour(255, 255, 255))
         self.text_alarm5.SetForegroundColour(wx.Colour(196, 56, 25))
         # self.text_alarm2.Hide()
 
-        self.text7 = wx.StaticText(panel, label="Cédula: ", pos=(pos_ini_x - 120, pos_ini_y + 390))
+        self.text7 = wx.StaticText(panel, label="Cédula: ", pos=(pos_ini_x - 120, pos_ini_y + 420))
         # text.SetBackgroundColour(wx.Colour(255, 255, 255))
-        self.cedula1 = wx.TextCtrl(panel, id=11, pos=(pos_ini_x, pos_ini_y + 390), size=(50, 25), value="",
+        self.cedula1 = wx.TextCtrl(panel, id=11, pos=(pos_ini_x, pos_ini_y + 420), size=(50, 25), value="",
                                    style=wx.TE_LEFT)
         self.cedula1.SetMaxLength(2)
-        self.text8 = wx.StaticText(panel, label="-", pos=(pos_ini_x + 58, pos_ini_y + 390))
+        self.text8 = wx.StaticText(panel, label="-", pos=(pos_ini_x + 58, pos_ini_y + 420))
         # text.SetBackgroundColour(wx.Colour(255, 255, 255))
-        self.cedula2 = wx.TextCtrl(panel, id=12, pos=(pos_ini_x + 70, pos_ini_y + 390), size=(50, 25), value="",
+        self.cedula2 = wx.TextCtrl(panel, id=12, pos=(pos_ini_x + 70, pos_ini_y + 420), size=(50, 25), value="",
                                    style=wx.TE_LEFT)
         self.cedula2.SetMaxLength(4)
-        self.text9 = wx.StaticText(panel, label="-", pos=(pos_ini_x + 126, pos_ini_y + 390))
+        self.text9 = wx.StaticText(panel, label="-", pos=(pos_ini_x + 126, pos_ini_y + 420))
         # text.SetBackgroundColour(wx.Colour(255, 255, 255))
-        self.cedula3 = wx.TextCtrl(panel, id=13, pos=(pos_ini_x + 140, pos_ini_y + 390), size=(50, 25), value="",
+        self.cedula3 = wx.TextCtrl(panel, id=13, pos=(pos_ini_x + 140, pos_ini_y + 420), size=(50, 25), value="",
                                    style=wx.TE_LEFT)
         self.cedula3.SetMaxLength(4)
 
         self.text_alarm6 = wx.StaticText(panel, id=5, label="* Campo requerido (formato 9-9999-9999)",
-                                         pos=(pos_ini_x + 200, pos_ini_y + 390))
+                                         pos=(pos_ini_x + 200, pos_ini_y + 420))
         # self.text_alarm1.SetBackgroundColour(wx.Colour(255, 255, 255))
         self.text_alarm6.SetForegroundColour(wx.Colour(196, 56, 25))
 
@@ -252,6 +302,8 @@ class MyFrame(wx.Frame):
         self.text3.SetFont(font)
         self.department.SetFont(font)
 
+        self.greetings.SetFont(font)
+
         self.text4.SetFont(font)
         self.text_alarm4.SetFont(font)
         self.reason.SetFont(font)
@@ -260,6 +312,10 @@ class MyFrame(wx.Frame):
         self.text_alarm5.SetFont(font)
         self.signature.SetFont(font)
         self.text6.SetFont(font)
+
+        self.text_combo_mediciones.SetFont(font)
+        self.mediciones.SetFont(font)
+        self.mygrid.SetFont(font)
 
         self.text_cedula_combo.SetFont(font)
         self.ids.SetFont(font)
@@ -296,7 +352,7 @@ class MyFrame(wx.Frame):
         text = wx.StaticText(panel, label="Build on: 2020-08-01", pos=(pos_ini_x - 90, pos_ini_y + 520))
         text.SetFont(fontCredits)
         # text.SetBackgroundColour(wx.Colour(255, 255, 255))
-        text = wx.StaticText(panel, label="Last Update: 2020-08-12", pos=(pos_ini_x - 90, pos_ini_y + 540))
+        text = wx.StaticText(panel, label="Last Update: 2020-08-13", pos=(pos_ini_x - 90, pos_ini_y + 540))
         text.SetFont(fontCredits)
         # text.SetBackgroundColour(wx.Colour(255, 255, 255))
 
@@ -314,8 +370,10 @@ class MyFrame(wx.Frame):
         self.reason.Bind(wx.EVT_KEY_UP, self.checkingFields)
         self.signature.Bind(wx.EVT_KEY_UP, self.checkingFields)
 
+        # Event for Yes/No Combo
+        self.mediciones.Bind(wx.EVT_COMBOBOX, self.OnComboMed)
+
         # Event for Ids Combo
-        # Event for combo sucursal
         self.ids.Bind(wx.EVT_COMBOBOX, self.OnComboIds)
 
         # Save button
@@ -347,7 +405,7 @@ class MyFrame(wx.Frame):
         imageFile = current_dir + "/images/optica_rs_3.jpg"
         logo = wx.Image(imageFile, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         imageObj = wx.StaticBitmap(self, -1, logo, (-100, -105), (logo.GetWidth(), logo.GetHeight()))
-        imageObj.SetPosition((pos_ini_x + 480, pos_ini_y - 10))
+        imageObj.SetPosition((pos_ini_x + 510, pos_ini_y - 10))
 
         # imageFile = current_dir + "/images/optica_rs.jpg"
         # bitmap = scale_bitmap(imageFile, 300, 200)
@@ -355,24 +413,22 @@ class MyFrame(wx.Frame):
         # logo = wx.StaticBitmap(self, -1, logo, (-50, -30), (logo.GetWidth(), logo.GetHeight()))
         # logo.SetPosition((0,0))
 
-        # self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)
 
         # wx.EVT_ENTER_WINDOW(self, self.onMouseOver)
         # wx.EVT_LEAVE_WINDOW(self, self.onMouseLeave)
 
-    def onMouseOver(self, event):
-        self.my_btn_save.SetBackgroundColour((255, 255, 255))
-        self.my_btn_save.SetForegroundColour(wx.Colour(0, 0, 0))
-        self.my_btn_clear_all.Refresh()
+    # def onMouseOver(self, event):
+        # self.my_btn_save.SetBackgroundColour((255, 255, 255))
+        # self.my_btn_save.SetForegroundColour(wx.Colour(0, 0, 0))
+        # self.my_btn_clear_all.Refresh()
 
-    def onMouseLeave(self, event):
-        self.my_btn_save.SetBackgroundColour((13, 52, 128))
-        self.my_btn_save.SetForegroundColour(wx.Colour(255, 255, 255))
-        self.my_btn_clear_all.Refresh()
+    # def onMouseLeave(self, event):
+        # self.my_btn_save.SetBackgroundColour((13, 52, 128))
+        # self.my_btn_save.SetForegroundColour(wx.Colour(255, 255, 255))
+        # self.my_btn_clear_all.Refresh()
 
     def OnButtonSave(self, e):
         print("Saving File ...")
-        sucursal = self.sucursal.GetValue()
         sendto = self.sendto.GetValue()
         department = self.department.GetValue()
         greetings = self.greetings.GetValue()
@@ -384,20 +440,40 @@ class MyFrame(wx.Frame):
 
         id = cedula1 + "-" + cedula2 + "-" + cedula3
 
+        sphere_l = self.mygrid.GetCellValue(0, 0)
+        sphere_r = self.mygrid.GetCellValue(1, 0)
+        cylinder_l = self.mygrid.GetCellValue(0, 1)
+        cylinder_r = self.mygrid.GetCellValue(1, 1)
+        axis_l = self.mygrid.GetCellValue(0, 2)
+        axis_r = self.mygrid.GetCellValue(1, 2)
+        av_l = self.mygrid.GetCellValue(0, 3)
+        av_r = self.mygrid.GetCellValue(1, 3)
+
         selection = self.sucursal.GetSelection()
 
         current_dir = os.getcwd()
         path_file = os.path.expanduser(current_dir + "/Templates/")
 
-        letter.saving_word_letter(selection, sendto, department, greetings, reason, signature, id, path_file)
-
-        wx.MessageBox('Archivo Guardado', 'Información', wx.OK | wx.ICON_INFORMATION)
+        mediciones_flag = self.mediciones.GetValue()
+        try:
+            if mediciones_flag == "Si":
+                letter.saving_word_letter_mediciones(selection, sendto, department, greetings, reason, signature,
+                                                     id, sphere_l, sphere_r, cylinder_l, cylinder_r,
+                                                     axis_l, axis_r, av_l, av_r, path_file)
+            if mediciones_flag == "No":
+                letter.saving_word_letter(selection, sendto, department, greetings, reason, signature,
+                                          id, path_file)
+            wx.MessageBox('Archivo Guardado', 'Información', wx.OK | wx.ICON_INFORMATION)
+        except PermissionError:
+            wx.MessageBox('El documento se encuentra abierto y No se ha Guardado', 'Error de permisos',
+                          wx.OK | wx.ICON_ERROR)
 
     def OnButtonOpen(self, e):
-        print("Open File...")
+        # print("Open File...")
         current_dir = os.getcwd()
         path_file = os.path.expanduser(current_dir + "/Templates/")
         file_to_open = "carta_final.docx"
+        # os.close(path_file + file_to_open)
         os.startfile(path_file + file_to_open)
 
     def OnButtonSaveNSend(self, e):
@@ -415,16 +491,39 @@ class MyFrame(wx.Frame):
 
         id = cedula1 + "-" + cedula2 + "-" + cedula3
 
+        sphere_l = self.mygrid.GetCellValue(0, 0)
+        sphere_r = self.mygrid.GetCellValue(1, 0)
+        cylinder_l = self.mygrid.GetCellValue(0, 1)
+        cylinder_r = self.mygrid.GetCellValue(1, 1)
+        axis_l = self.mygrid.GetCellValue(0, 2)
+        axis_r = self.mygrid.GetCellValue(1, 2)
+        av_l = self.mygrid.GetCellValue(0, 3)
+        av_r = self.mygrid.GetCellValue(1, 3)
+
         selection = self.sucursal.GetSelection()
 
         current_dir = os.getcwd()
         path_file = os.path.expanduser(current_dir + "/Templates/")
 
-        letter.saving_word_letter(selection, sendto, department, greetings, reason, signature, id, path_file)
+        mediciones_flag = self.mediciones.GetValue()
 
-        a = dialogBox(self, "Dialog").ShowModal()
+        try:
+            if mediciones_flag == "Si":
+                letter.saving_word_letter_mediciones(selection, sendto, department, greetings, reason, signature,
+                                                     id, sphere_l, sphere_r, cylinder_l, cylinder_r,
+                                                     axis_l, axis_r, av_l, av_r, path_file)
+            if mediciones_flag == "No":
+                letter.saving_word_letter(selection, sendto, department, greetings, reason, signature,
+                                          id, path_file)
 
-        final_file = "carta_final.docx"
+            wx.MessageBox('Archivo Guardado', 'Información', wx.OK | wx.ICON_INFORMATION)
+
+            a = dialogBox(self, "Dialog").ShowModal()
+        except PermissionError:
+            wx.MessageBox('El documento se encuentra abierto y No se ha Guardado', 'Error de permisos',
+                          wx.OK | wx.ICON_ERROR)
+
+        # final_file = "carta_final.docx"
 
     def OnButtonSendLastLetter(self, e):
         # print("Sending last letter to Email...")
@@ -443,27 +542,13 @@ class MyFrame(wx.Frame):
         self.greetings.Enable()
         self.reason.Enable()
         self.signature.Enable()
+        self.mediciones.Enable()
         self.ids.Enable()
         self.cedula1.Enable()
         self.cedula2.Enable()
         self.cedula3.Enable()
 
         self.text_alarm1.Hide()
-
-    def OnEraseBackground(self, evt):
-        """
-        Add a picture to the background
-        """
-        # yanked from ColourDB.py
-        dc = evt.GetDC()
-
-        if not dc:
-            dc = wx.ClientDC(self)
-            rect = self.GetUpdateRegion().GetBox()
-            dc.SetClippingRect(rect)
-        dc.Clear()
-        bmp = wx.Bitmap("/images/optica_rs.jpg")
-        dc.DrawBitmap(bmp, 0, 0)
 
     def block_non_numbers(self, event):
         key_code = event.GetKeyCode()
@@ -655,7 +740,14 @@ class MyFrame(wx.Frame):
             # self.my_btn_open.Disable()
             self.my_btn_save_n_send.Disable()
 
+    def OnComboMed(self, event):
+        print("Combo is Working....")
+        question = self.mediciones.GetValue()
 
+        if question == "Si":
+            self.mygrid.Enable()
+        else:
+            self.mygrid.Disable()
 
 
 if __name__ == '__main__':
