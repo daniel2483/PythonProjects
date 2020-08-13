@@ -11,8 +11,8 @@ import os
 import writing_a_doc_module as letter
 import send_email_to_gmail_account_module as email
 
-from wx.lib.masked import NumCtrl
-from PIL import Image
+# from wx.lib.masked import NumCtrl
+# from PIL import Image
 
 
 # from mailmerge import MailMerge
@@ -27,7 +27,7 @@ class dialogBox(wx.Dialog):
         font = wx.Font(10, wx.DECORATIVE, wx.NORMAL, wx.NORMAL)
 
         self.label_0 = wx.StaticText(panel, id=1, label="Email de lista:", pos=(10, 20))
-        email_list = ['alerosan@gmail.com', 'jdrs2483@gmail.com']
+        email_list = ['alerosan@gmail.com', 'jdrs2483@gmail.com', 'jdrs2483@yahoo.com']
         self.email_list = wx.ComboBox(panel, value="", pos=(110, 20), size=(150, 25), choices=email_list,
                                       style=wx.CB_DROPDOWN | wx.TE_READONLY)
 
@@ -87,7 +87,7 @@ class dialogBox(wx.Dialog):
         # Validation Email
         regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 
-        if (re.search(regex, email)):
+        if re.search(regex, email):
             # print("Valid Email")
             self.my_btn_ok.Enable()
             self.text_alarm1.Hide()
@@ -157,27 +157,33 @@ class MyFrame(wx.Frame):
 
         self.text5 = wx.StaticText(panel, label="Razón de la carta: ", pos=(pos_ini_x - 120, pos_ini_y + 120))
         # text.SetBackgroundColour(wx.Colour(255, 255, 255))
-        self.reason = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y + 120), size=(470, 200), value="",
+        self.reason = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y + 120), size=(470, 140), value="",
                                   style=wx.TE_LEFT | wx.TE_MULTILINE)
         self.text_alarm4 = wx.StaticText(panel, id=4, label="* Campo requerido", pos=(pos_ini_x + 480, pos_ini_y + 120))
         # self.text_alarm1.SetBackgroundColour(wx.Colour(255, 255, 255))
         self.text_alarm4.SetForegroundColour(wx.Colour(196, 56, 25))
         # self.text_alarm2.Hide()
+        
+        self.text_combo_mediciones = wx.StaticText(panel, label="Agregar Receta: ")
 
-        self.text6 = wx.StaticText(panel, label="Nombre quien firma: ", pos=(pos_ini_x - 120, pos_ini_y + 330))
+        self.text_cedula_combo = wx.StaticText(panel, id=22, label="Lista de Cédulas",
+                                               pos=(pos_ini_x - 120, pos_ini_y + 330))
+        ids = ['Alejandro Rodríguez Sánchez | 9-9999-9999',
+               'Gladys Rodríguez Sánchez | 9-9999-9999',
+               'Fabio Rodríguez González | 6-0106-1307',
+               'Fabiola Rodríguez Sánchez | 9-9999-9999',
+               'Daniel Rodríguez Sánchez| 1-1172-0707']
+        self.ids = wx.ComboBox(panel, value="", pos=(pos_ini_x, pos_ini_y + 330), size=(250, 25), choices=ids,
+                               style=wx.CB_DROPDOWN | wx.TE_READONLY)
+
+        self.text6 = wx.StaticText(panel, label="Nombre quien firma: ", pos=(pos_ini_x - 120, pos_ini_y + 360))
         # text.SetBackgroundColour(wx.Colour(255, 255, 255))
-        self.signature = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y + 330), size=(250, 25), value="",
+        self.signature = wx.TextCtrl(panel, pos=(pos_ini_x, pos_ini_y + 360), size=(250, 25), value="",
                                      style=wx.TE_LEFT)
-        self.text_alarm5 = wx.StaticText(panel, id=5, label="* Campo requerido", pos=(pos_ini_x + 260, pos_ini_y + 330))
+        self.text_alarm5 = wx.StaticText(panel, id=5, label="* Campo requerido", pos=(pos_ini_x + 260, pos_ini_y + 360))
         # self.text_alarm1.SetBackgroundColour(wx.Colour(255, 255, 255))
         self.text_alarm5.SetForegroundColour(wx.Colour(196, 56, 25))
         # self.text_alarm2.Hide()
-
-        self.text_cedula_combo = wx.StaticText(panel,id=22,label= "Lista de Cédulas", pos=(pos_ini_x -120,pos_ini_y+360))
-        ids = ['1-1172-0707']
-        
-
-
 
         self.text7 = wx.StaticText(panel, label="Cédula: ", pos=(pos_ini_x - 120, pos_ini_y + 390))
         # text.SetBackgroundColour(wx.Colour(255, 255, 255))
@@ -206,6 +212,7 @@ class MyFrame(wx.Frame):
         self.greetings.Disable()
         self.reason.Disable()
         self.signature.Disable()
+        self.ids.Disable()
         self.cedula1.Disable()
         self.cedula2.Disable()
         self.cedula3.Disable()
@@ -253,6 +260,9 @@ class MyFrame(wx.Frame):
         self.text_alarm5.SetFont(font)
         self.signature.SetFont(font)
         self.text6.SetFont(font)
+
+        self.text_cedula_combo.SetFont(font)
+        self.ids.SetFont(font)
 
         self.text7.SetFont(font)
         self.text8.SetFont(font)
@@ -303,6 +313,10 @@ class MyFrame(wx.Frame):
         self.greetings.Bind(wx.EVT_KEY_UP, self.checkingFields)
         self.reason.Bind(wx.EVT_KEY_UP, self.checkingFields)
         self.signature.Bind(wx.EVT_KEY_UP, self.checkingFields)
+
+        # Event for Ids Combo
+        # Event for combo sucursal
+        self.ids.Bind(wx.EVT_COMBOBOX, self.OnComboIds)
 
         # Save button
         self.my_btn_save.Bind(wx.EVT_BUTTON, self.OnButtonSave)
@@ -413,7 +427,7 @@ class MyFrame(wx.Frame):
         final_file = "carta_final.docx"
 
     def OnButtonSendLastLetter(self, e):
-        print("Sending last letter to Email...")
+        # print("Sending last letter to Email...")
 
         a = dialogBox(self, "Dialog").ShowModal()
 
@@ -429,6 +443,7 @@ class MyFrame(wx.Frame):
         self.greetings.Enable()
         self.reason.Enable()
         self.signature.Enable()
+        self.ids.Enable()
         self.cedula1.Enable()
         self.cedula2.Enable()
         self.cedula3.Enable()
@@ -603,6 +618,44 @@ class MyFrame(wx.Frame):
 
     def ShowMessage(self):
         wx.MessageBox('Archivo Guardado', 'Info', wx.OK | wx.ICON_INFORMATION)
+
+    def OnComboIds(self, event):
+        id = self.ids.GetValue()
+        name, ced = id.split(' | ')
+        print("Changing ID..." + ced)
+
+        self.signature.SetValue(name)
+        self.text_alarm5.Hide()
+
+        cedula1, cedula2, cedula3 = ced.split('-')
+
+        self.cedula1.SetValue(cedula1)
+        self.cedula2.SetValue(cedula2)
+        self.cedula3.SetValue(cedula3)
+
+        self.text_alarm6.Hide()
+
+        # Validating fields
+        sucursal = self.sucursal.GetValue()
+        sendto = self.sendto.GetValue()
+        # greetings = self.greetings.GetValue()
+        reason = self.reason.GetValue()
+        signature = self.signature.GetValue()
+        cedula1 = self.cedula1.GetValue()
+        cedula2 = self.cedula2.GetValue()
+        cedula3 = self.cedula3.GetValue()
+
+        if sucursal != "" and sendto != "" and reason != "" and signature != "" and len(cedula1) > 0 and len(
+                cedula2) == 4 and len(cedula3) == 4:
+            self.my_btn_save.Enable()
+            # self.my_btn_open.Enable()
+            self.my_btn_save_n_send.Enable()
+        else:
+            self.my_btn_save.Disable()
+            # self.my_btn_open.Disable()
+            self.my_btn_save_n_send.Disable()
+
+
 
 
 if __name__ == '__main__':
