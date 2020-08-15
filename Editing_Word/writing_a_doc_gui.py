@@ -87,7 +87,8 @@ class dialogBox(wx.Dialog):
         email = self.email.GetValue()
 
         # Validation Email
-        regex = '^[a-z0-9.]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+        # regex = '^[a-z0-9.]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+        regex = '^[a-z0-9.]+[\._]?[a-z0-9]+[@]\w+[.][a-z0-9.]{2,}$'
 
         if re.search(regex, email):
             # print("Valid Email")
