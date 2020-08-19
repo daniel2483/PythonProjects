@@ -219,11 +219,11 @@ class MyFrame(wx.Frame):
 
         self.text_cedula_combo = wx.StaticText(panel, id=22, label="Lista de Cédulas",
                                                pos=(pos_ini_x - 120, pos_ini_y + 360))
-        ids = ['Alejandro Rodríguez Sánchez | 9-9999-9999 | 4555',
-               'Gladys Rodríguez Sánchez | 9-9999-9999 | ',
-               'Fabio Rodríguez González | 6-0106-1307 | ',
-               'Fabiola Rodríguez Sánchez | 9-9999-9999 | ',
-               'Daniel Rodríguez Sánchez | 1-1172-0707 | ']
+        ids = ['Alejandro Rodríguez Sánchez | 2-0626-0889 | 066-530',
+               'Gladys Rodríguez Sánchez | 9-9999-9999 | 999-999',
+               'Fabio Rodríguez González | 6-0106-1307 | 999-999',
+               'Fabiola Rodríguez Sánchez | 2-0698-0165 | 066-799',
+               'Daniel Rodríguez Sánchez | 1-1172-0707 | 999-999']
         self.ids = wx.ComboBox(panel, value="", pos=(pos_ini_x, pos_ini_y + 360), size=(270, 25), choices=ids,
                                style=wx.CB_DROPDOWN | wx.TE_READONLY)
 
