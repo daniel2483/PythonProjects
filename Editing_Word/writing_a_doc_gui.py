@@ -2,7 +2,7 @@
 #   Word Letter Editor
 #   Made by: Jose Daniel Rodriguez Sanchez
 #   Build on: 2020-08-01
-#   Last Update: 2020-08-13
+#   Last Update: 2020-08-19
 
 
 import wx
@@ -219,11 +219,11 @@ class MyFrame(wx.Frame):
 
         self.text_cedula_combo = wx.StaticText(panel, id=22, label="Lista de Cédulas",
                                                pos=(pos_ini_x - 120, pos_ini_y + 360))
-        ids = ['Alejandro Rodríguez Sánchez | 9-9999-9999',
-               'Gladys Rodríguez Sánchez | 9-9999-9999',
-               'Fabio Rodríguez González | 6-0106-1307',
-               'Fabiola Rodríguez Sánchez | 9-9999-9999',
-               'Daniel Rodríguez Sánchez | 1-1172-0707']
+        ids = ['Alejandro Rodríguez Sánchez | 9-9999-9999 | 4555',
+               'Gladys Rodríguez Sánchez | 9-9999-9999 | ',
+               'Fabio Rodríguez González | 6-0106-1307 | ',
+               'Fabiola Rodríguez Sánchez | 9-9999-9999 | ',
+               'Daniel Rodríguez Sánchez | 1-1172-0707 | ']
         self.ids = wx.ComboBox(panel, value="", pos=(pos_ini_x, pos_ini_y + 360), size=(270, 25), choices=ids,
                                style=wx.CB_DROPDOWN | wx.TE_READONLY)
 
@@ -353,7 +353,7 @@ class MyFrame(wx.Frame):
         text = wx.StaticText(panel, label="Build on: 2020-08-01", pos=(pos_ini_x - 90, pos_ini_y + 520))
         text.SetFont(fontCredits)
         # text.SetBackgroundColour(wx.Colour(255, 255, 255))
-        text = wx.StaticText(panel, label="Last Update: 2020-08-13", pos=(pos_ini_x - 90, pos_ini_y + 540))
+        text = wx.StaticText(panel, label="Last Update: 2020-08-19", pos=(pos_ini_x - 90, pos_ini_y + 540))
         text.SetFont(fontCredits)
         # text.SetBackgroundColour(wx.Colour(255, 255, 255))
 
@@ -414,19 +414,18 @@ class MyFrame(wx.Frame):
         # logo = wx.StaticBitmap(self, -1, logo, (-50, -30), (logo.GetWidth(), logo.GetHeight()))
         # logo.SetPosition((0,0))
 
-
         # wx.EVT_ENTER_WINDOW(self, self.onMouseOver)
         # wx.EVT_LEAVE_WINDOW(self, self.onMouseLeave)
 
     # def onMouseOver(self, event):
-        # self.my_btn_save.SetBackgroundColour((255, 255, 255))
-        # self.my_btn_save.SetForegroundColour(wx.Colour(0, 0, 0))
-        # self.my_btn_clear_all.Refresh()
+    # self.my_btn_save.SetBackgroundColour((255, 255, 255))
+    # self.my_btn_save.SetForegroundColour(wx.Colour(0, 0, 0))
+    # self.my_btn_clear_all.Refresh()
 
     # def onMouseLeave(self, event):
-        # self.my_btn_save.SetBackgroundColour((13, 52, 128))
-        # self.my_btn_save.SetForegroundColour(wx.Colour(255, 255, 255))
-        # self.my_btn_clear_all.Refresh()
+    # self.my_btn_save.SetBackgroundColour((13, 52, 128))
+    # self.my_btn_save.SetForegroundColour(wx.Colour(255, 255, 255))
+    # self.my_btn_clear_all.Refresh()
 
     def OnButtonSave(self, e):
         print("Saving File ...")
