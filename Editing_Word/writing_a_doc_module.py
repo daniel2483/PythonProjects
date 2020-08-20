@@ -6,7 +6,7 @@ from datetime import date
 
 
 def saving_word_letter(business, send_to_txt, department_txt, greetings, reason_to_contact, person_name_txt,
-                       id_number_txt, path_file):
+                       id_number_txt, path_file, codigo_txt):
     # send_to_txt = input ("\nPara: ")
     # department_txt = input ("Departamento: ")
     # greetings = input ("Saludos: ")
@@ -37,7 +37,8 @@ def saving_word_letter(business, send_to_txt, department_txt, greetings, reason_
         greetings=greetings,
         reason_to_contact=reason_to_contact,
         person_name=person_name_txt,
-        id_number=id_number_txt)
+        id_number=id_number_txt,
+        codigo=codigo_txt)
 
     document.write(path + 'carta_final.docx')
 
@@ -46,7 +47,7 @@ def saving_word_letter_mediciones(business, send_to_txt, department_txt, greetin
                                   reason_to_contact, person_name_txt, id_number_txt,
                                   sphere_l_txt, sphere_r_txt, cylinder_l_txt, cylinder_r_txt,
                                   axis_l_txt, axis_r_txt, av_l_txt, av_r_txt,
-                                  path_file):
+                                  path_file, codigo_txt):
     # send_to_txt = input ("\nPara: ")
     # department_txt = input ("Departamento: ")
     # greetings = input ("Saludos: ")
@@ -85,7 +86,8 @@ def saving_word_letter_mediciones(business, send_to_txt, department_txt, greetin
         axis_l=axis_l_txt,
         axis_r=axis_r_txt,
         av_l=av_l_txt,
-        av_r=av_r_txt)
+        av_r=av_r_txt,
+        codigo=codigo_txt)
 
     document.write(path + 'carta_final.docx')
 
