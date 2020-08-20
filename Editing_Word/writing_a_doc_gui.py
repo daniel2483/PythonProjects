@@ -2,7 +2,7 @@
 #   Word Letter Editor
 #   Made by: Jose Daniel Rodriguez Sanchez
 #   Build on: 2020-08-01
-#   Last Update: 2020-08-19
+#   Last Update: 2020-08-20
 
 
 import wx
@@ -217,15 +217,18 @@ class MyFrame(wx.Frame):
         # self.mygrid.EnableScrolling(False, False)
         ################# Fin formulario para recetas ####################
 
-        self.text_cedula_combo = wx.StaticText(panel, id=22, label="Lista de Cédulas",
+        self.text_cedula_combo = wx.StaticText(panel, id=22, label="Lista de Cédulas: ",
                                                pos=(pos_ini_x - 120, pos_ini_y + 360))
         ids = ['Alejandro Rodríguez Sánchez | 2-0626-0889 | 066-530',
                'Gladys Rodríguez Sánchez | 9-9999-9999 | 999-999',
                'Fabio Rodríguez González | 6-0106-1307 | 999-999',
-               'Fabiola Rodríguez Sánchez | 2-0698-0165 | 066-799',
-               'Daniel Rodríguez Sánchez | 1-1172-0707 | 999-999']
+               'Fabiola Rodríguez Sánchez | 2-0698-0165 | 066-799']
         self.ids = wx.ComboBox(panel, value="", pos=(pos_ini_x, pos_ini_y + 360), size=(270, 25), choices=ids,
                                style=wx.CB_DROPDOWN | wx.TE_READONLY)
+
+        self.text_cod = wx.StaticText(panel, label="Código Opt: ", pos=(pos_ini_x + 290, pos_ini_y + 360))
+        self.codigo = wx.TextCtrl(panel, pos=(pos_ini_x + 370, pos_ini_y + 360), size=(80, 25), value="",
+                                  style=wx.TE_LEFT)
 
         self.text6 = wx.StaticText(panel, label="Nombre quien firma: ", pos=(pos_ini_x - 120, pos_ini_y + 390))
         # text.SetBackgroundColour(wx.Colour(255, 255, 255))
@@ -264,9 +267,11 @@ class MyFrame(wx.Frame):
         self.reason.Disable()
         self.signature.Disable()
         self.ids.Disable()
+        self.codigo.Disable()
         self.cedula1.Disable()
         self.cedula2.Disable()
         self.cedula3.Disable()
+
 
         self.my_btn_save = wx.Button(panel, label='Guardar', pos=(pos_ini_x - 50, pos_ini_y + 450), size=(100, 40))
         self.my_btn_save.Disable()
@@ -320,6 +325,10 @@ class MyFrame(wx.Frame):
 
         self.text_cedula_combo.SetFont(font)
         self.ids.SetFont(font)
+
+        self.text_cod.SetFont(font)
+        self.codigo.SetFont(font)
+
 
         self.text7.SetFont(font)
         self.text8.SetFont(font)
@@ -434,6 +443,7 @@ class MyFrame(wx.Frame):
         greetings = self.greetings.GetValue()
         reason = self.reason.GetValue()
         signature = self.signature.GetValue()
+        codigo = self.codigo.GetValue()
         cedula1 = self.cedula1.GetValue()
         cedula2 = self.cedula2.GetValue()
         cedula3 = self.cedula3.GetValue()
@@ -459,10 +469,10 @@ class MyFrame(wx.Frame):
             if mediciones_flag == "Si":
                 letter.saving_word_letter_mediciones(selection, sendto, department, greetings, reason, signature,
                                                      id, sphere_l, sphere_r, cylinder_l, cylinder_r,
-                                                     axis_l, axis_r, av_l, av_r, path_file)
+                                                     axis_l, axis_r, av_l, av_r, path_file,codigo)
             if mediciones_flag == "No":
                 letter.saving_word_letter(selection, sendto, department, greetings, reason, signature,
-                                          id, path_file)
+                                          id, path_file,codigo)
             wx.MessageBox('Archivo Guardado', 'Información', wx.OK | wx.ICON_INFORMATION)
         except PermissionError:
             wx.MessageBox('El documento se encuentra abierto y No se ha Guardado', 'Error de permisos',
@@ -485,6 +495,7 @@ class MyFrame(wx.Frame):
         greetings = self.greetings.GetValue()
         reason = self.reason.GetValue()
         signature = self.signature.GetValue()
+        codigo = self.codigo.GetValue()
         cedula1 = self.cedula1.GetValue()
         cedula2 = self.cedula2.GetValue()
         cedula3 = self.cedula3.GetValue()
@@ -511,10 +522,10 @@ class MyFrame(wx.Frame):
             if mediciones_flag == "Si":
                 letter.saving_word_letter_mediciones(selection, sendto, department, greetings, reason, signature,
                                                      id, sphere_l, sphere_r, cylinder_l, cylinder_r,
-                                                     axis_l, axis_r, av_l, av_r, path_file)
+                                                     axis_l, axis_r, av_l, av_r, path_file,codigo)
             if mediciones_flag == "No":
                 letter.saving_word_letter(selection, sendto, department, greetings, reason, signature,
-                                          id, path_file)
+                                          id, path_file,codigo)
 
             wx.MessageBox('Archivo Guardado', 'Información', wx.OK | wx.ICON_INFORMATION)
 
@@ -544,6 +555,7 @@ class MyFrame(wx.Frame):
         self.signature.Enable()
         self.mediciones.Enable()
         self.ids.Enable()
+        self.codigo.Enable()
         self.cedula1.Enable()
         self.cedula2.Enable()
         self.cedula3.Enable()
@@ -706,8 +718,8 @@ class MyFrame(wx.Frame):
 
     def OnComboIds(self, event):
         id = self.ids.GetValue()
-        name, ced = id.split(' | ')
-        print("Changing ID..." + ced)
+        name, ced, cod = id.split(' | ')
+        print("Changing ID..." + ced + " Cod: " + cod)
 
         self.signature.SetValue(name)
         self.text_alarm5.Hide()
@@ -719,6 +731,8 @@ class MyFrame(wx.Frame):
         self.cedula3.SetValue(cedula3)
 
         self.text_alarm6.Hide()
+
+        self.codigo.SetValue(cod)
 
         # Validating fields
         sucursal = self.sucursal.GetValue()
