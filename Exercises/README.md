@@ -6,6 +6,4 @@ from book:
     Introducing Python by Bill Lubanovic (O’Reilly). Copyright 2015 Bill Lubanovic, 978-1-449-35936-2
     
 Also contains exercises from 
-    EDX - Introduction to Python Fundamentals
-    
-    [Course](https://www.edx.org/course/introduction-to-python-fundamentals-5)
+    EDX - Introduction to Python Fundamentals [Course](https://www.edx.org/course/introduction-to-python-fundamentals-5)
