@@ -165,26 +165,28 @@ for i in range(0,500):
 # Sample input:
 # enter a 1 sentence quote, non-alpha separate words
 
-quote = "Wheresoever you go, go with all your heart"
-word = quote.split()
+#quote = "Wheresoever you go, go with all your heart "
 
-#print(word[1])
+quote = input("Please enter a quote: ")
+quote = quote + " "
+
 
 print ("\n\n### Task 7 ###")
 word = ""
 alphabetic = 'abcdefghijklmnopqrstuvwxyz'
 
 for letter in quote:
-    #print (letter)
     if letter.isalpha() == True:
         word = word + letter
     else:
-        #print (word)
-        #word = ""
-        #print (word[0].lower())
         if word != "":
-            for alpha in alphabetic[6:27]:
+            #print(word)
+            for alpha in alphabetic[7:28]:
                 #print (alpha)
                 if word[0].lower() == alpha:
-                    print (word)
-        word = ""
+                    print (word.upper())
+                    word = ""
+                    break
+            word=""
+        
+
