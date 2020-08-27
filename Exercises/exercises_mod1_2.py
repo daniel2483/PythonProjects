@@ -1,4 +1,4 @@
-## Task 1
+print ("\n\n### Task 1 ###")
 
 # [ ] access and print the second character from planet_name: "u"
 planet_name = "Jupiter"
@@ -16,7 +16,7 @@ print(planet_name[0],planet_name[-1])
 planet_name = "Jupiter"
 print(planet_name[-7])
 
-## Task 2
+print ("\n\n### Task 2 ###")
 
 # [ ] print planet_name sliced into the first 3 characters and remaining characters
 planet_name = "Neptune"
@@ -31,7 +31,7 @@ print(wise_words[::3])
 # [ ] print planet_name in reverse
 print(planet_name[::-1])
 
-## Task 3
+print ("\n\n### Task 3 ###")
 
 # [ ] Get user input for 1 fav_food
 # [ ] iterate through letters in fav_food 
@@ -62,7 +62,7 @@ print(name[:4])
 name = "Hiroto"
 print (name[1:])
 
-## Task 4
+print ("\n\n### Task 4 ###")
 
 # [ ] Create Mystery Name
 first_name = "D!ni&l"
@@ -93,6 +93,7 @@ work_tip = "Good code is commented code"
 test=work_tip.find("code")
 print(test)
 
+
 # [ ] search for "code" in code_tip using .find() 
 # [ ] search substring with substring index start= 13,end = last char 
 # [ ] save result in variable: code_index
@@ -108,8 +109,9 @@ if code_index != -1:
     print("code is found")
 else:
     print("code is not found")
-    
-## Task 5
+
+
+print ("\n\n### Task 5 ###")
 
 # [ ] find and report (print) number of w's, o's + use of word "code"
 work_tip = "Good code is commented code"
@@ -133,6 +135,7 @@ print(count_os)
 print(count_code)
 
 
+print ("\n\n### Task 6 ###")
 # [ ]  count times letter "i" appears in code_tip string
 # [ ] find and display the index of all the letter i's in code_tip
 # Remember: if .find("i") has No Match, -1 is returned
@@ -155,5 +158,33 @@ for i in range(0,500):
     if index != -1 and index != index_copy:
         print(index)
     init+=1
-    
 
+
+# Create a program inputs a phrase (like a famous quotation) and prints all of the words that start with h-z
+
+# Sample input:
+# enter a 1 sentence quote, non-alpha separate words
+
+quote = "Wheresoever you go, go with all your heart"
+word = quote.split()
+
+#print(word[1])
+
+print ("\n\n### Task 7 ###")
+word = ""
+alphabetic = 'abcdefghijklmnopqrstuvwxyz'
+
+for letter in quote:
+    #print (letter)
+    if letter.isalpha() == True:
+        word = word + letter
+    else:
+        #print (word)
+        #word = ""
+        #print (word[0].lower())
+        if word != "":
+            for alpha in alphabetic[6:27]:
+                #print (alpha)
+                if word[0].lower() == alpha:
+                    print (word)
+        word = ""
