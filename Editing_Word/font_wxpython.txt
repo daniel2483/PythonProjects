@@ -1,0 +1,15 @@
+
+
+Font(size,family,style,weight)
+
+family can be:
+
+    wx.DECORATIVE, wx.DEFAULT,wx.MODERN, wx.ROMAN, wx.SCRIPT or wx.SWISS.
+
+style can be:
+
+    wx.NORMAL, wx.SLANT or wx.ITALIC.
+
+weight can be:
+
+    wx.NORMAL, wx.LIGHT, or wx.BOLD
