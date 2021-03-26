@@ -10,7 +10,7 @@ pycparser==2.20
 pysmb==1.2.1
 pywin32==228
 pywinrm==0.4.1
-PyYAML==5.3.1
+PyYAML==5.4
 requests==2.24.0
 requests-ntlm==1.1.0
 six==1.15.0
