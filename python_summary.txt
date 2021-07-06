@@ -1,0 +1,146 @@
+
+
+Referencias:
+Python Tutorial - Guido van Rossum and the Python development team, May 21th 2020 (CHAPTER THREE, page 9)
+
+Python 3 al descubierto - Arturo Fernández Monto, 2012 
+
+
+Resumen Python:
+
+¿Qué es Python?
+- Python es un lenguaje de programación de alto nivel, interpretado y multipropósito. En los últimos años su 
+utilización ha ido constantemente creciendo y en  la  actualidad  es  uno  de  los  lenguajes  de  
+programación  más  empleados
+- puede  ser  utilizado  en  diversas  plataformas  y  sistemas  operativos,  entre  los  que  podemos  
+destacar  los  más  populares,  como  Windows,  Mac  OS  y  Linux. 
+
+- Qué significa interpretado?
+ No es necesario  compilar  el  código  para  su   ejecución,  ya  que  existe  un  intérprete  que  se  
+encarga  de  leer  el  fichero  fuente  y  ejecutarlo.
+
+- Que significa alto nivel?
+  Que no es un languaje de máquina, ya que utiliza palabras claves o sintaxis específica y que ejecuta comandos
+que luego son traducidas a lenguaje de máquina.
+
+- Que significa multipropósito o propósito general?
+  Con  este  lenguaje  podemos  desarrollar  software  para  aplicaciones  científicas,  para  
+comunicaciones  de  red,  para  aplicaciones  de  escritorio  con  interfaz  gráfica  de  usuario  (GUI),  
+para  crear  juegos,  para  smartphones y  por  supuesto, para aplicaciones web.
+
+Historia:
+El  origen  del  lenguaje  Python  se  remonta  a  principios  de  los  noventa.  Por  este  tiempo,  
+un  investigador  holandés  llamado  Guido  van  Rossum,  que  trabajaba  en  el  centro  de  investigación  
+CWI  (Centrum  Wiskunde  &  Informatica)  de  Ámsterdam, es  asignado  a  un  proyecto  que  consistía  en  el  
+desarrollo  de  un  sistema  operativo  distribuido.  Por  aquel  tiempo,  el  CWI  utilizaba  un  lenguaje  
+de  programación  llamado  ABC.  En  lugar  de  emplear  este  lenguaje,  Guido  decide  crear  uno  nuevo  
+que  pueda  superar  las  limitaciones.
+
+La  primera  versión  del  lenguaje  ve  la  luz  en  1991,  pero  no  es  hasta  tres  años  después  
+cuando  decide  publicarse  la  versión  1.0.
+
+Hasta  el  momento  solo  se  ha  liberado  tres  versiones  principales,  teniendo  cada  una  de  ellas  
+diversas  actualizaciones.  En  lo  que  respecta  a  la  versión  2,  la  última  en  ser  liberada  fue  
+la  2.7,  en  julio  de  2010.  En  el  momento  de  escribir  estas  líneas,  la  versión  3  cuenta  con  
+la  actualización  3.2,  liberada  en  febrero  de  2011.
+
+Entre  las  características  de  las  primeras  versiones  de  Python  cabe  destacar  el  soporte  de  la  
+orientación  a  objetos,  el  manejo  de  excepciones  y  el  soporte  de  estructuras  de  datos  de  alto  
+nivel,  como,  por  ejemplo,  las  listas  y  los  diccionarios. Se  tuvo  en  cuenta  que  el  código  
+escrito  en  este  lenguaje  fuera  fácil  de  leer  y  de  aprender,  sin  que  esto  suponga  renunciar  
+a  características y funcionalidades avanzadas.
+
+Características:
+- Dos de las principales características del lenguaje Python son, por un lado que es interpretado y, por 
+otro lado, que es multiplataforma.
+
+- Posee un interpretador, esto significa que podemos correr código python sin necesidad de almacenarlo en un
+fichero, puede utilizarse el intepretar para probar. En otras palabras la interacción con el intérprete del 
+lenguaje se puede hacer directamente a través de la consola. 
+
+Se puede acceder al interpretador corriendo el comando, como se ve continuación:
+
+C:\Users\arlyn>python
+Python 3.8.3 (tags/v3.8.3:6f8c832, May 13 2020, 22:20:19) [MSC v.1925 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+
+El intepretador se puede utilizar como una calculadora, como se observa en el siguiente video:
+
+[video 1]
+
+Habitualmente,  a  los  programas  en  Python  se  les  denomina  scripts.  En  realidad,  script es 
+el término que se suele emplear para los ficheros de código fuente escritos en Python
+
+
+- Dinámicamente Tipado:
+Python  carece  de  tipos  propiamente  dichos,  es  decir,  es  un  lenguaje  con  tipado dinámico.  
+No es necesario declarar en Python el tipo de variable, ya que el tipo de cada variable se fija en el 
+momento de su asignación. Como consecuencia de este hecho,  una  variable  puede  cambiar  su  tipo  
+durante  su  ciclo  de  vida  sin  necesidad  explícita  de  ser  declarado.
+
+- Orientado a Objetos:
+Además de soportar la orientación a objetos, Python también nos permite utilizar otros paradigmas de 
+programación, como por ejemplo, la programación funcional y la imperativa.
+
+- Con respecto a la sintaxis:
+una de las diferencias más destacables es el uso de la indentación (sangría con tab).   Diferentes   
+niveles de indentación   son   utilizados   para   marcar   las   sentencias que corresponden al mismo bloque. 
+
+Ejemplo 1:
+
+
+code ..
+
+if condition:
+	..
+	code
+	...
+else:
+	...
+	code
+	...
+
+code ...
+
+
+Ejemplo 2:
+if condition:
+	...
+	code
+	...
+	if condition:
+		...
+		code
+		...
+	else:
+		...
+		code
+		...
+	...
+	code
+	...
+else:
+	...
+	code 
+	...
+... 
+code
+...
+
+
+- Para facilitar la programación, Python incluye una serie de estructuras de datos de alto  nivel,  
+como  son,  por  ejemplo,  las  listas,  los  diccionarios,  cadenas  de  texto  (strings), tuplas 
+y conjuntos.
+
+
+Sintaxis y Código:
+
+Primer programa "Hola mundo"
+
+>>> print(“Hola Mundo”)
+
+
+
+
+
