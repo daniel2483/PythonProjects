@@ -81,7 +81,7 @@ durante  su  ciclo  de  vida  sin  necesidad  explícita  de  ser  declarado.
 
 - Orientado a Objetos:
 Además de soportar la orientación a objetos, Python también nos permite utilizar otros paradigmas de 
-programación, como por ejemplo, la programación funcional y la imperativa.
+programación, como, por ejemplo, la programación funcional y la imperativa.
 
 - Con respecto a la sintaxis:
 una de las diferencias más destacables es el uso de la indentación (sangría con tab).   Diferentes   
@@ -139,8 +139,6 @@ Sintaxis y Código:
 Primer programa "Hola mundo"
 
 >>> print(“Hola Mundo”)
-
-
 
 
 
