@@ -1,7 +1,7 @@
 height = int(input("Enter the height of rectangule (must be an integer): "))
 width = int(input("Enter the width of rectangule (must be an integer): "))
 
-counter = 0
+counter_heigh = 0
 
 string_first_line = ""
 string_other_line = ""
@@ -9,12 +9,12 @@ string_other_line = ""
 counter_line = 0
 
 for height_dimension in range(0,height):
-    if counter == 0:
+    if counter_heigh == 0:
         for width_dimention in range(0,width):
             string_first_line = string_first_line + "*"
             if width_dimention == (width-1):
                 print(string_first_line)
-    elif (counter < (height-1)):
+    elif (counter_heigh < (height-1)):
         if (counter_line == 0):
             for width_dimention in range(0,width):
                 if width_dimention == 0 or width_dimention == (width-1):
@@ -25,7 +25,7 @@ for height_dimension in range(0,height):
         counter_line = counter_line + 1
     else:
         print(string_first_line)
-    counter = counter + 1
+    counter_heigh = counter_heigh + 1
 
         
 
