@@ -131,7 +131,7 @@ class MyFrame(wx.Frame):
         #print ("Working on Dir: " + str(current_dir))
         
         # Style
-        self.SetIcon(wx.Icon(current_dir + "images/app_calc.ico"))
+        self.SetIcon(wx.Icon(current_dir + "/images/app_calc.ico"))
         #self.SetIcon(wx.Icon.SetWidth(16))
         #self.SetIcon(wx.Icon.SetHeight(16))
         #self.wx.Icon(desiredWidth = 150, desiredHeight = 150)
