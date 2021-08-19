@@ -20,7 +20,7 @@ class MyFrame(wx.Frame):
         panel = wx.Panel(self)
 
         # create wx.Bitmap object
-        bmpForRootAny = wx.Bitmap('images/root.png')
+        bmpForRootAny = wx.Bitmap('images/app_calc.ico')
 
         operand1 = ""
         operand2 = ""

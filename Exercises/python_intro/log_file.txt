@@ -1,8 +1,0 @@
-1: item 1
-2: item 2
-3: item 3
-4: item 4
-5: quit
-6: quit
-7: quit
-8: quit
