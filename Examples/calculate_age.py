@@ -1,5 +1,6 @@
 import sys
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 year = input("Year of birth: ")
 month = input("Month of birth: ")
@@ -65,9 +66,12 @@ years_number = days_delta//365
 month_n = days_delta%365
 month_number = month_n//30
 days_number = month_n%30
-print("The number of days: ",days_delta)
-print("Number of Years: ",str(years_number)," and month(s) ",str(month_number)," and days ",str(days_number))
 
+rdelta = relativedelta(today, birthday)
+
+print("The number of days: ",days_delta)
+print("Using approach: You have ",str(years_number)," years"," and ",str(month_number)," month(s) "," and ",str(days_number)," day(s) ")
+print("Using exact: You have ",str(rdelta.years)," years"," and ",str(rdelta.months)," month(s) "," and ",str(rdelta.days)," day(s) ")
 
 #print ("\n\nThe type of the date is now",  type(date_time_obj))
 #print ("The date is", date_time_obj)
