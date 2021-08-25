@@ -14,8 +14,8 @@ def check_if_pair(number):
         return center
 
 
-height = int(input("Enter the height of rectangule (must be an integer): "))
-width = int(input("Enter the width of rectangule (must be an integer): "))
+height = int(input("Enter the height of arrow (must be an integer): "))
+width = int(input("Enter the height of arrow (must be an integer): "))
 
 counter_heigh = 0
 
@@ -48,5 +48,3 @@ for height_dimension in range(0,height):
         print(string_lines)
         counter_line= counter_line +2
     counter_heigh = counter_heigh + 1
-
-
