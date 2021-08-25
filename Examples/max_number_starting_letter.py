@@ -1,4 +1,4 @@
-words = ["The","Flower","Banana","Hello","Hala","Rogar", "Rymes","argon","Row","Telon","Test","Rear","Roast"]
+words = ["He","Flower","Banana","Hello","Hala","Rogar", "Rymes","argon","Row","Telon","Test","Rear","Roast","Hi","Hangar"]
 
 letter_dict = {"a" : 0,"b" : 0,"c" : 0,"d" : 0,"e" : 0,"f" : 0,"g" : 0,
   "h" : 0,"i" : 0,"j" : 0,"k" : 0,"l" : 0,"m" : 0,"n" : 0,"o" : 0,"p" : 0,
@@ -40,7 +40,7 @@ number_of_times = max(letter_dict["a"],
 
 #print ("The letter more frequent: ")
 #print (number_of_times)
-print("\n")
+#print("\n")
 
 for letter in letter_dict:
     if letter_dict[letter] == number_of_times:
