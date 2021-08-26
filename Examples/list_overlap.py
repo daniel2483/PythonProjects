@@ -32,7 +32,7 @@ for num in a:
 print("This is the new list which has the same values in a and b fixed list")
 print("\nList in a: "+str(a))
 print("\nList in b: "+str(b))
-print("\nNew List c: "+str(set(new_list)))
+print("\nNew List c: "+str(list(set(new_list))))
 print("\n\n")
 print("This is the new list which has the same values in a and b random list")
 
@@ -56,4 +56,4 @@ for num in d:
 
 print("\nList in d: "+str(d))
 print("\nList in e: "+str(e))
-print("\nNew List f: "+str(set(new_list2)))
+print("\nNew List f: "+str(list(set(new_list2))))
