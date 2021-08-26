@@ -13,7 +13,6 @@ def check_if_pair(number):
         #print (str(center))
         return center
 
-
 height = int(input("Enter the dimension of diamond (must be an integer): "))
 #width = int(input("Enter the width of diamond (must be an integer): "))
 width = height
