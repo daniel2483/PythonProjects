@@ -34,12 +34,16 @@ if number%2 == 0:
     else:
         print ("This number: "+str(number)+" is an even and can't be divided by four.")
 
+print ("\n\n")
 loop = 0
 while loop == 0:
     try:
         num = int(input("Please enter an integer number: "))
         check = int(input("Please enter an integer number to do a division: "))
-        
+        if num%check == 0:
+            print ("This number: "+str(num)+" can be divided by "+str(check)+".")
+        else:
+            print ("This number: "+str(num)+" can't be divided by "+str(check)+".")
         loop = 1
     except ValueError:
         loop = 0
