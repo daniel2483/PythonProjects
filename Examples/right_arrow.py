@@ -14,8 +14,9 @@ def check_if_pair(number):
         return center
 
 
-height = int(input("Enter the height of arrow (must be an integer): "))
-width = int(input("Enter the height of arrow (must be an integer): "))
+height = int(input("Enter the dimension of arrow (must be an integer): "))
+#width = int(input("Enter the height of arrow (must be an integer): "))
+width = height
 
 counter_heigh = 0
 
