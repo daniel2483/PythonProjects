@@ -13,15 +13,15 @@ def player_info(player):
     name = input(player + " Name: ")
     print ('''
     ############ Options ############
-    # 1. Rock
-    # 2. Paper
-    # 3. Scissors
+    # 1. Rock                       #
+    # 2. Paper                      #
+    # 3. Scissors                   #
     #################################
     ''')
     correct_option = 0
     while correct_option == 0:
         try:
-            selection = int(input("Select a correct option: "))
+            selection = int(input("Select a correct option for "+player+": "))
             if selection == 1 or selection == 2 or selection == 3:
                 correct_option = 1
             else:
@@ -34,8 +34,8 @@ def player_info(player):
 
 def winner_method(player1,option1,player2,option2):
 
-    print("Option 1 is:  "+ str(option1))
-    print("Option 2 is:  "+ str(option2))
+    #print("Option 1 is:  "+ str(option1))
+    #print("Option 2 is:  "+ str(option2))
 
     if (option1 == option2):
         winner = "Draw Game!"
@@ -47,7 +47,7 @@ def winner_method(player1,option1,player2,option2):
             winner = player2
         elif(option2 == 1 and option1 == 2):
             winner = player1
-        elif(option2 == 2 and option2 == 3):
+        elif(option1 == 2 and option2 == 3):
             winner = player2
         elif(option2 == 2 and option1 == 3):
             winner = player1
