@@ -61,7 +61,6 @@ days = today - birthday
 
 days_delta = days.days
 
-#print("The type of days: ",type(days_delta))
 years_number = days_delta//365
 month_n = days_delta%365
 month_number = month_n//30
