@@ -39,7 +39,7 @@ if errors > 0:
     print("Date has errors...")
     sys.exit()
 
-print("\n\nThis is a test...")
+#print("\n\nThis is a test...")
 today = datetime.today()
 now = today.strftime("%Y-%m-%d")
 print("Today is ", now)
