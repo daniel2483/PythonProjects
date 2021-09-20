@@ -44,18 +44,6 @@ today = datetime.today()
 now = today.strftime("%Y-%m-%d")
 print("Today is ", now)
 
-#if(month < 10):
-#    month = "0"+str(month)
-
-#if(day < 10):
-#    day = "0"+str(day)
-
-#date_time_str = str(year)+str(month)+str(day)
-
-#date_time_obj = datetime.strptime(date_time_str, '%Y%m%d')
-
-#print("YearMonthDay: ",date_time_str)
-
 birthday = datetime(year, month, day, 0, 0, 0)
 days = today - birthday
 
@@ -72,5 +60,4 @@ print("The number of days: ",days_delta)
 print("Using approach: You have ",str(years_number)," years"," and ",str(month_number)," month(s) "," and ",str(days_number)," day(s) ")
 print("Using exact: You have ",str(rdelta.years)," years"," and ",str(rdelta.months)," month(s) "," and ",str(rdelta.days)," day(s) ")
 
-#print ("\n\nThe type of the date is now",  type(date_time_obj))
-#print ("The date is", date_time_obj)
+
