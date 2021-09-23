@@ -14,17 +14,14 @@ def check_if_pair(number):
         return center
 
 height = int(input("Enter the dimension of diamond (must be an integer): "))
-#width = int(input("Enter the width of diamond (must be an integer): "))
 width = height
 
 width_blank = width//2
 counter_heigh = 0
 
 center = int(check_if_pair(height))
-#center = check_if_pair(width)
 
 string_lines = ""
-#string_other_line = ""
 
 counter_line = 1
 
