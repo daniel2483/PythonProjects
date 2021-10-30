@@ -1,0 +1,24 @@
+sofia.lescano@digitalglobaltalent.com
+
+
+Is Python compiled or interpreted language? 
+Interpreted
+What are files with ".pyc" extension used for?
+For example original.pyc is a byte-code compiled version of 'original.py')
+Does Python support miltiple inheritance?
+No
+What built-in function can be used to access parent class from inherited one?
+What object is created with empty curly brackets?
+Dictionary
+What is the length of set object created from three identical integers?
+10
+What method is executed first, __init__ or __new__?
+__init__
+Can instance of Abstract Class be created?
+Yes
+What interface is implemented by generator?
+interpreter
+What is the value of first argument of instance method?
+self
+How to create method that will receive Class Object as the first argument?
+What function is used for dynamic class creation?
